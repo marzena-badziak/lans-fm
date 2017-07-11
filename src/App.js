@@ -1,19 +1,31 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {
+  Component
+}
+from 'react';
 import './App.css';
+//import Layout from "./Layout";
+//LandingPage - import Home from "./Home";
+//import SignUp from "./session/SignUp";
+//import Login from "./session/Login";
+import {
+  Router, Route, IndexRoute, hashHistory
+}
+from "react-router";
+
+
 
 class App extends Component {
+
   render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+    return ( < div className = "App" >
+      < Router history = {
+        hashHistory
+      } >
+      < Route path = "/"
+      component = {
+        Layout
+      } >
+      < /Route> < /Router> < /div>
     );
   }
 }
