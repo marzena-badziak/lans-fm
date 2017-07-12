@@ -24,10 +24,12 @@ class SearchBar extends Component {
       })
     );
   };
+
   render() {
     return (
-      <div style={{ paddingTop: "8px", width: this.props.width }}>
+      <div className="container">
         <form onSubmit={e => this.fetchArtist(e)}>
+          <h1 htmlFor="search-bar">Search Artist</h1>
           <div className="input-group">
             <input
               onChange={e => this.setSearchValue(e)}
