@@ -5,7 +5,7 @@ import thunk from "redux-thunk";
 const search = (
   state = {
     artistEntered: "TEST",
-    artistsSimilar: {},
+    artistsSimilar: [],
     message: ""
   },
   action
