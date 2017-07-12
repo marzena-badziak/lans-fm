@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { searchArtist } from "./search-actions.js";
 import { connect } from "react-redux";
+import propTypes from 'prop-types';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -11,7 +12,6 @@ class SearchBar extends Component {
     };
   }
   setSearchValue = e => {
-    // console.log(e);
     this.setState({
       searchValue: e.target.value
     });
@@ -27,8 +27,7 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <div className="container">
-        <form onSubmit={e => this.fetchArtist(e)}>
+        <form style={{width:this.props.width}} onSubmit={e => this.fetchArtist(e)}>
           <div className="input-group">
             <input
               onChange={e => this.setSearchValue(e)}
@@ -52,9 +51,10 @@ class SearchBar extends Component {
             </span>
           </div>
         </form>
-      </div>
     );
   }
 }
-
+SearchBar.propTypes = {
+  width: propTypes.string
+}
 export default connect()(SearchBar);

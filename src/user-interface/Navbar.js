@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import SearchBar from "./SearchBar";
 import styled from "styled-components";
-import store from "./store";
 
 class Navbar extends Component {
   render() {
@@ -10,7 +9,7 @@ class Navbar extends Component {
         <div>
           <StyledLogo href="#">Lans-Fm</StyledLogo>
         </div>
-        <SearchBar store={store} width="40%" />
+        <SearchBar width="40%" />
         <div>
           <StyledLink href="#">Login</StyledLink>
         </div>

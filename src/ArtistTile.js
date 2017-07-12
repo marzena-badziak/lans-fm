@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-const axios = require("axios");
+import propTypes from 'prop-types'
+import axios from 'axios'
+
+
 
 class ArtistTile extends Component {
   constructor(props) {
@@ -44,5 +47,9 @@ const StyledArtistTile = styled.div`
 
   text-align: center;
 `;
-
+ArtistTile.propTypes = {
+  name: propTypes.string.isRequired,
+  img: propTypes.string.isRequired,
+  match: propTypes.string.isRequired
+}
 export default ArtistTile;
