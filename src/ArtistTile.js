@@ -11,7 +11,15 @@ class ArtistTile extends Component {
     return (
       <StyledArtistTile className="col-xs-4 col-md-3">
         <p>
-          <strong>Artist name:</strong> {this.props.name}
+          <strong>
+            {this.props.name}
+          </strong>
+        </p>
+        <p>
+          Match strength:{" "}
+          <strong style={{ color: "#003366" }}>
+            {parseFloat(this.props.match).toFixed(2)}
+          </strong>
         </p>
 
         <img

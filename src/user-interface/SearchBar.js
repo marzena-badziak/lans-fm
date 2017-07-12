@@ -11,7 +11,7 @@ class SearchBar extends Component {
     };
   }
   setSearchValue = e => {
-    console.log(e);
+    // console.log(e);
     this.setState({
       searchValue: e.target.value
     });
@@ -35,7 +35,7 @@ class SearchBar extends Component {
               id="search-bar"
               type="text"
               value={this.state.searchValue}
-              placeholder="Iron Maiden"
+              placeholder="Type artist name to find similar artists"
               className="form-control"
             />
             <span className="input-group-btn">
