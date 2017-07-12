@@ -20,19 +20,33 @@ class SearchBar extends Component {
   };
   render() {
     return (
-      <form>
-        <label htmlFor="search-bar">Search Artist</label>
-        <input
-          onChange={e => this.setSearchValue(e)}
-          id="search-bar"
-          type="text"
-          value={this.state.searchValue}
-          placeholder="Iron Maiden"
-        />
-        <button type="submit" onClick={e => this.fetchArtist(e)}>
-          Search
-        </button>
-      </form>
+      <div className="container">
+        <form onSubmit={e => this.fetchArtist(e)}>
+          <h1 htmlFor="search-bar">Search Artist</h1>
+          <div className="input-group">
+            <input
+              onChange={e => this.setSearchValue(e)}
+              id="search-bar"
+              type="text"
+              value={this.state.searchValue}
+              placeholder="Iron Maiden"
+              className="form-control"
+            />
+            <span className="input-group-btn">
+              <button
+                className="btn btn-default"
+                type="button"
+                onClick={e => this.fetchArtist(e)}
+              >
+                <span
+                  className="glyphicon glyphicon-search"
+                  aria-hidden="true"
+                />
+              </button>
+            </span>
+          </div>
+        </form>
+      </div>
     );
   }
 }
