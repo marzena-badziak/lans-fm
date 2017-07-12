@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-// import { connect } from "react-redux";
+import { connect } from "react-redux";
 import ArtistTile from "./ArtistTile.js";
 
 const axios = require("axios");
@@ -63,9 +63,8 @@ class ArtistsGrid extends Component {
         className="row"
         style={{
           float: "none",
-          padding: "0 20px",
           margin: "0 auto",
-          border: "1px solid red"
+          padding: "10px"
         }}
       >
         <dbody>
@@ -76,4 +75,4 @@ class ArtistsGrid extends Component {
   }
 }
 
-export default ArtistsGrid;
+export default connect()(ArtistsGrid);
