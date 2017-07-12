@@ -12,7 +12,9 @@ class App extends Component {
         className="App"
         style={{
           backgroundImage:
-            "url(" + "http://cdn.wallpapersafari.com/79/66/H3GhW5.jpg" + ")"
+            "url(" + "http://cdn.wallpapersafari.com/79/66/H3GhW5.jpg" + ")",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed"
         }}
       >
         <SearchBar />

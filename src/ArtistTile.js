@@ -9,7 +9,7 @@ class ArtistTile extends Component {
 
   render() {
     return (
-      <StyledArtistTile>
+      <StyledArtistTile className="col-xs-4 col-md-3">
         <p>
           <strong>Artist name:</strong> {this.props.name}
         </p>
@@ -17,8 +17,8 @@ class ArtistTile extends Component {
         <img
           src={this.props.img}
           alt={this.props.name}
-          width="200px"
-          height="200px"
+          width="150px"
+          height="150px"
           // onClick={}
         />
       </StyledArtistTile>
@@ -28,12 +28,11 @@ class ArtistTile extends Component {
 
 const StyledArtistTile = styled.div`
   display: inline-block;
-  border: 1px solid gray;
   margin: 10px;
-  padding: 5px;
+  padding: 15px 5px;
   width: 250px;
   height: 250px;
-  background-color: #d9d9d9;
+  background-color: #f2f2f2;
   text-align: center;
 `;
 
