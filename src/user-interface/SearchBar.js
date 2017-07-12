@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import {searchArtist} from "./search-actions.js";
+<<<<<<< Updated upstream:src/user-interface/SearchBar.js
 import { connect } from 'react-redux';
+=======
+>>>>>>> Stashed changes:src/user-interface/SearchBar.js
 
 class SearchBar extends Component {
   constructor(props) {
@@ -18,11 +21,16 @@ class SearchBar extends Component {
   };
   fetchArtist = e => {
     e.preventDefault();
+<<<<<<< Updated upstream:src/user-interface/SearchBar.js
     this.props.dispatch(  
       searchArtist({
         artist: this.state.searchValue
       })
     );
+=======
+    searchArtist({artist: this.state.searchValue});
+    console.log(this.state.searchValue);
+>>>>>>> Stashed changes:src/user-interface/SearchBar.js
   };
 
   render() {

@@ -2,8 +2,11 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { Router, Route, IndexRoute, hashHistory } from "react-router";
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 import store from './user-interface/store';
+=======
+>>>>>>> Stashed changes
 import SearchBar from "./user-interface/SearchBar";
 import ArtistsGrid from "./ArtistsGrid";
 
