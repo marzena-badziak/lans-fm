@@ -3,6 +3,7 @@ import SearchBar from "./user-interface/SearchBar";
 import Navbar from "./user-interface/Navbar";
 import styled from "styled-components";
 import ArtistsGrid from "./ArtistsGrid";
+import store from "./user-interface/store";
 class Home extends Component {
   render() {
     return (
@@ -18,7 +19,7 @@ class Home extends Component {
         <Navbar />
         <div className="container">
           <StyledH1 htmlFor="search-bar">Search Artist</StyledH1>
-          <SearchBar container="container" />
+          <SearchBar store={store} />
           <ArtistsGrid />
         </div>
       </div>

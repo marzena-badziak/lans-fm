@@ -1,9 +1,9 @@
-import React from 'react';
-import {connect} from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 //import apiClient from "../lib/api-client";
-import {hashHistory} from 'react-router';
+import { hashHistory } from "react-router";
 //var LastfmAPI = require("lastfmapi");
-import axios from 'axios'
+import axios from "axios";
 
 const lastfmKey = {
   api_key: "5df8d91bac81fb9ea65ca73b43ecec62",
@@ -13,25 +13,19 @@ const lastfmKey = {
 var mySimilar = [];
 
 export const searchArtist = artist => {
-<<<<<<< Updated upstream
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: "SEARCH_ATTEMPT",
-      artistEntered: artist.artist       
+      artistEntered: artist.artist
     });
-    axios.get(`http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=${artist.artist}&api_key=5df8d91bac81fb9ea65ca73b43ecec62&format=json`)
-=======
-  /*return (dispatch) => {
-    dispatch({
-      type: "SEARCH_ATTEMPT",
-      artistEntered: artist       
-    });*/
-    axios.get('http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=cher&api_key=5df8d91bac81fb9ea65ca73b43ecec62&format=json')
->>>>>>> Stashed changes
-      .then(function (response) {
+    axios
+      .get(
+        `http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=${artist.artist}&api_key=5df8d91bac81fb9ea65ca73b43ecec62&format=json`
+      )
+      .then(function(response) {
         console.log(response);
       })
-      .catch(function (error) {
+      .catch(function(error) {
         console.log(error);
       });
     /*   .then((response) => {
@@ -46,8 +40,5 @@ export const searchArtist = artist => {
             hashHistory.push("artists-similar"); 
             
         })*/
-<<<<<<< Updated upstream
-  }
-=======
->>>>>>> Stashed changes
-}
+  };
+};
