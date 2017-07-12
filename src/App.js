@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { Router, Route, IndexRoute, hashHistory } from "react-router";
-import SearchBar from "./SearchBar";
+import SearchBar from "./user-interface/SearchBar";
 import ArtistsGrid from "./ArtistsGrid";
 
 class App extends Component {
