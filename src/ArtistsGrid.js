@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-// import { connect } from "react-redux";
+import { connect } from "react-redux";
 import ArtistTile from "./ArtistTile.js";
 
 const axios = require("axios");
@@ -45,35 +45,38 @@ var artistsListToShow = [
 
 class ArtistsGrid extends Component {
   render() {
+    console.log(this.props);
     var grid = [];
-
-    artistsListToShow.forEach(artist => {
+    this.props.results.forEach(artist => {
       grid.push(
         <ArtistTile
-          name={artist.bandName}
-          key={artist.bandName}
-          album={artist.album}
-          img={artist.img}
+          name={artist.name}
+          key={artist.name}
+          // album={artist.album}
+          img={artist.image[2]["#text"]}
+          match={artist.match}
         />
       );
     });
 
     return (
-      <div
-        className="row"
-        style={{
-          float: "none",
-          padding: "0 20px",
-          margin: "0 auto",
-          border: "1px solid red"
-        }}
-      >
+      <SearchResultsContainer className="row">
         <dbody>
           {grid}
         </dbody>
-      </div>
+      </SearchResultsContainer>
     );
   }
 }
 
-export default ArtistsGrid;
+const SearchResultsContainer = styled.div`
+  float: none;
+  margin: 0 auto;
+  padding: 10px;
+`;
+
+const mapStateToProps = state => {
+  return { results: state.search.artistsSimilar };
+};
+
+export default connect(mapStateToProps)(ArtistsGrid);

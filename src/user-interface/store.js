@@ -5,7 +5,7 @@ import thunk from "redux-thunk";
 const search = (
   state = {
     artistEntered: "TEST",
-    asrtistsSimilar: {},
+    artistsSimilar: [],
     message: ""
   },
   action
@@ -21,7 +21,7 @@ const search = (
       return {
         ...state,
         message: "",
-        asrtistsSimilar: action.artistsSimilar
+        artistsSimilar: action.artistsSimilar
       };
     case "SEARCH_FAIL":
       return {
