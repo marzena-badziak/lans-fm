@@ -30,7 +30,7 @@ const StyledArtistTile = styled.div`
   display: inline-block;
   background-color: #f2f2f2;
   margin: 10px;
-  padding: 10px 5px;
+  padding: 10px;
   width: 250px;
   height: 250px;
 
