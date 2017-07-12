@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { Router, Route, IndexRoute, hashHistory } from "react-router";
+import store from './user-interface/store';
 import SearchBar from "./user-interface/SearchBar";
 import ArtistsGrid from "./ArtistsGrid";
 
@@ -17,7 +18,7 @@ class App extends Component {
           backgroundAttachment: "fixed"
         }}
       >
-        <SearchBar />
+        <SearchBar store={store} />
         <div className="container">
           <ArtistsGrid />
         </div>

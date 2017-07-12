@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {searchArtist} from "./search-actions.js";
+import { connect } from 'react-redux';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -17,8 +18,11 @@ class SearchBar extends Component {
   };
   fetchArtist = e => {
     e.preventDefault();
-    searchArtist({artist: this.state.searchValue});
-    console.log(this.state.searchValue);
+    this.props.dispatch(  
+      searchArtist({
+        artist: this.state.searchValue
+      })
+    );
   };
   render() {
     return (
@@ -53,4 +57,4 @@ class SearchBar extends Component {
   }
 }
 
-export default SearchBar;
+export default connect()(SearchBar);
