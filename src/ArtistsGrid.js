@@ -45,9 +45,8 @@ var artistsListToShow = [
 
 class ArtistsGrid extends Component {
   render() {
-    console.log(this.props.results);
+    console.log(this.props);
     var grid = [];
-
     this.props.results.forEach(artist => {
       grid.push(
         <ArtistTile
