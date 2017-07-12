@@ -1,6 +1,6 @@
-var LastfmAPI = require("lastfmapi");
+const  LastfmAPI = require("lastfmapi");
 
-var lfm = new LastfmAPI({
+const lfm = new LastfmAPI({
   api_key: "5df8d91bac81fb9ea65ca73b43ecec62",
   secret: "1186a5beaa848cba51f710c4685be2e9"
 });
