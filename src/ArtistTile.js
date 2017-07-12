@@ -28,11 +28,12 @@ class ArtistTile extends Component {
 
 const StyledArtistTile = styled.div`
   display: inline-block;
+  background-color: #f2f2f2;
   margin: 10px;
-  padding: 15px 5px;
+  padding: 10px 5px;
   width: 250px;
   height: 250px;
-  background-color: #f2f2f2;
+
   text-align: center;
 `;
 

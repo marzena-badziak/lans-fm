@@ -1,4 +1,13 @@
 var LastfmAPI = require("lastfmapi");
+var express = require("express");
+var app = express();
+
+app.get("/getSimilarArtists", function(req, res) {});
+
+var server = app.listen(8081, function() {
+  var host = server.address().address;
+  var port = server.address().port;
+});
 
 var lfm = new LastfmAPI({
   api_key: "5df8d91bac81fb9ea65ca73b43ecec62",
