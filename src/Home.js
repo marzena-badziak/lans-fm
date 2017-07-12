@@ -1,13 +1,9 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import { Router, Route, IndexRoute, hashHistory } from "react-router";
-<<<<<<< HEAD
-import store from './user-interface/store';
 import SearchBar from "./user-interface/SearchBar";
+import Navbar from "./user-interface/Navbar";
+import styled from "styled-components";
 import ArtistsGrid from "./ArtistsGrid";
-
-class App extends Component {
+class Home extends Component {
   render() {
     return (
       <div
@@ -19,19 +15,15 @@ class App extends Component {
           backgroundAttachment: "fixed"
         }}
       >
-        <SearchBar store={store} />
+        <Navbar />
         <div className="container">
+          <StyledH1 htmlFor="search-bar">Search Artist</StyledH1>
+          <SearchBar container="container" />
           <ArtistsGrid />
         </div>
       </div>
     );
-=======
-import Home from "./Home";
-class App extends Component {
-  render() {
-    return <Home />;
->>>>>>> 2477ad8f238097e4be9e96a2c57df643d55ae80f
   }
 }
-
-export default App;
+const StyledH1 = styled.h1`display: inline-block;`;
+export default Home;
