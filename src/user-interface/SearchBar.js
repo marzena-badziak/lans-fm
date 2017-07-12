@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {searchArtist} from "./search-actions.js";
 
 class SearchBar extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class SearchBar extends Component {
   };
   fetchArtist = e => {
     e.preventDefault();
+    searchArtist({artist: this.state.searchValue});
     console.log(this.state.searchValue);
   };
   render() {
