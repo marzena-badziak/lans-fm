@@ -20,7 +20,7 @@ export const searchArtist = artist => {
     });
     axios
       .get(
-        `http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=${artist.artist}&api_key=${lastfmKey.api_key}&limit=1000&format=json`
+        `http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=${artist.artist}&api_key=${lastfmKey.api_key}&limit=250&format=json`
       )
       .then(function(response) {
         console.log(response.data.similarartists.artist);
