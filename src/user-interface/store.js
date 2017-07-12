@@ -3,7 +3,7 @@ import persistState from 'redux-localstorage';
 import thunk from 'redux-thunk';
 
 const search = (state = {
-      artistEntered: "", asrtistsSimilar: {}, message: ""}) => {
+      artistEntered: "TEST", asrtistsSimilar: {}, message: ""}, action) => {
       switch (action.type) {
         case 'SEARCH_ATTEMPT':
           return {
@@ -28,9 +28,9 @@ const search = (state = {
     }
 
     const rootReducer = combineReducers({
-      posts: posts,
-      counter: counter,
-      session: session
+      // posts: posts,
+      //  counter: counter,
+      search: search
     })
 
     const enhancer = compose(

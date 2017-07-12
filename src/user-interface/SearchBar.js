@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import {searchArtist} from "./search-actions.js";
+<<<<<<< Updated upstream:src/user-interface/SearchBar.js
+import { connect } from 'react-redux';
+=======
+>>>>>>> Stashed changes:src/user-interface/SearchBar.js
 
 class SearchBar extends Component {
   constructor(props) {
@@ -17,13 +21,23 @@ class SearchBar extends Component {
   };
   fetchArtist = e => {
     e.preventDefault();
+<<<<<<< Updated upstream:src/user-interface/SearchBar.js
+    this.props.dispatch(  
+      searchArtist({
+        artist: this.state.searchValue
+      })
+    );
+=======
     searchArtist({artist: this.state.searchValue});
     console.log(this.state.searchValue);
+>>>>>>> Stashed changes:src/user-interface/SearchBar.js
   };
+
   render() {
     return (
-      <div style={{ paddingTop: "8px", width: this.props.width }}>
+      <div className="container">
         <form onSubmit={e => this.fetchArtist(e)}>
+          <h1 htmlFor="search-bar">Search Artist</h1>
           <div className="input-group">
             <input
               onChange={e => this.setSearchValue(e)}
@@ -52,4 +66,4 @@ class SearchBar extends Component {
   }
 }
 
-export default SearchBar;
+export default connect()(SearchBar);
