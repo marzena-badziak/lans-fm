@@ -2,15 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 //import apiClient from "../lib/api-client";
 import { hashHistory } from "react-router";
-//var LastfmAPI = require("lastfmapi");
 import axios from "axios";
 
 const lastfmKey = {
   api_key: "5df8d91bac81fb9ea65ca73b43ecec62",
   secret: "1186a5beaa848cba51f710c4685be2e9"
 };
-
-var mySimilar = [];
 
 export const searchArtist = artist => {
   return dispatch => {

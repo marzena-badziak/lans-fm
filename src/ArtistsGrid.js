@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import ArtistTile from "./ArtistTile.js";
-
+import propTypes from "prop-types"
 const axios = require("axios");
 
 var artistsListToShow = [
@@ -45,7 +45,6 @@ var artistsListToShow = [
 
 class ArtistsGrid extends Component {
   render() {
-    console.log(this.props);
     var grid = [];
     this.props.results.forEach(artist => {
       grid.push(
@@ -78,5 +77,7 @@ const SearchResultsContainer = styled.div`
 const mapStateToProps = state => {
   return { results: state.search.artistsSimilar };
 };
-
+ArtistsGrid.propTypes = {
+  results: propTypes.array
+}
 export default connect(mapStateToProps)(ArtistsGrid);
