@@ -20,10 +20,14 @@ export const searchArtist = artist => {
     });
     axios
       .get(
-        `http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=${artist.artist}&api_key=5df8d91bac81fb9ea65ca73b43ecec62&format=json`
+        `http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=${artist.artist}&api_key=${lastfmKey.api_key}&limit=250&format=json`
       )
       .then(function(response) {
-        console.log(response);
+        console.log(response.data.similarartists.artist);
+        dispatch({
+            type: "SEARCH_SUCCESS",
+            artistsSimilar: response.data.similarartists.artist
+        });
       })
       .catch(function(error) {
         console.log(error);
@@ -36,9 +40,9 @@ export const searchArtist = artist => {
                     token: response.data.data.auth_token,
                     user_id: response.data.data.user_id
                 }
-            }); 
-            hashHistory.push("artists-similar"); 
-            
+            });
+            hashHistory.push("artists-similar");
+
         })*/
   };
 };
