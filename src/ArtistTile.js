@@ -53,7 +53,7 @@ class ArtistTile extends Component {
       }
     }
   };
-  hideAlbums = () => {
+  hideAlbums = (e) => {
     this.setState({
       dropDownDisplay: "none"
     });
@@ -62,7 +62,7 @@ class ArtistTile extends Component {
     return (
       <StyledArtistTile
         className="col-xs-4 col-md-3"
-        onMouseLeave={e => this.hideAlbums(e)}
+        onMouseLeave={this.hideAlbums}
       >
           <CardHeader title={this.props.name} />
         <p>
@@ -110,25 +110,29 @@ class DropdownUl extends Component {
   };
 
   render() {
+    const { diplayStyle, albums } = this.props
     return (
-      <List
-        style={{
-          display: this.props.diplayStyle,
-          position: "absolute",
-          top: 0,
-          zIndex: 2,
-          width: "250px",
-          height: "330px",
-          overflowY: "scroll",
-          backgroundColor: "#69F0AE"
-        }}
-        className="list-group"
+      <AlbumsList
+        display= {diplayStyle}
       >
-        {this.props.albums.albums.album ? this.albumRender() : false}
-      </List>
+        {albums.albums.album ? this.albumRender() : false}
+      </AlbumsList>
     );
   }
 }
+
+const AlbumsList = styled(List)`
+          display: ${props => props.display};
+          position: absolute;
+          top: 0;
+          z-index: 2;
+          width: 260px;
+          height: 330px;
+          overflow-y: scroll;
+          background-color: #81D4FA;
+
+`
+
 const StyledSpan = styled.span`
   font-size: large;
   align-self: center;
@@ -139,15 +143,14 @@ const StyledAlbumElement = styled.li`
 `;
 const StyledArtistTile = styled(Card)`
   display: inline-block;
-  background-color: #f2f2f2;
+  background-color: #000;
   margin: 10px;
   padding: 10px;
   width: 250px;
   height: 330px;
-
   text-align: center;
-
   z-index: 1;
+  padding-left: 0px
 `;
 
 ArtistTile.propTypes = {

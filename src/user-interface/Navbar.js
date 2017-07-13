@@ -8,7 +8,7 @@ import FlatButton from 'material-ui/FlatButton';
 class Navbar extends Component {
   render() {
     return (
-      <AppBar style={{backgroundColor: "#009688"}} title = {<StyledLogo href="/">LansFm</StyledLogo>} iconElementRight={<FlatButton label="Login" />} showMenuIconButton={false}/>
+      <AppBar style={{backgroundColor: "#01579B"}} title = {<StyledLogo href="/">LansFm</StyledLogo>} iconElementRight={<FlatButton label="Login" />} showMenuIconButton={false}/>
 
 
 
@@ -26,20 +26,20 @@ class Navbar extends Component {
   }
 }
 const StyledLink = styled.a`
-  color: black;
+  color: white;
 
   &:hover {
-    color: #333;
+    color: #e7f7ff;
     text-decoration: none;
   }
 `;
 const StyledLogo = styled.a`
   font-family: Righteous;
-  color: black;
+  color: white;
   font-size: x-large;
 
   &:hover {
-    color: #333;
+    color:#e7f7ff;
     text-decoration: none;
   }
 `;
