@@ -1,14 +1,22 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+// import logo from "./logo.svg";
 import { Router, Route, IndexRoute, hashHistory } from "react-router";
-import SearchBar from "./SearchBar";
+import "./App.css";
+import store from "./user-interface/store";
+import Home from "./Home";
+import Layout from "./Layout";
+import ArtistsGrid from "./ArtistsGrid";
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <SearchBar />
+        <Router history={hashHistory}>
+          <Route path="/" component={Layout}>
+            <IndexRoute component={Home} />
+            <Route path="searchResults" component={ArtistsGrid} />
+          </Route>
+        </Router>
       </div>
     );
   }

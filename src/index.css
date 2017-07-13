@@ -1,5 +1,32 @@
 body {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Roboto' sans-serif;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#258dc8+0,a6edea+100 */
+  background: rgb(37, 141, 200); /* Old browsers */
+  background: -moz-linear-gradient(
+    -45deg,
+    rgba(37, 141, 200, 1) 0%,
+    rgba(166, 237, 234, 1) 100%
+  ); /* FF3.6-15 */
+  background: -webkit-linear-gradient(
+    -45deg,
+    rgba(37, 141, 200, 1) 0%,
+    rgba(166, 237, 234, 1) 100%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    135deg,
+    rgba(37, 141, 200, 1) 0%,
+    rgba(166, 237, 234, 1) 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(
+      startColorstr='#258dc8',
+      endColorstr='#a6edea',
+      GradientType=1
+    ); /* IE6-9 fallback on horizontal gradient */
+  background-repeat: repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  height: 100vh;
 }
