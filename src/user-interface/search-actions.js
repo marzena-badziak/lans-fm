@@ -50,13 +50,12 @@ export const searchArtist = artist => {
 export const getAlbums = data => {
   const getAlbumOptions = {
     artist: data.data,
-    limit: "5"
+    limit: "10"
   };
   return dispatch => {
     axios
       .get(`${lastfmApi("artist.gettopalbums", getAlbumOptions)}`)
       .then(function(response) {
-        console.log(response.data);
         dispatch({
           type: "SEARCH_ALBUMS",
           payload: response.data.topalbums
