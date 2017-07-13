@@ -29,7 +29,6 @@ class ArtistTile extends Component {
     });
   };
   fetchAlbums = e => {
-    console.log(this.props.name);
     this.props.dispatch(
       getAlbums({
         data: this.props.name
@@ -51,11 +50,9 @@ class ArtistTile extends Component {
     }
   };
   hideAlbums = () => {
-    console.log("a");
     this.setState({
       dropDownDisplay: "none"
     });
-    console.log(this.state);
   };
   render() {
     return (
@@ -78,7 +75,7 @@ class ArtistTile extends Component {
         <img
           src={this.props.img}
           alt={this.props.name}
-          width="150px"
+          width="160px"
           height="150px"
           // onClick={}
         />
@@ -106,38 +103,45 @@ class DropdownUl extends Component {
   albumRender = () => {
     if (this.props.albums.albums.album) {
       return this.props.albums.albums.album.map((album, i) => {
-        console.log(album.image);
         return (
-          <li style={{ textAlign: "left" }} className="list-group-item" key={i}>
-            <span>
+          <StyledAlbumElement className="list-group-item" key={i}>
+            <StyledSpan>
               {album.name}
-            </span>
-            <img src={album.image[0]["#text"]} alt="Album Foto" />
-          </li>
+            </StyledSpan>
+            <img src={album.image[1]["#text"]} alt="Album Foto" />
+          </StyledAlbumElement>
         );
       });
     }
   };
 
   render() {
-    console.log(this.albumRender());
     return (
       <ul
         style={{
           display: this.props.diplayStyle,
           position: "absolute",
           top: 0,
-          zIndex: 2
+          zIndex: 2,
+          width: "250px",
+          height: "300px",
+          overflowY: "scroll"
         }}
         className="list-group"
       >
-        {console.log(this.props.albums.albums.album)}
-
         {this.props.albums.albums.album ? this.albumRender() : false}
       </ul>
     );
   }
 }
+const StyledSpan = styled.span`
+  font-size: large;
+  align-self: center;
+`;
+const StyledAlbumElement = styled.li`
+  display: flex;
+  justify-content: space-around;
+`;
 const StyledButton = styled.button`
   margin-top: 15px;
   margin-right: 10px;
@@ -159,6 +163,10 @@ ArtistTile.propTypes = {
   name: propTypes.string.isRequired,
   img: propTypes.string.isRequired,
   match: propTypes.string.isRequired
+};
+DropdownUl.propTypes = {
+  albums: propTypes.object.isRequired,
+  diplayStyle: propTypes.string.isRequired
 };
 const mapStateToProps = state => {
   return {

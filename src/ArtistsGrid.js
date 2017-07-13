@@ -54,6 +54,7 @@ const mapStateToProps = state => {
   };
 };
 ArtistsGrid.propTypes = {
-  results: propTypes.array
+  results: propTypes.array,
+  artistEntered: propTypes.string
 };
 export default connect(mapStateToProps)(ArtistsGrid);
