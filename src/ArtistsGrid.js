@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import ArtistTile from "./ArtistTile.js";
 import propTypes from "prop-types";
-const axios = require("axios");
+// const axios = require("axios");
 
 class ArtistsGrid extends Component {
   render() {
@@ -13,22 +13,20 @@ class ArtistsGrid extends Component {
         <ArtistTile
           name={artist.name}
           key={artist.name}
-          // album={artist.album}
           img={artist.image[2]["#text"]}
           match={artist.match}
         />
       );
     });
     // console.log(grid);
-    console.log(grid);
     return (
       <div className="container">
         <SearchResultsContainer className="row">
           {grid.length === 0
-            ? <p>Brak wyników</p>
+            ? <h3>No results</h3>
             : <div>
                 <h2>
-                  {" "}Search results for: {this.props.artistEntered}{" "}
+                  Search results for: {this.props.artistEntered}
                 </h2>
                 <dbody>
                   {grid}

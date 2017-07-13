@@ -34,7 +34,7 @@ const search = (
         ...state,
         message: "Brak Artysty w bazie Last.fm",
 
-        artistsSimilar: ""
+        artistsSimilar: []
       };
 
     default:

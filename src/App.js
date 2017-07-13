@@ -2,7 +2,7 @@ import React, { Component } from "react";
 // import logo from "./logo.svg";
 import { Router, Route, IndexRoute, hashHistory } from "react-router";
 import "./App.css";
-import store from "./user-interface/store";
+// import store from "./user-interface/store";
 import Home from "./Home";
 import Layout from "./Layout";
 import ArtistsGrid from "./ArtistsGrid";
@@ -12,9 +12,11 @@ class App extends Component {
     return (
       <div className="App">
         <Router history={hashHistory}>
-          <Route path="/" component={Layout}>
+          <Route path="/">
             <IndexRoute component={Home} />
-            <Route path="searchResults" component={ArtistsGrid} />
+            <Route component={Layout}>
+              <Route path="searchResults" component={ArtistsGrid} />
+            </Route>
           </Route>
         </Router>
       </div>
