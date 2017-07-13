@@ -4,6 +4,7 @@ import Navbar from "./user-interface/Navbar";
 import styled from "styled-components";
 // import ArtistsGrid from "./ArtistsGrid";
 import store from "./user-interface/store";
+import ArtistsGrid from "./ArtistsGrid";
 class Home extends Component {
   render() {
     return (
