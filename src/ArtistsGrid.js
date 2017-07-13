@@ -2,46 +2,8 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import ArtistTile from "./ArtistTile.js";
-import propTypes from "prop-types"
+import propTypes from "prop-types";
 const axios = require("axios");
-
-var artistsListToShow = [
-  {
-    bandName: "Led Zeppelin",
-    album: "refeowfds",
-    img: "http://cps-static.rovicorp.com/3/JPG_500/MI0004/105/MI0004105188.jpg"
-  },
-  {
-    bandName: "Iron Maiden",
-    album: "dfmojposdpc",
-    img: "http://cps-static.rovicorp.com/3/JPG_500/MI0004/105/MI0004105188.jpg"
-  },
-  {
-    bandName: "Ozric Tentacles",
-    album: "hrwigeifohfvil",
-    img: "http://cps-static.rovicorp.com/3/JPG_500/MI0004/105/MI0004105188.jpg"
-  },
-  {
-    bandName: "Shpongle",
-    album: "fdlwodslioj",
-    img: "http://cps-static.rovicorp.com/3/JPG_500/MI0004/105/MI0004105188.jpg"
-  },
-  {
-    bandName: "Genesis",
-    album: "dfmojposdpc",
-    img: "http://cps-static.rovicorp.com/3/JPG_500/MI0004/105/MI0004105188.jpg"
-  },
-  {
-    bandName: "Pink Floyd",
-    album: "hrwigeifohfvil",
-    img: "http://cps-static.rovicorp.com/3/JPG_500/MI0004/105/MI0004105188.jpg"
-  },
-  {
-    bandName: "Metallica",
-    album: "fdlwodslioj",
-    img: "http://cps-static.rovicorp.com/3/JPG_500/MI0004/105/MI0004105188.jpg"
-  }
-];
 
 class ArtistsGrid extends Component {
   render() {
@@ -58,12 +20,22 @@ class ArtistsGrid extends Component {
       );
     });
 
+    console.log(grid);
     return (
-      <SearchResultsContainer className="row">
-        <dbody>
-          {grid}
-        </dbody>
-      </SearchResultsContainer>
+      <div className="container">
+        <SearchResultsContainer className="row">
+          {grid.length === 0
+            ? <p>Brak wyników</p>
+            : <div>
+                <h2>
+                  {" "}Search results for: {this.props.artistEntered}{" "}
+                </h2>
+                <dbody>
+                  {grid}
+                </dbody>
+              </div>}
+        </SearchResultsContainer>
+      </div>
     );
   }
 }
@@ -79,5 +51,5 @@ const mapStateToProps = state => {
 };
 ArtistsGrid.propTypes = {
   results: propTypes.array
-}
+};
 export default connect(mapStateToProps)(ArtistsGrid);

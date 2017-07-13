@@ -28,6 +28,14 @@ const search = (
         ...state,
         message: "Blad"
       };
+
+    case "SEARCH_NO_ARTIST":
+      return {
+        ...state,
+        message: "Brak Artysty w bazie Last.fm",
+        artistsSimilar: ""
+      };
+
     default:
       return state;
   }
