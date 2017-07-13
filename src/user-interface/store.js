@@ -39,10 +39,22 @@ const search = (
   }
 };
 
+const albums = (state = { albums: [] }, action) => {
+  switch (action.type) {
+    case "SEARCH_ALBUMS":
+      return {
+        ...state,
+        albums: action.payload
+      };
+    default:
+      return state;
+  }
+};
 const rootReducer = combineReducers({
   // posts: posts,
   //  counter: counter,
-  search: search
+  search: search,
+  albums: albums
 });
 
 const enhancer = compose(applyMiddleware(thunk));

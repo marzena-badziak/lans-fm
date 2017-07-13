@@ -9,11 +9,11 @@ const lastfmKey = {
 const lastfmApi = (method, options) => {
   let request = `http://ws.audioscrobbler.com/2.0/?method=${method}`;
   Object.entries(options).forEach(([key, value]) => {
-    request = `${request}&${key}=${value}`
+    request = `${request}&${key}=${value}`;
   });
-  request = `${request}` + `&api_key=${lastfmKey.api_key}&limit=15&format=json`;
+  request = `${request}&api_key=${lastfmKey.api_key}&limit=15&format=json`;
   return request;
-}
+};
 /*var apiClient = axios.create({
   baseURL: "http://ws.audioscrobbler.com/2.0/",
   headers: {

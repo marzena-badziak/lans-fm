@@ -8,6 +8,7 @@ const axios = require("axios");
 class ArtistsGrid extends Component {
   render() {
     var grid = [];
+    console.log(this.props.results);
     this.props.results.forEach(artist => {
       grid.push(
         <ArtistTile

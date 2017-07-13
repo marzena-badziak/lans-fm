@@ -47,3 +47,35 @@ export const searchArtist = artist => {
         })*/
   };
 };
+export const getAlbums = data => {
+  const getAlbumOptions = {
+    artist: data.data,
+    limit: "5"
+  };
+  return dispatch => {
+    axios
+      .get(`${lastfmApi("artist.gettopalbums", getAlbumOptions)}`)
+      .then(function(response) {
+        console.log(response.data);
+        dispatch({
+          type: "SEARCH_ALBUMS",
+          payload: response.data.topalbums
+        });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    /*   .then((response) => {
+            dispatch({
+                type: "LOGIN_SUCCESS",
+                data: {
+                    username: user.username,
+                    token: response.data.data.auth_token,
+                    user_id: response.data.data.user_id
+                }
+            });
+            hashHistory.push("artists-similar");
+
+        })*/
+  };
+};
