@@ -7,7 +7,7 @@ import axios from "axios";
 export const searchArtist = artist => {
   const getsimilarOptions = {
     artist: artist.artist,
-    limit: '10'
+    limit: "10"
   };
 
   return dispatch => {
@@ -17,20 +17,17 @@ export const searchArtist = artist => {
       artistEntered: artist.artist
     });
     axios
-      .get(
-        `${lastfmApi('artist.getsimilar', getsimilarOptions)}`
-      )
+      .get(`${lastfmApi("artist.getsimilar", getsimilarOptions)}`)
       .then(function(response) {
-        if (typeof response.data.similarartists.artist === 'undefined') {
+        if (typeof response.data.similarartists.artist === "undefined") {
           dispatch({
             type: "SEARCH_NO_ARTIST"
           });
-        }
-        else {
+        } else {
           dispatch({
             type: "SEARCH_SUCCESS",
             artistsSimilar: response.data.similarartists.artist
-          })
+          });
         }
       })
       .catch(function(error) {
