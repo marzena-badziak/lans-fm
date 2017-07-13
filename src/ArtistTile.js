@@ -24,11 +24,9 @@ class ArtistTile extends Component {
   };
   setUlDisplay = e => {
     this.fetchAlbums();
-    if (this.dropDownDisplay == "none") {
-      this.setState({
-        dropDownDisplay: "block"
-      });
-    }
+    this.setState({
+      dropDownDisplay: "block"
+    });
   };
   fetchAlbums = e => {
     console.log(this.props.name);
@@ -41,13 +39,30 @@ class ArtistTile extends Component {
   renderArtistAlbum = () => {
     if (this.props.albums.albums.album) {
       if (this.props.name == this.props.albums.albums.album[0].artist.name) {
-        return <DropdownUl albums={this.props.albums}>></DropdownUl>;
+        return (
+          <DropdownUl
+            diplayStyle={this.state.dropDownDisplay}
+            albums={this.props.albums}
+          >
+            >
+          </DropdownUl>
+        );
       }
     }
   };
+  hideAlbums = () => {
+    console.log("a");
+    this.setState({
+      dropDownDisplay: "none"
+    });
+    console.log(this.state);
+  };
   render() {
     return (
-      <StyledArtistTile className="col-xs-4 col-md-3">
+      <StyledArtistTile
+        className="col-xs-4 col-md-3"
+        onMouseLeave={e => this.hideAlbums(e)}
+      >
         <p>
           <strong>
             {this.props.name}
@@ -67,19 +82,20 @@ class ArtistTile extends Component {
           height="150px"
           // onClick={}
         />
-        <p>
-          <button
-            className="btn btn-default"
-            type="button"
-            value={this.props.name}
-            onClick={e => this.fetchArtist(e)}
-          >
-            Search similar
-          </button>
-        </p>
-        <button onClick={e => this.setUlDisplay(e)}>
-          <p>Albums</p>
-        </button>
+        <StyledButton
+          className="btn btn-default"
+          type="StyledButton"
+          value={this.props.name}
+          onClick={e => this.fetchArtist(e)}
+        >
+          Search similar
+        </StyledButton>
+        <StyledButton
+          className="btn btn-default"
+          onMouseEnter={e => this.setUlDisplay(e)}
+        >
+          Albums
+        </StyledButton>
         {this.renderArtistAlbum()}
       </StyledArtistTile>
     );
@@ -89,13 +105,14 @@ class ArtistTile extends Component {
 class DropdownUl extends Component {
   albumRender = () => {
     if (this.props.albums.albums.album) {
-      return this.props.albums.albums.album.map(album => {
+      return this.props.albums.albums.album.map((album, i) => {
+        console.log(album.image);
         return (
-          <li>
-            Name: {album.name}
-            {
-              // <img src={album.image[1].text} alt="Album Foto" />
-            }
+          <li style={{ textAlign: "left" }} className="list-group-item" key={i}>
+            <span>
+              {album.name}
+            </span>
+            <img src={album.image[0]["#text"]} alt="Album Foto" />
           </li>
         );
       });
@@ -105,7 +122,15 @@ class DropdownUl extends Component {
   render() {
     console.log(this.albumRender());
     return (
-      <ul>
+      <ul
+        style={{
+          display: this.props.diplayStyle,
+          position: "absolute",
+          top: 0,
+          zIndex: 2
+        }}
+        className="list-group"
+      >
         {console.log(this.props.albums.albums.album)}
 
         {this.props.albums.albums.album ? this.albumRender() : false}
@@ -113,7 +138,10 @@ class DropdownUl extends Component {
     );
   }
 }
-
+const StyledButton = styled.button`
+  margin-top: 15px;
+  margin-right: 10px;
+`;
 const StyledArtistTile = styled.div`
   display: inline-block;
   background-color: #f2f2f2;
@@ -123,6 +151,8 @@ const StyledArtistTile = styled.div`
   height: 300px;
 
   text-align: center;
+
+  z-index: 1;
 `;
 
 ArtistTile.propTypes = {
