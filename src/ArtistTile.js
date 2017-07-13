@@ -1,14 +1,22 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import propTypes from 'prop-types'
-import axios from 'axios'
-
-
+import { searchArtist } from  './user-interface/search-actions'
+import { connect } from "react-redux";
 
 class ArtistTile extends Component {
   constructor(props) {
     super(props);
   }
+
+  fetchArtist = e => {
+    e.preventDefault();
+    this.props.dispatch(
+      searchArtist({
+        artist: this.props.name
+      })
+    );
+  };
 
   render() {
     return (
@@ -23,6 +31,7 @@ class ArtistTile extends Component {
           <strong style={{ color: "#003366" }}>
             {parseFloat(this.props.match).toFixed(2)}
           </strong>
+
         </p>
 
         <img
@@ -32,6 +41,14 @@ class ArtistTile extends Component {
           height="150px"
           // onClick={}
         />
+        <p>
+        <button
+          className="btn btn-default"
+          type="button"
+          value={this.props.name}
+          onClick={e => this.fetchArtist(e)}
+        >Search similar</button>
+        </p>
       </StyledArtistTile>
     );
   }
@@ -43,7 +60,7 @@ const StyledArtistTile = styled.div`
   margin: 10px;
   padding: 10px;
   width: 250px;
-  height: 250px;
+  height: 300px;
 
   text-align: center;
 `;
@@ -52,4 +69,4 @@ ArtistTile.propTypes = {
   img: propTypes.string.isRequired,
   match: propTypes.string.isRequired
 }
-export default ArtistTile;
+export default connect()(ArtistTile);

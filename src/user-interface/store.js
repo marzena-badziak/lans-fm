@@ -4,7 +4,7 @@ import thunk from "redux-thunk";
 
 const search = (
   state = {
-    artistEntered: "TEST",
+    artistEntered: "",
     artistsSimilar: [],
     message: ""
   },
@@ -28,6 +28,12 @@ const search = (
         ...state,
         message: "Blad"
       };
+    case "SEARCH_NO_ARTIST":
+      return {
+        ...state,
+        message: "Brak Artysty w bazie Last.fm",
+        artistsSimilar: null
+      }
     default:
       return state;
   }
@@ -39,6 +45,6 @@ const rootReducer = combineReducers({
   search: search
 });
 
-const enhancer = compose(applyMiddleware(thunk), persistState("search"));
+const enhancer = compose(applyMiddleware(thunk));
 const store = createStore(rootReducer, {}, enhancer);
 export default store;

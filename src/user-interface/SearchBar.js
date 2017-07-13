@@ -16,6 +16,7 @@ class SearchBar extends Component {
       searchValue: e.target.value
     });
   };
+
   fetchArtist = e => {
     e.preventDefault();
     this.props.dispatch(
