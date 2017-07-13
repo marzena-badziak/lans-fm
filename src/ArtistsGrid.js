@@ -19,7 +19,7 @@ class ArtistsGrid extends Component {
         />
       );
     });
-
+    // console.log(grid);
     console.log(grid);
     return (
       <div className="container">
@@ -47,7 +47,10 @@ const SearchResultsContainer = styled.div`
 `;
 
 const mapStateToProps = state => {
-  return { results: state.search.artistsSimilar };
+  return {
+    results: state.search.artistsSimilar,
+    artistEntered: state.search.artistEntered
+  };
 };
 ArtistsGrid.propTypes = {
   results: propTypes.array

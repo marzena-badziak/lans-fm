@@ -5,9 +5,9 @@ import styled from "styled-components";
 class Navbar extends Component {
   render() {
     return (
-      <StyledNav className="navbar navbar-default">
+      <StyledNav className="navbar navbar-default navbar-fixed-top">
         <div>
-          <StyledLogo href="#">Lans-Fm</StyledLogo>
+          <StyledLogo href="#">LansFm</StyledLogo>
         </div>
         <SearchBar width="40%" />
         <div>
