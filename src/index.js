@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { configureApi } from "./lib/api-client.js";
+//import { configureApi } from "./lib/api-client.js";
 import store from "./user-interface/store";
 import "./index.css";
 import App from "./App";
