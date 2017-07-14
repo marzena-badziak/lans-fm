@@ -23,7 +23,11 @@ class ArtistsGrid extends Component {
     return (
       <div className="container">
         <SearchResultsContainer className="row">
+<<<<<<< HEAD
           <h2>
+=======
+          <h2 style={{ paddingBottom: "20px" }}>
+>>>>>>> b1d1e9269d438b8a4873b16ac8d549ef4073685c
             {this.props.message} {this.props.artistEntered}
           </h2>
           <dbody>
@@ -38,7 +42,7 @@ class ArtistsGrid extends Component {
 const SearchResultsContainer = styled.div`
   float: none;
   margin: 0 auto;
-  padding: 10px;
+  padding: 20px 0;
 `;
 
 const mapStateToProps = state => {

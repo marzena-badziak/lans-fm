@@ -8,36 +8,47 @@ import ArtistsGrid from "./ArtistsGrid";
 class Home extends Component {
   render() {
     return (
-      <div
-        className="App"
-        style={{
-          textAlign: "center",
-          margin: "0 auto"
-        }}
-      >
+      <StyledHome className="App">
         <StyledLogo href="#">LansFm</StyledLogo>
 
         <div
           className="container"
-          style={{ marginTop: "20vh", height: "70vh" }}
+          style={{
+            paddingTop: "20vh",
+            height: "95vh"
+          }}
         >
           <StyledH1 htmlFor="search-bar">
             Search the least popular artists
           </StyledH1>
-          <SearchBar store={store} />
+          <SearchBar
+            boxShadow="0px 0px 30px 3px rgba(0, 0, 0, 0.6);"
+            width="100%"
+            height="50px"
+            store={store}
+          />
           {/* <ArtistsGrid /> */}
         </div>
-      </div>
+      </StyledHome>
     );
   }
 }
-
+const StyledHome = styled.div`
+  text-align: center;
+  margin: 0 auto;
+  background: url('https://files.slack.com/files-pri/T5X6DE6HX-F68Q4HP3M/background.png')
+    no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+`;
 const StyledLogo = styled.a`
   position: relative;
   top: 22px;
   left: -34vw;
   font-family: Righteous;
-  color: black;
+  color: white;
   font-size: x-large;
 
   &:hover {
@@ -54,6 +65,8 @@ const StyledLogo = styled.a`
 
 const StyledH1 = styled.h1`
   display: inline-block;
+  color: white;
+  font-weight: 700;
   padding: 10px;
 `;
 export default Home;
