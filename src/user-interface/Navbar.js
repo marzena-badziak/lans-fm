@@ -2,11 +2,18 @@ import React, { Component } from "react";
 import SearchBar from "./SearchBar";
 import SearchBarTop from "./SearchBarTop";
 import styled from "styled-components";
+import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
+
 
 class Navbar extends Component {
   render() {
     return (
-      <StyledNav className="navbar navbar-default navbar-fixed-top">
+      <AppBar style={{backgroundColor: "#01579B"}} title = {<StyledLogo href="/">LansFm</StyledLogo>} iconElementRight={<FlatButton label="Login" />} showMenuIconButton={false}/>
+
+
+
+/*
         <div>
           <StyledLogo href="#">LansFm</StyledLogo>
         </div>
@@ -16,7 +23,8 @@ class Navbar extends Component {
         <div>
           <StyledLink href="#">Login</StyledLink>
         </div>
-      </StyledNav>
+      </AppBar>
+      */
     );
   }
 }
@@ -27,18 +35,20 @@ const StyledTopSearchBar = styled(SearchBar)`
 `;
 
 const StyledLink = styled.a`
-  color: black;
+
+  color: white;
+
   &:hover {
-    color: #333;
+    color: #e7f7ff;
     text-decoration: none;
   }
 `;
 const StyledLogo = styled.a`
   font-family: Righteous;
-  color: black;
+  color: white;
   font-size: x-large;
   &:hover {
-    color: #333;
+    color:#e7f7ff;
     text-decoration: none;
   }
 `;

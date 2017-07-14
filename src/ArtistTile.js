@@ -5,6 +5,10 @@ import { searchArtist } from "./user-interface/search-actions";
 import { connect } from "react-redux";
 import axios from "axios";
 import { getAlbums } from "./user-interface/search-actions.js";
+import RaisedButton from 'material-ui/RaisedButton';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {List, ListItem} from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
 class ArtistTile extends Component {
   constructor(props) {
     super(props);
@@ -49,7 +53,7 @@ class ArtistTile extends Component {
       }
     }
   };
-  hideAlbums = () => {
+  hideAlbums = (e) => {
     this.setState({
       dropDownDisplay: "none"
     });
@@ -58,13 +62,9 @@ class ArtistTile extends Component {
     return (
       <StyledArtistTile
         className="col-xs-4 col-md-3"
-        onMouseLeave={e => this.hideAlbums(e)}
+        onMouseLeave={this.hideAlbums}
       >
-        <p>
-          <strong>
-            {this.props.name}
-          </strong>
-        </p>
+          <CardHeader title={this.props.name} />
         <p>
           Match strength:{" "}
           <strong style={{ color: "#003366" }}>
@@ -79,21 +79,18 @@ class ArtistTile extends Component {
           height="150px"
           // onClick={}
         />
-
-        <StyledButton
-          className="btn btn-default"
-          type="StyledButton"
+        <RaisedButton
+        style={{margin:"5px"}}
+        label="Search similar"
+          primary={true}
           value={this.props.name}
           onClick={e => this.fetchArtist(e)}
-        >
-          Search similar
-        </StyledButton>
-        <StyledButton
-          className="btn btn-default"
+       />
+        <RaisedButton
+        label="Albums"
+        primary={true}
           onMouseEnter={e => this.setUlDisplay(e)}
-        >
-          Albums
-        </StyledButton>
+        />
         {this.renderArtistAlbum()}
       </StyledArtistTile>
     );
@@ -105,36 +102,37 @@ class DropdownUl extends Component {
     if (this.props.albums.albums.album) {
       return this.props.albums.albums.album.map((album, i) => {
         return (
-          <StyledAlbumElement className="list-group-item" key={i}>
-            <StyledSpan>
-              {album.name}
-            </StyledSpan>
-            <img src={album.image[1]["#text"]} alt="Album Foto" />
-          </StyledAlbumElement>
+          <ListItem className="list-group-item" key={i}  primaryText={album.name}
+        leftAvatar={<Avatar src={album.image[1]["#text"]} alt="Album Foto" />} />
         );
       });
     }
   };
 
   render() {
+    const { diplayStyle, albums } = this.props
     return (
-      <ul
-        style={{
-          display: this.props.diplayStyle,
-          position: "absolute",
-          top: 0,
-          zIndex: 2,
-          width: "250px",
-          height: "300px",
-          overflowY: "scroll"
-        }}
-        className="list-group"
+      <AlbumsList
+        display= {diplayStyle}
       >
-        {this.props.albums.albums.album ? this.albumRender() : false}
-      </ul>
+        {albums.albums.album ? this.albumRender() : false}
+      </AlbumsList>
     );
   }
 }
+
+const AlbumsList = styled(List)`
+          display: ${props => props.display};
+          position: absolute;
+          top: 0;
+          z-index: 2;
+          width: 260px;
+          height: 330px;
+          overflow-y: scroll;
+          background-color: #81D4FA;
+
+`
+
 const StyledSpan = styled.span`
   font-size: large;
   align-self: center;
@@ -143,21 +141,16 @@ const StyledAlbumElement = styled.li`
   display: flex;
   justify-content: space-around;
 `;
-const StyledButton = styled.button`
-  margin-top: 15px;
-  margin-right: 10px;
-`;
-const StyledArtistTile = styled.div`
+const StyledArtistTile = styled(Card)`
   display: inline-block;
-  background-color: #f2f2f2;
+  background-color: #000;
   margin: 10px;
   padding: 10px;
   width: 250px;
-  height: 300px;
-
+  height: 330px;
   text-align: center;
-
   z-index: 1;
+  padding-left: 0px
 `;
 
 ArtistTile.propTypes = {

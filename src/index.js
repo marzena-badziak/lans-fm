@@ -6,13 +6,16 @@ import store from "./user-interface/store";
 import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
-
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // configureApi(store);
 
 const AppWithStore = (
+<MuiThemeProvider>
   <Provider store={store}>
     <App store={store} />
   </Provider>
+</MuiThemeProvider>
+
 );
 
 ReactDOM.render(AppWithStore, document.getElementById("root"));

@@ -6,6 +6,7 @@ import propTypes from "prop-types";
 import { withRouter } from "react-router";
 import styled from "styled-components";
 
+import TextField from 'material-ui/TextField';
 class SearchBar extends Component {
   constructor(props) {
     super(props);
@@ -36,15 +37,12 @@ class SearchBar extends Component {
         style={{ width: this.props.width }}
         onSubmit={e => this.fetchArtist(e)}
       >
-        <div className="input-group">
-          <StyledInput
+
+          <TextField
             onChange={e => this.setSearchValue(e)}
             id="search-bar"
             type="text"
             value={this.state.searchValue}
-            placeholder="Type artist name to find similar artists"
-            className="form-control"
-          />
           <span className="input-group-btn">
             <StyledButton
               className="btn btn-default"
@@ -54,7 +52,12 @@ class SearchBar extends Component {
               <strong>search</strong>
             </StyledButton>
           </span>
-        </div>
+
+            hintText="Type artist name to find similar artists"
+          //  className="form-control"
+          fullWidth={true}
+            style={{ height: "50px" }}
+          />
       </form>
     );
   }
