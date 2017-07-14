@@ -31,15 +31,11 @@ class SearchBar extends Component {
     );
     this.props.router.push("searchResults");
   };
-
   render() {
     return (
-      <form
-        style={{ width: this.props.width }}
-        onSubmit={e => this.fetchArtist(e)}
-      >
-        <StyledSearchBar>
-          <StyledInput
+      <form onSubmit={e => this.fetchArtist(e)}>
+        <StyledSearchBar {...this.props}>
+          <StyledSearchInput
             onChange={e => this.setSearchValue(e)}
             id="search-bar"
             type="text"
@@ -47,24 +43,25 @@ class SearchBar extends Component {
             placeholder="Type artist name to find similar artists"
             //  className="form-control"
           />
-          <StyledSpan onClick={e => this.fetchArtist(e)}>Search</StyledSpan>
+          <StyledSearchSpan onClick={e => this.fetchArtist(e)}>
+            Search
+          </StyledSearchSpan>
         </StyledSearchBar>
-
       </form>
     );
   }
 }
 const StyledSearchBar = styled.div`
-  -webkit-box-shadow: 0px 0px 30px 3px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 0px 0px 30px 3px rgba(0, 0, 0, 0.6);
-  box-shadow: 0px 0px 30px 3px rgba(0, 0, 0, 0.6);
+  box-shadow: ${props => props.boxShadow};
   border-radius: 15px;
   display: flex;
-  justify-content: center;
-  height: 50px;
+  align-items: baseline;
+  height: ${props => props.height};
   font-size: 20px;
+  width: ${props => props.width};
+  margin: 0 auto;
 `;
-const StyledSpan = styled.div`
+const StyledSearchSpan = styled.div`
 padding 15px;
   display: flex;
   background-color: white;
@@ -76,7 +73,8 @@ padding 15px;
   border: 1px solid #000000;
   background-color: #f2b3de;
 `;
-const StyledInput = styled.input`
+const StyledSearchInput = styled.input`
+color:black;
 padding 15px;
   width: 100%;
   height: inherit;
