@@ -21,7 +21,12 @@ class Home extends Component {
           <StyledH1 htmlFor="search-bar">
             Search the least popular artists
           </StyledH1>
-          <SearchBar store={store} />
+          <SearchBar
+            boxShadow="0px 0px 30px 3px rgba(0, 0, 0, 0.6);"
+            width="100%"
+            height="50px"
+            store={store}
+          />
           {/* <ArtistsGrid /> */}
         </div>
       </StyledHome>
@@ -60,7 +65,8 @@ const StyledLogo = styled.a`
 
 const StyledH1 = styled.h1`
   display: inline-block;
-  color: #333;
+  color: white;
+  font-weight: 700;
   padding: 10px;
 `;
 export default Home;
