@@ -5,16 +5,14 @@ import Navbar from "./user-interface/Navbar";
 class Layout extends Component {
   render() {
     return (
-      <StyledDiv>
+      <div>
         <div>
           <Navbar />
 
           {this.props.children}
         </div>
-      </StyledDiv>
+      </div>
     );
   }
 }
-
-const StyledDiv = styled.div`padding-top: 60px;`;
 export default Layout;
