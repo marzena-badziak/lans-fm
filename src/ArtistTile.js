@@ -79,6 +79,7 @@ class ArtistTile extends Component {
           height="150px"
           // onClick={}
         />
+
         <StyledButton
           className="btn btn-default"
           type="StyledButton"
@@ -164,6 +165,7 @@ ArtistTile.propTypes = {
   img: propTypes.string.isRequired,
   match: propTypes.string.isRequired
 };
+
 DropdownUl.propTypes = {
   albums: propTypes.object.isRequired,
   diplayStyle: propTypes.string.isRequired
