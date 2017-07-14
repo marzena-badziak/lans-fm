@@ -8,8 +8,8 @@ import FlatButton from "material-ui/FlatButton";
 class Navbar extends Component {
   render() {
     return (
-      <StyledAppBar
-        style={{ backgroundColor: "#944dff" }}
+      <AppBar
+        style={{ backgroundColor: "#8585ad" }}
         iconElementLeft={<StyledLogo href="#">LansFm</StyledLogo>}
         title={
           <SearchBar

@@ -13,7 +13,10 @@ class Home extends Component {
 
         <div
           className="container"
-          style={{ marginTop: "20vh", height: "70vh" }}
+          style={{
+            paddingTop: "20vh",
+            height: "95vh"
+          }}
         >
           <StyledH1 htmlFor="search-bar">
             Search the least popular artists
