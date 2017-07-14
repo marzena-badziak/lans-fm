@@ -49,6 +49,7 @@ class SearchBar extends Component {
           />
           <StyledSpan onClick={e => this.fetchArtist(e)}>Search</StyledSpan>
         </StyledSearchBar>
+
       </form>
     );
   }

@@ -20,7 +20,7 @@ const search = (
     case "SEARCH_SUCCESS":
       return {
         ...state,
-        message: "",
+        message: "Wyniki wyszukiwania dla: ",
         artistsSimilar: action.artistsSimilar
       };
     case "SEARCH_FAIL":
