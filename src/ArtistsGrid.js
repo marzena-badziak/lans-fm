@@ -23,16 +23,12 @@ class ArtistsGrid extends Component {
     return (
       <div className="container">
         <SearchResultsContainer className="row">
-          {grid.length === 0
-            ? <h3>No results</h3>
-            : <div>
-                <h2>
-                  Search results for: {this.props.artistEntered}
-                </h2>
-                <dbody>
-                  {grid}
-                </dbody>
-              </div>}
+          <h2>
+            {this.props.message} {this.props.artistEntered}
+          </h2>
+          <dbody>
+            {grid}
+          </dbody>
         </SearchResultsContainer>
       </div>
     );
@@ -48,7 +44,8 @@ const SearchResultsContainer = styled.div`
 const mapStateToProps = state => {
   return {
     results: state.search.artistsSimilar,
-    artistEntered: state.search.artistEntered
+    artistEntered: state.search.artistEntered,
+    message: state.search.message
   };
 };
 ArtistsGrid.propTypes = {

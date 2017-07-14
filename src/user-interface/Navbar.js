@@ -2,29 +2,27 @@ import React, { Component } from "react";
 import SearchBar from "./SearchBar";
 import SearchBarTop from "./SearchBarTop";
 import styled from "styled-components";
-import AppBar from 'material-ui/AppBar';
-import FlatButton from 'material-ui/FlatButton';
-
+import AppBar from "material-ui/AppBar";
+import FlatButton from "material-ui/FlatButton";
 
 class Navbar extends Component {
   render() {
     return (
-      <AppBar style={{backgroundColor: "#01579B"}} title = {<StyledLogo href="/">LansFm</StyledLogo>} iconElementRight={<FlatButton label="Login" />} showMenuIconButton={false}/>
-
-
-
-/*
-        <div>
+      <AppBar
+        style={{ backgroundColor: "#01579B" }}
+        iconElementLeft={<StyledLogo href="#">LansFm</StyledLogo>}
+        title={<SearchBar width="50%" />}
+        iconElementRight={<FlatButton label="Login" />}
+        showMenuIconButton={false}
+      >
+        {/* <div>
           <StyledLogo href="#">LansFm</StyledLogo>
-        </div>
+        </div> */}
 
-        <StyledTopSearchBar width="50%" />
-
-        <div>
+        {/* <div>
           <StyledLink href="#">Login</StyledLink>
-        </div>
+        </div> */}
       </AppBar>
-      */
     );
   }
 }
@@ -35,7 +33,6 @@ const StyledTopSearchBar = styled(SearchBar)`
 `;
 
 const StyledLink = styled.a`
-
   color: white;
 
   &:hover {
@@ -48,7 +45,7 @@ const StyledLogo = styled.a`
   color: white;
   font-size: x-large;
   &:hover {
-    color:#e7f7ff;
+    color: #e7f7ff;
     text-decoration: none;
   }
 `;

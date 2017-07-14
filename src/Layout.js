@@ -16,5 +16,5 @@ class Layout extends Component {
   }
 }
 
-const StyledDiv = styled.div`padding-top: 60px;`;
+const StyledDiv = styled.div``;
 export default Layout;

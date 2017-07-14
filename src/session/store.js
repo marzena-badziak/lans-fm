@@ -2,41 +2,34 @@ import { compose, createStore, combineReducers, applyMiddleware } from "redux";
 import persistState from "redux-localstorage";
 import thunk from "redux-thunk";
 
-const search = (
+const session = (
   state = {
-    artistEntered: "",
-    artistsSimilar: [],
+    apiSig: "",
+    sessionKey: "",
+    username: "",
     message: ""
   },
   action
 ) => {
   switch (action.type) {
-    case "SEARCH_ATTEMPT":
+    case "LOGIN_ATTEMPT":
       return {
         ...state,
-        message: "Trwa wyszukiwanie",
-        artistEntered: action.artistEntered
+        message: "Trwa logowanie"
       };
-    case "SEARCH_SUCCESS":
+    case "LOGIN_SUCCESS":
       return {
         ...state,
-        message: "Wyniki wyszukiwania dla: ",
-        artistsSimilar: action.artistsSimilar
+        apiSig: action.apiSig,
+        sessionKey: action.sessionKey,
+        username: action.username,
+        message: 'Zalogowano jako'
       };
-    case "SEARCH_FAIL":
+    case "LOGIN_FAIL":
       return {
         ...state,
         message: "Blad"
       };
-
-    case "SEARCH_NO_ARTIST":
-      return {
-        ...state,
-        message: "Brak Artysty w bazie Last.fm",
-
-        artistsSimilar: []
-      };
-
     default:
       return state;
   }
