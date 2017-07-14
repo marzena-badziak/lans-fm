@@ -4,7 +4,6 @@ import Navbar from "./user-interface/Navbar";
 
 class Layout extends Component {
   render() {
-    console.log(this.props.children);
     return (
       <StyledDiv>
         <div>
@@ -17,5 +16,5 @@ class Layout extends Component {
   }
 }
 
-const StyledDiv = styled.div`margin-top: 60px;`;
+const StyledDiv = styled.div`padding-top: 60px;`;
 export default Layout;

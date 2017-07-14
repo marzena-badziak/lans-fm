@@ -1,7 +1,7 @@
-import React from "react";
-import { connect } from "react-redux";
+// import React from "react";
+// import { connect } from "react-redux";
 import lastfmApi from "../lib/lastfm-api";
-import { hashHistory } from "react-router";
+// import { hashHistory } from "react-router";
 import axios from "axios";
 
 export const searchArtist = artist => {
@@ -11,7 +11,7 @@ export const searchArtist = artist => {
   };
 
   return dispatch => {
-    console.log(artist);
+    // console.log(artist);
     dispatch({
       type: "SEARCH_ATTEMPT",
       artistEntered: artist.artist
@@ -19,7 +19,7 @@ export const searchArtist = artist => {
     axios
       .get(`${lastfmApi("artist.getsimilar", getsimilarOptions)}`)
       .then(function(response) {
-        if (typeof response.data.similarartists.artist === "undefined") {
+        if (typeof response.data.similarartists === "undefined") {
           dispatch({
             type: "SEARCH_NO_ARTIST"
           });
