@@ -9,7 +9,7 @@ class Navbar extends Component {
   render() {
     return (
       <AppBar
-        style={{ backgroundColor: "#944dff" }}
+        style={{ backgroundColor: "#8585ad" }}
         iconElementLeft={<StyledLogo href="#">LansFm</StyledLogo>}
         title={<SearchBar width="50%" />}
         iconElementRight={<FlatButton label="Login" />}
