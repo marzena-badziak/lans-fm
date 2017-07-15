@@ -9,12 +9,16 @@ import RaisedButton from "material-ui/RaisedButton";
 import { Card, CardActions, CardHeader, CardText } from "material-ui/Card";
 import { List, ListItem } from "material-ui/List";
 import Avatar from "material-ui/Avatar";
+import ShowVideo from "./ShowVideo";
+
 class ArtistTile extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      dropDownDisplay: "none"
+      dropDownDisplay: "none",
+      playVideo: false,
+      videoId: ""
     };
   }
 
@@ -32,6 +36,10 @@ class ArtistTile extends Component {
       dropDownDisplay: "block"
     });
   };
+  // playVideo = e => {
+  //   console.log("play clicked");
+  //   console.log(e);
+  // };
   fetchAlbums = e => {
     this.props.dispatch(
       getAlbums({
@@ -39,6 +47,25 @@ class ArtistTile extends Component {
       })
     );
   };
+  renderVideo = () => {
+    console.log("inside renderVideo");
+
+    axios
+      .get(
+        "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&q=" +
+          this.props.name +
+          "+VEVO" +
+          "&type=video&key=AIzaSyBdXp1WnmYGXXuDFybXxK_94awGD5Qm-Zw"
+      )
+      .then(response => {
+        this.setState({ videoId: response.data.items[0].id.videoId });
+        this.setState({ playVideo: true });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   renderArtistAlbum = () => {
     if (this.props.albums.albums.album) {
       if (this.props.name == this.props.albums.albums.album[0].artist.name) {
@@ -99,18 +126,27 @@ class ArtistTile extends Component {
             style={{ margin: "5px" }}
             backgroundColor="#751aff"
             label="Search similar"
-            labelColor="white"
+            labelColor="#ffffff"
             value={this.props.name}
             onClick={e => this.fetchArtist(e)}
           />
           <RaisedButton
             label="Albums"
             backgroundColor="#a366ff"
-            labelColor="white"
+            labelColor="#ffffff"
             onMouseEnter={e => this.setUlDisplay(e)}
+          />
+          <RaisedButton
+            label="Play"
+            backgroundColor="#a366ff"
+            labelColor="#ffffff"
+            onClick={e => this.renderVideo()}
           />
         </div>
         {this.renderArtistAlbum()}
+        {this.state.playVideo === true
+          ? <ShowVideo artist={this.props.name} videoId={this.state.videoId} />
+          : null}
       </StyledArtistTile>
     );
   }

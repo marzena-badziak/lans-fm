@@ -4,7 +4,7 @@ import SearchBar from "./user-interface/SearchBar";
 import styled from "styled-components";
 // import ArtistsGrid from "./ArtistsGrid";
 import store from "./user-interface/store";
-import ArtistsGrid from "./ArtistsGrid";
+// import ArtistsGrid from "./ArtistsGrid";
 class Home extends Component {
   render() {
     return (
