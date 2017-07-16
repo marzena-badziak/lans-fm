@@ -15,30 +15,49 @@ export class ShowVideo extends Component {
   // }
 
   render() {
-    console.log("showVideo render: " + this.props.videoId);
+    var videoFound = "";
+    if (this.props.videoFound === false) {
+      videoFound = false;
+    } else {
+      videoFound = true;
+    }
     return (
-      <div
-        className="youtube-wrapper"
-        style={{ zIndex: "5", position: "relative" }}
-      >
-        <iframe
-          style={{
-            zIndex: "1000",
-            position: "relative",
-            top: "-342px",
-            left: "0"
-          }}
-          title="YouTube video player"
-          className="youtube-player"
-          type="text/html"
-          width="260"
-          height="260"
-          wmode="Opaque"
-          src={`http://www.youtube.com/embed/${this.props
-            .videoId}?wmode=window`}
-          frameBorder="0"
-          allowFullScreen
-        />
+      <div>
+        {videoFound === false
+          ? <div
+              style={{
+                zIndex: "1000",
+                position: "relative",
+                backgroundColor: "white",
+                top: "-342px",
+                left: "0"
+              }}
+            >
+              Video not found
+            </div>
+          : <div
+              className="youtube-wrapper"
+              style={{ zIndex: "5", position: "relative" }}
+            >
+              <iframe
+                style={{
+                  zIndex: "1000",
+                  position: "relative",
+                  top: "-342px",
+                  left: "0"
+                }}
+                title="YouTube video player"
+                className="youtube-player"
+                type="text/html"
+                width="260"
+                height="260"
+                wmode="Opaque"
+                src={`http://www.youtube.com/embed/${this.props
+                  .videoId}?wmode=window`}
+                frameBorder="0"
+                allowFullScreen
+              />
+            </div>}
       </div>
     );
   }

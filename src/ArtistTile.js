@@ -18,7 +18,8 @@ class ArtistTile extends Component {
     this.state = {
       dropDownDisplay: "none",
       playVideo: false,
-      videoId: ""
+      videoId: "",
+      videoFound: true
     };
   }
 
@@ -36,10 +37,6 @@ class ArtistTile extends Component {
       dropDownDisplay: "block"
     });
   };
-  // playVideo = e => {
-  //   console.log("play clicked");
-  //   console.log(e);
-  // };
   fetchAlbums = e => {
     this.props.dispatch(
       getAlbums({
@@ -48,8 +45,6 @@ class ArtistTile extends Component {
     );
   };
   renderVideo = () => {
-    console.log("inside renderVideo");
-
     axios
       .get(
         "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&q=" +
@@ -58,11 +53,15 @@ class ArtistTile extends Component {
           "&type=video&key=AIzaSyBdXp1WnmYGXXuDFybXxK_94awGD5Qm-Zw"
       )
       .then(response => {
-        this.setState({ videoId: response.data.items[0].id.videoId });
-        this.setState({ playVideo: true });
+        this.setState({
+          videoId: response.data.items[0].id.videoId,
+          playVideo: true,
+          videoFound: true
+        });
       })
       .catch(err => {
-        console.log(err);
+        this.setState({ playVideo: true, videoFound: false });
+        console.log("no video found, videoFound: " + this.state.videoFound);
       });
   };
 
@@ -144,8 +143,12 @@ class ArtistTile extends Component {
           />
         </div>
         {this.renderArtistAlbum()}
-        {this.state.playVideo === true
-          ? <ShowVideo artist={this.props.name} videoId={this.state.videoId} />
+        {this.state.playVideo
+          ? <ShowVideo
+              artist={this.props.name}
+              videoId={this.state.videoId}
+              videoFound={this.state.videoFound}
+            />
           : null}
       </StyledArtistTile>
     );
