@@ -3,8 +3,12 @@ import SearchBar from "./SearchBar";
 import styled from "styled-components";
 import AppBar from "material-ui/AppBar";
 import FlatButton from "material-ui/FlatButton";
+import { connect } from "react-redux";
+import LoginInfo from "./LoginInfo";
 
 class Navbar extends Component {
+
+
   render() {
     return (
       <AppBar
@@ -18,14 +22,7 @@ class Navbar extends Component {
             style={{ marginTop: "7px" }}
           />
         }
-          iconElementRight={
-            <form action="http://www.last.fm/api/auth ">
-              <input type="hidden" name="api_key" value="5df8d91bac81fb9ea65ca73b43ecec62" />
-              <input type="hidden" name="cb" value="http://localhost:3001/#/login" />
-              <FlatButton type="submit" label="Login" />
-            </form>
-          }
-        showMenuIconButton={true}
+          iconElementRight={<LoginInfo />} showMenuIconButton={true}
       />
     );
   }
@@ -49,5 +46,10 @@ const StyledLogo = styled.a`
     color: #e7f7ff;
     text-decoration: none;
 `;
+const mapStateToProps = state => {
+  return {
+    session: state.session
+  };
+};
 
-export default Navbar;
+export default connect(mapStateToProps)(Navbar);

@@ -53,11 +53,44 @@ const albums = (state = { albums: [] }, action) => {
       return state;
   }
 };
+
+const session = (
+  state = {
+    apiSig: "",
+    sessionKey: "",
+    username: "",
+    message: ""
+  },
+  action
+) => {
+  switch (action.type) {
+    case "LOGIN_ATTEMPT":
+      return {
+        ...state,
+        message: "Trwa logowanie"
+      };
+    case "LOGIN_SUCCESS":
+      return {
+        ...state,
+        apiSig: action.apiSig,
+        sessionKey: action.sessionKey,
+        username: action.username,
+        message: 'Zalogowano jako'
+      };
+    case "LOGIN_FAIL":
+      return {
+        ...state,
+        message: "Blad"
+      };
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
-  // posts: posts,
-  //  counter: counter,
   search: search,
-  albums: albums
+  albums: albums,
+  session: session
 });
 
 const enhancer = compose(applyMiddleware(thunk));

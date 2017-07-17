@@ -1,6 +1,6 @@
 // import React from "react";
 // import { connect } from "react-redux";
-import lastfmApi from "../lib/lastfm-api";
+import { lastfmApi } from "../lib/lastfm-api";
 // import { hashHistory } from "react-router";
 import axios from "axios";
 
