@@ -9,6 +9,7 @@ import ArtistsGrid from "./artists/ArtistsGrid";
 import Login from "./session/Login";
 
 import AlbumsPage from "./albums/AlbumsPage";
+import AlbumPage from "./albums/AlbumPage";
 class App extends Component {
   render() {
     return (
@@ -20,6 +21,10 @@ class App extends Component {
               <Route path="searchResults" component={ArtistsGrid} />
               <Route path="login" component={Login} />
               <Route path=":AritstName/albums" component={AlbumsPage} />
+              <Route
+                path=":AritstName/albums/:albumName"
+                component={AlbumPage}
+              />
             </Route>
           </Route>
         </Router>
