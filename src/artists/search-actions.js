@@ -7,7 +7,7 @@ import axios from "axios";
 export const searchArtist = artist => {
   const getsimilarOptions = {
     artist: artist.artist,
-    limit: "10"
+    limit: "250"
   };
 
   return dispatch => {
@@ -26,7 +26,7 @@ export const searchArtist = artist => {
         } else {
           dispatch({
             type: "SEARCH_SUCCESS",
-            artistsSimilar: response.data.similarartists.artist
+            artistsSimilar: response.data.similarartists.artist.reverse().slice(0, 30)
           });
         }
       })
