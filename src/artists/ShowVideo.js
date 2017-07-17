@@ -26,7 +26,7 @@ export class ShowVideo extends Component {
           style={{
             zIndex: "1000",
             position: "relative",
-            top: "-342px",
+            top: "-372px",
             left: "0"
           }}
           title="YouTube video player"
