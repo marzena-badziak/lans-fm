@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { getAlbums } from "../artists/search-actions.js";
 import AlbumTile from "./AlbumTile";
 import styled from "styled-components";
+import qs from 'qs';
+
 class AlbumsPage extends Component {
   constructor(props) {
     super(props);
@@ -11,10 +13,9 @@ class AlbumsPage extends Component {
     };
   }
   fetchAlbums = e => {
-    console.log("a");
     this.props.dispatch(
       getAlbums({
-        data: this.props.params.AritstName
+        data: this.props.params.AritstN
       })
     );
   };
@@ -25,7 +26,6 @@ class AlbumsPage extends Component {
     });
   }
   renderTiles() {
-    console.log(this.props);
     if (this.props.albums.albums.album) {
       return this.props.albums.albums.album.map((album, i) => {
         if (!(album.name == "(null)")) {
@@ -44,7 +44,7 @@ class AlbumsPage extends Component {
     }
   }
   render() {
-    console.log(this.props);
+    console.log(qs.stringify(this.props.albums, {arrayFormat: 'brackets'}))
     return (
       <div className="container">
         <SearchResultsContainer>
@@ -66,6 +66,7 @@ const SearchResultsContainer = styled.div`
   padding: 20px 0;
 `;
 const mapStateToProps = state => {
+  console.log (state.albums);
   return {
     albums: state.albums
   };

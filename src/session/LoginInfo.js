@@ -15,7 +15,9 @@ class LoginInfo extends Component {
         </form>
       );
     } else {
-      return (this.props.session.username)
+      return (
+        <FlatButton onClick label="Logout" />
+      )
     }
   }
 

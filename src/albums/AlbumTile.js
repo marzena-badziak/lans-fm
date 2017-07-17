@@ -9,8 +9,27 @@ import {
 } from "material-ui/Card";
 import styled from "styled-components";
 import FlatButton from "material-ui/FlatButton";
+import axios from "axios";
+import lastfmApi from "../lib/lastfm-api"
+
+
+
 
 class AlbumTile extends Component {
+/*  scrobbleAlbum = () => {
+    let scrobbleRequest = Qs.stringify(params, {arrayFormat: 'brackets'})
+
+    });
+    axios
+      .get(`${lastfmApi("artist.getsimilar", '')}`)
+      .then(function(response) {
+        return 0;
+      })
+      .catch(function(error) {
+        console.log(error);
+      })
+    }*/
+
   render() {
     return (
       <StyledAlbumCard>
@@ -22,7 +41,6 @@ class AlbumTile extends Component {
           <img src={this.props.image} alt={`${this.props.title} cover`} />
         </CardMedia>
         <CardActions>
-          <FlatButton label="Scrobble" />
           <FlatButton label="Show Album" />
         </CardActions>
       </StyledAlbumCard>
