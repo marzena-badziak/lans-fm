@@ -21,6 +21,9 @@ class Home extends Component {
           <StyledH1 htmlFor="search-bar">
             Search the least popular artists
           </StyledH1>
+          <StyledH3>
+            Type your favourite artist and discover similar ones!
+          </StyledH3>
           <SearchBar
             boxShadow="0px 0px 30px 3px rgba(0, 0, 0, 0.6);"
             width="100%"
@@ -66,6 +69,15 @@ const StyledH1 = styled.h1`
   display: inline-block;
   color: white;
   font-weight: 700;
-  padding: 10px;
+  padding: 5px;
+  margin: 10px;
 `;
+const StyledH3 = styled.h3`
+  display: inline-block;
+  color: white;
+  font-weight: 700;
+  padding: 5px;
+  margin: 5px;
+`;
+
 export default Home;
