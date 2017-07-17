@@ -26,7 +26,9 @@ export const searchArtist = artist => {
         } else {
           dispatch({
             type: "SEARCH_SUCCESS",
-            artistsSimilar: response.data.similarartists.artist.reverse().slice(0, 30)
+            artistsSimilar: response.data.similarartists.artist
+              .reverse()
+              .slice(0, 30)
           });
         }
       })
@@ -50,7 +52,7 @@ export const searchArtist = artist => {
 export const getAlbums = data => {
   const getAlbumOptions = {
     artist: data.data,
-    limit: "30"
+    limit: "10"
   };
   return dispatch => {
     axios
