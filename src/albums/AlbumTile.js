@@ -9,6 +9,7 @@ import {
 } from "material-ui/Card";
 import styled from "styled-components";
 import FlatButton from "material-ui/FlatButton";
+
 class AlbumTile extends Component {
   render() {
     return (
@@ -30,5 +31,6 @@ class AlbumTile extends Component {
 }
 const StyledAlbumCard = styled(Card)`
 width: 300px;
+margin-top: 30px;
 `;
 export default AlbumTile;
