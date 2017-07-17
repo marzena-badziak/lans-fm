@@ -11,7 +11,7 @@ const lastfmApi = (method, options) => {
   Object.entries(options).forEach(([key, value]) => {
     request = `${request}&${key}=${value}`;
   });
-  request = `${request}&api_key=${lastfmKey.api_key}&limit=250&format=json`;
+  request = `${request}&api_key=${lastfmKey.api_key}&format=json`;
   return request;
 };
 /*var apiClient = axios.create({
@@ -36,4 +36,5 @@ const configureApi = store => {
 };
 
 export { configureApi };*/
+export { lastfmApi, lastfmKey };
 export default lastfmApi;

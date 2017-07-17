@@ -7,7 +7,11 @@ import axios from "axios";
 export const searchArtist = artist => {
   const getsimilarOptions = {
     artist: artist.artist,
+<<<<<<< HEAD
     limit: "10"
+=======
+    limit: "250"
+>>>>>>> b32b695d8ca799b3e137563a7d89ec304b649fe5
   };
 
   return dispatch => {
@@ -26,7 +30,11 @@ export const searchArtist = artist => {
         } else {
           dispatch({
             type: "SEARCH_SUCCESS",
+<<<<<<< HEAD
             artistsSimilar: response.data.similarartists.artist
+=======
+            artistsSimilar: response.data.similarartists.artist.reverse().slice(0, 30)
+>>>>>>> b32b695d8ca799b3e137563a7d89ec304b649fe5
           });
         }
       })
@@ -50,7 +58,11 @@ export const searchArtist = artist => {
 export const getAlbums = data => {
   const getAlbumOptions = {
     artist: data.data,
+<<<<<<< HEAD
     limit: "30"
+=======
+    limit: "10"
+>>>>>>> b32b695d8ca799b3e137563a7d89ec304b649fe5
   };
   return dispatch => {
     axios

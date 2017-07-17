@@ -6,6 +6,7 @@ import "./App.css";
 import Home from "./Home";
 import Layout from "./Layout";
 import ArtistsGrid from "./artists/ArtistsGrid";
+import Login from "./session/Login"
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
             <IndexRoute component={Home} />
             <Route component={Layout}>
               <Route path="searchResults" component={ArtistsGrid} />
+              <Route path="login" component={Login} />
             </Route>
           </Route>
         </Router>
