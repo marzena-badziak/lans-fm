@@ -9,12 +9,17 @@ import RaisedButton from "material-ui/RaisedButton";
 import { Card, CardActions, CardHeader, CardText } from "material-ui/Card";
 import { List, ListItem } from "material-ui/List";
 import Avatar from "material-ui/Avatar";
+import ShowVideo from "./ShowVideo";
+
 class ArtistTile extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      dropDownDisplay: "none"
+      dropDownDisplay: "none",
+      playVideo: false,
+      videoId: "",
+      videoFound: true
     };
   }
 
@@ -39,6 +44,27 @@ class ArtistTile extends Component {
       })
     );
   };
+  renderVideo = () => {
+    axios
+      .get(
+        "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&q=" +
+          this.props.name +
+          "+VEVO" +
+          "&type=video&key=AIzaSyBdXp1WnmYGXXuDFybXxK_94awGD5Qm-Zw"
+      )
+      .then(response => {
+        this.setState({
+          videoId: response.data.items[0].id.videoId,
+          playVideo: true,
+          videoFound: true
+        });
+      })
+      .catch(err => {
+        this.setState({ playVideo: true, videoFound: false });
+        console.log("no video found, videoFound: " + this.state.videoFound);
+      });
+  };
+
   renderArtistAlbum = () => {
     if (this.props.albums.albums.album) {
       if (this.props.name == this.props.albums.albums.album[0].artist.name) {
@@ -118,19 +144,32 @@ class ArtistTile extends Component {
             style={{ margin: "5px" }}
             backgroundColor="#751aff"
             label="Search similar"
-            labelColor="white"
+            labelColor="#ffffff"
             value={this.props.name}
             onClick={e => this.fetchArtist(e)}
           />
           <RaisedButton
             label="Albums"
             backgroundColor="#a366ff"
-            labelColor="white"
+            labelColor="#ffffff"
             onMouseEnter={e => this.setUlDisplay(e)}
+          />
+          <RaisedButton
+            label="Play"
+            backgroundColor="#a366ff"
+            labelColor="#ffffff"
+            onClick={e => this.renderVideo()}
           />
         </div>
 >>>>>>> b1d1e9269d438b8a4873b16ac8d549ef4073685c
         {this.renderArtistAlbum()}
+        {this.state.playVideo
+          ? <ShowVideo
+              artist={this.props.name}
+              videoId={this.state.videoId}
+              videoFound={this.state.videoFound}
+            />
+          : null}
       </StyledArtistTile>
     );
   }
