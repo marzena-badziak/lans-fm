@@ -82,6 +82,9 @@ const session = (
         ...state,
         message: "Blad"
       };
+    case 'USER_LOGOUT':
+      state = undefined
+
     default:
       return state;
   }
