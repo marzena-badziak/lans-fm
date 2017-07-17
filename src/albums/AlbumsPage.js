@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getAlbums } from "../artists/search-actions.js";
 import AlbumTile from "./AlbumTile";
 import styled from "styled-components";
+import Avatar from "material-ui/Avatar";
 class AlbumsPage extends Component {
   constructor(props) {
     super(props);
@@ -43,10 +44,28 @@ class AlbumsPage extends Component {
       return <div>Searching albums ...</div>;
     }
   }
+  artistImageCheck = () => {
+    if (
+      this.props.results.filter(
+        artist => artist.name == this.props.params.AritstName
+      )[0]
+    ) {
+      return this.props.results.filter(
+        artist => artist.name == this.props.params.AritstName
+      )[0].image[2]["#text"];
+    }
+  };
   render() {
-    console.log(this.props);
     return (
       <div className="container">
+        <h2>
+          {this.props.params.AritstName}
+        </h2>
+        <Avatar
+          src={this.artistImageCheck()}
+          alt={`${this.props.params.AritstName} foto`}
+          size={200}
+        />
         <SearchResultsContainer>
           {this.renderTiles()}
         </SearchResultsContainer>
@@ -67,6 +86,7 @@ const SearchResultsContainer = styled.div`
 `;
 const mapStateToProps = state => {
   return {
+    results: state.search.artistsSimilar,
     albums: state.albums
   };
 };
