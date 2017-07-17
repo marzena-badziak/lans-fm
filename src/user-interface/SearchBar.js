@@ -82,6 +82,23 @@ padding 15px;
   -moz-border-radius: 10px 0px 0px 01px;
   -webkit-border-radius: 10px 0px 0px 10px;
   border: 1px solid #000000;
+  ::-webkit-input-placeholder {
+     text-align: center;
+  }
+
+  :-moz-placeholder { /* Firefox 18- */
+     text-align: center;
+  }
+
+  ::-moz-placeholder {  /* Firefox 19+ */
+     text-align: center;
+  }
+
+  :-ms-input-placeholder {
+     text-align: center;
+  }
+
+
 `;
 SearchBar.propTypes = {
   width: propTypes.string

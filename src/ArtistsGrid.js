@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import ArtistTile from "./ArtistTile.js";
 import propTypes from "prop-types";
+
 // const axios = require("axios");
 
 class ArtistsGrid extends Component {
@@ -21,16 +22,14 @@ class ArtistsGrid extends Component {
     });
     // console.log(grid);
     return (
-      <div className="container" style={{ border: "2px solid black" }}>
+      <div className="container">
         <SearchResultsContainer className="row">
-          <div style={{ border: "2px solid green" }}>
-            <h2 style={{ paddingBottom: "20px" }}>
-              {this.props.message} {this.props.artistEntered}
-            </h2>
-            <dbody>
-              {grid}
-            </dbody>
-          </div>
+          <h2 style={{ paddingBottom: "20px" }}>
+            {this.props.message} {this.props.artistEntered}
+          </h2>
+          <dbody>
+            {grid}
+          </dbody>
         </SearchResultsContainer>
       </div>
     );
