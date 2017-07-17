@@ -30,9 +30,7 @@ getQueryVariable = (variable) =>  {
   render() {
     this.login()
     return (
-
-      <div>
-      </div>
+      <div></div>
     );
   }
 }

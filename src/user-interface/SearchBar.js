@@ -33,31 +33,6 @@ class SearchBar extends Component {
   };
   render() {
     return (
-<<<<<<< HEAD
-      <form
-        style={{ width: this.props.width }}
-        onSubmit={e => this.fetchArtist(e)}
-      >
-        <TextField
-          onChange={e => this.setSearchValue(e)}
-          id="search-bar"
-          type="text"
-          value={this.state.searchValue}
-          hintText="Type artist name to find similar artists"
-          //  className="form-control"
-          fullWidth={true}
-          style={{ height: "50px" }}
-        />
-        <span className="input-group-btn">
-          <StyledButton
-            className="btn btn-default"
-            type="button"
-            onClick={e => this.fetchArtist(e)}
-          >
-            <strong>search</strong>
-          </StyledButton>
-        </span>
-=======
       <form onSubmit={e => this.fetchArtist(e)}>
         <StyledSearchBar {...this.props}>
           <StyledSearchInput
@@ -72,7 +47,6 @@ class SearchBar extends Component {
             Search
           </StyledSearchSpan>
         </StyledSearchBar>
->>>>>>> b1d1e9269d438b8a4873b16ac8d549ef4073685c
       </form>
     );
   }

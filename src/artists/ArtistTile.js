@@ -120,25 +120,6 @@ class ArtistTile extends Component {
           height="260px"
           // onClick={}
         />
-<<<<<<< HEAD
-        <RaisedButton
-        style={{margin:"5px"}}
-        label="Search similar"
-          primary={true}
-          value={this.props.name}
-          onClick={e => this.fetchArtist(e)}
-       />
-        <RaisedButton
-        label="Albums"
-        primary={true}
-          onMouseEnter={e => this.setUlDisplay(e)}
-        />
-        <form action="http://www.last.fm/api/auth ">
-          <input type="hidden" name="api_key" value="5df8d91bac81fb9ea65ca73b43ecec62" />
-          <input type="hidden" name="cb" value="http://localhost:3001/#/login" />
-          <button type="submit">Scrobbluj TERAZ</button>
-        </form>
-=======
         <div style={{ textAlign: "center" }}>
           <RaisedButton
             style={{ margin: "5px" }}
@@ -160,8 +141,12 @@ class ArtistTile extends Component {
             labelColor="#ffffff"
             onClick={e => this.renderVideo()}
           />
+          <form action="http://www.last.fm/api/auth ">
+            <input type="hidden" name="api_key" value="5df8d91bac81fb9ea65ca73b43ecec62" />
+            <input type="hidden" name="cb" value="http://localhost:3001/#/login" />
+            <button type="submit">Scrobbluj TERAZ</button>
+          </form>
         </div>
->>>>>>> b1d1e9269d438b8a4873b16ac8d549ef4073685c
         {this.renderArtistAlbum()}
         {this.state.playVideo
           ? <ShowVideo

@@ -5,7 +5,7 @@ import "./App.css";
 // import store from "./user-interface/store";
 import Home from "./Home";
 import Layout from "./Layout";
-import ArtistsGrid from "./ArtistsGrid";
+import ArtistsGrid from "./artists/ArtistsGrid";
 import Login from "./session/Login"
 
 class App extends Component {

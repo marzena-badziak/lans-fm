@@ -36,5 +36,4 @@ const configureApi = store => {
 };
 
 export { configureApi };*/
-export default lastfmApi;
-export {lastfmKey};
+export {lastfmApi, lastfmKey};
