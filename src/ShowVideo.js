@@ -29,7 +29,7 @@ export class ShowVideo extends Component {
                 zIndex: "1000",
                 position: "relative",
                 backgroundColor: "white",
-                top: "-342px",
+                top: "-372px",
                 left: "0"
               }}
             >
@@ -43,7 +43,7 @@ export class ShowVideo extends Component {
                 style={{
                   zIndex: "1000",
                   position: "relative",
-                  top: "-342px",
+                  top: "-302px",
                   left: "0"
                 }}
                 title="YouTube video player"
