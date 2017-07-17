@@ -144,47 +144,6 @@ class ArtistTile extends Component {
     );
   }
 }
-
-class DropdownUl extends Component {
-  albumRender = () => {
-    if (this.props.albums.albums.album) {
-      return this.props.albums.albums.album.map((album, i) => {
-        return (
-          <ListItem
-            className="list-group-item"
-            key={i}
-            primaryText={album.name}
-            leftAvatar={
-              <Avatar src={album.image[1]["#text"]} alt="Album Foto" />
-            }
-          />
-        );
-      });
-    }
-  };
-
-  render() {
-    const { diplayStyle, albums } = this.props;
-    return (
-      <AlbumsList display={diplayStyle}>
-        {albums.albums.album ? this.albumRender() : false}
-      </AlbumsList>
-    );
-  }
-}
-
-const AlbumsList = styled(List)`
-          display: ${props => props.display};
-          position: absolute;
-          top: 0;
-          z-index: 2;
-          width: 260px;
-          height: 380px;
-          overflow-y: scroll;
-          background-color: #e6e6ff;
-
-`;
-
 const StyledSpan = styled.span`
   font-size: large;
   align-self: center;
@@ -207,11 +166,6 @@ ArtistTile.propTypes = {
   name: propTypes.string.isRequired,
   img: propTypes.string.isRequired,
   match: propTypes.string.isRequired
-};
-
-DropdownUl.propTypes = {
-  albums: propTypes.object.isRequired,
-  diplayStyle: propTypes.string.isRequired
 };
 
 export default connect()(withRouter(ArtistTile));
