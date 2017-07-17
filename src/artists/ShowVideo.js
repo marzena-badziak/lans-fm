@@ -16,7 +16,7 @@ export class ShowVideo extends Component {
   // }
 
   render() {
-    console.log("showVideo render: " + this.props.videoId);
+    // console.log("showVideo render: " + this.props.videoId);
     return (
       <div
         className="youtube-wrapper"
