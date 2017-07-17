@@ -71,7 +71,8 @@ padding 15px;
   -moz-border-radius: 0px 10px 10px 0px;
   -webkit-border-radius: 0px 10px 10px 0px;
   border: 1px solid #000000;
-  background-color: #DD8899;;
+  background-color: #DD8899;
+  cursor: pointer;
 `;
 const StyledSearchInput = styled.input`
 color:black;

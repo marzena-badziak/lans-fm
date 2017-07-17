@@ -5,7 +5,7 @@ import AlbumTile from "./AlbumTile";
 import styled from "styled-components";
 import qs from 'qs';
 import Avatar from "material-ui/Avatar";
-
+import CircularProgress from "material-ui/CircularProgress";
 class AlbumsPage extends Component {
   constructor(props) {
     super(props);
@@ -41,7 +41,11 @@ class AlbumsPage extends Component {
         }
       });
     } else {
-      return <div>Searching albums ...</div>;
+      return (
+        <div>
+          <CircularProgress />
+        </div>
+      );
     }
   }
   artistImageCheck = () => {
@@ -56,10 +60,7 @@ class AlbumsPage extends Component {
     }
   };
   render() {
-<<<<<<< HEAD
     console.log(qs.stringify(this.props.albums, {arrayFormat: 'brackets'}))
-=======
->>>>>>> 874fbfb436e874973c908792656a26f86d1aa029
     return (
       <div className="container">
         <h2>
