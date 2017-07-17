@@ -4,6 +4,7 @@ import { getAlbums } from "../artists/search-actions.js";
 import AlbumTile from "./AlbumTile";
 import styled from "styled-components";
 import Avatar from "material-ui/Avatar";
+import CircularProgress from "material-ui/CircularProgress";
 class AlbumsPage extends Component {
   constructor(props) {
     super(props);
@@ -41,7 +42,11 @@ class AlbumsPage extends Component {
         }
       });
     } else {
-      return <div>Searching albums ...</div>;
+      return (
+        <div>
+          <CircularProgress />
+        </div>
+      );
     }
   }
   artistImageCheck = () => {
