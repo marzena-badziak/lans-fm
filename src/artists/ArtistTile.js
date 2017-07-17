@@ -141,7 +141,6 @@ class ArtistTile extends Component {
             labelColor="#ffffff"
             onClick={e => this.renderVideo()}
           />
-          {this.loginInfo}
           <RaisedButton
             label="Scrobbluj"
             backgroundColor="#AA8899"

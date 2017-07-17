@@ -29,6 +29,7 @@ getQueryVariable = (variable) =>  {
 
   render() {
     this.login()
+    this.props.router.push("searchResults");
     return (
       <div></div>
     );

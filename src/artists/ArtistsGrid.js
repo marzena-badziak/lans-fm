@@ -21,16 +21,14 @@ class ArtistsGrid extends Component {
     });
     // console.log(grid);
     return (
-      <div className="container" style={{ border: "2px solid black" }}>
+      <div>
+        <h2 style={{ paddingBottom: "20px" }}>
+          {this.props.message} {this.props.artistEntered}
+        </h2>
         <SearchResultsContainer className="row">
-          <div style={{ border: "2px solid green" }}>
-            <h2 style={{ paddingBottom: "20px" }}>
-              {this.props.message} {this.props.artistEntered}
-            </h2>
-            <dbody>
-              {grid}
-            </dbody>
-          </div>
+          <dbody>
+            {grid}
+          </dbody>
         </SearchResultsContainer>
       </div>
     );
@@ -38,6 +36,12 @@ class ArtistsGrid extends Component {
 }
 
 const SearchResultsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: flex-start;
   float: none;
   margin: 0 auto;
   padding: 20px 0;
