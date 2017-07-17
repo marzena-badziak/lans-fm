@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { searchArtist } from "../artists/search-actions.js";
 import { connect } from "react-redux";
 import propTypes from "prop-types";
-// import { Router, Route, IndexRoute, hashHistory } from "react-router";
 import { withRouter } from "react-router";
 import styled from "styled-components";
 import RaisedButton from "material-ui/RaisedButton";
@@ -76,7 +75,6 @@ const StyledSearchBar = styled.div`
 `;
 const StyledSearchSpan = styled.div`
   display: flex;
-  background-color: white;
   height: inherit;
   align-items: center;
   padding: 0 15px;
@@ -84,7 +82,8 @@ const StyledSearchSpan = styled.div`
   -moz-border-radius: 0px 10px 10px 0px;
   -webkit-border-radius: 0px 10px 10px 0px;
   border: 1px solid #000000;
-  background-color: #dd8899;
+  background-color: #DD8899;
+  cursor: pointer;
 `;
 const StyledSearchInput = styled.input`
   color: black;

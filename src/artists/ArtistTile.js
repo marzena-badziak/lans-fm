@@ -4,13 +4,13 @@ import propTypes from "prop-types";
 import { searchArtist } from "./search-actions";
 import { connect } from "react-redux";
 import axios from "axios";
-import { getAlbums } from "./search-actions.js";
+
 import RaisedButton from "material-ui/RaisedButton";
 import { Card, CardActions, CardHeader, CardText } from "material-ui/Card";
 import { List, ListItem } from "material-ui/List";
 import Avatar from "material-ui/Avatar";
 import ShowVideo from "./ShowVideo";
-
+import { withRouter } from "react-router";
 class ArtistTile extends Component {
   constructor(props) {
     super(props);
@@ -31,19 +31,11 @@ class ArtistTile extends Component {
       })
     );
   };
-  setUlDisplay = e => {
-    this.fetchAlbums();
-    this.setState({
-      dropDownDisplay: "block"
-    });
+  getAlbums = e => {
+    e.preventDefault();
+    this.props.router.push(`${this.props.name}/albums`);
   };
-  fetchAlbums = e => {
-    this.props.dispatch(
-      getAlbums({
-        data: this.props.name
-      })
-    );
-  };
+
   renderVideo = () => {
     axios
       .get(
@@ -76,20 +68,6 @@ class ArtistTile extends Component {
       });
   };
 
-  renderArtistAlbum = () => {
-    if (this.props.albums.albums.album) {
-      if (this.props.name == this.props.albums.albums.album[0].artist.name) {
-        return (
-          <DropdownUl
-            diplayStyle={this.state.dropDownDisplay}
-            albums={this.props.albums}
-          >
-            >
-          </DropdownUl>
-        );
-      }
-    }
-  };
   hideAlbums = e => {
     this.setState({
       dropDownDisplay: "none"
@@ -144,7 +122,7 @@ class ArtistTile extends Component {
             label="Albums"
             backgroundColor="#AA8899"
             labelColor="#ffffff"
-            onMouseEnter={e => this.setUlDisplay(e)}
+            onClick={e => this.getAlbums(e)}
           />
           <RaisedButton
             label="Play"
@@ -166,7 +144,6 @@ class ArtistTile extends Component {
             <button type="submit">Scrobbluj TERAZ</button>
           </form>
         </div>
-        {this.renderArtistAlbum()}
         {this.state.playVideo
           ? <ShowVideo
               artist={this.props.name}
@@ -178,47 +155,6 @@ class ArtistTile extends Component {
     );
   }
 }
-
-class DropdownUl extends Component {
-  albumRender = () => {
-    if (this.props.albums.albums.album) {
-      return this.props.albums.albums.album.map((album, i) => {
-        return (
-          <ListItem
-            className="list-group-item"
-            key={i}
-            primaryText={album.name}
-            leftAvatar={
-              <Avatar src={album.image[1]["#text"]} alt="Album Foto" />
-            }
-          />
-        );
-      });
-    }
-  };
-
-  render() {
-    const { diplayStyle, albums } = this.props;
-    return (
-      <AlbumsList display={diplayStyle}>
-        {albums.albums.album ? this.albumRender() : false}
-      </AlbumsList>
-    );
-  }
-}
-
-const AlbumsList = styled(List)`
-          display: ${props => props.display};
-          position: absolute;
-          top: 0;
-          z-index: 2;
-          width: 260px;
-          height: 380px;
-          overflow-y: scroll;
-          background-color: #e6e6ff;
-
-`;
-
 const StyledSpan = styled.span`
   font-size: large;
   align-self: center;
@@ -243,13 +179,4 @@ ArtistTile.propTypes = {
   match: propTypes.string.isRequired
 };
 
-DropdownUl.propTypes = {
-  albums: propTypes.object.isRequired,
-  diplayStyle: propTypes.string.isRequired
-};
-const mapStateToProps = state => {
-  return {
-    albums: state.albums
-  };
-};
-export default connect(mapStateToProps)(ArtistTile);
+export default connect()(withRouter(ArtistTile));
