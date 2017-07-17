@@ -3,7 +3,7 @@ import SearchBar from "./user-interface/SearchBar";
 // import Navbar from "./user-interface/Navbar";
 import styled from "styled-components";
 // import ArtistsGrid from "./ArtistsGrid";
-import store from "./user-interface/store";
+//import store from "./user-interface/store";
 // import ArtistsGrid from "./ArtistsGrid";
 class Home extends Component {
   render() {
@@ -25,7 +25,6 @@ class Home extends Component {
             boxShadow="0px 0px 30px 3px rgba(0, 0, 0, 0.6);"
             width="100%"
             height="50px"
-            store={store}
           />
           {/* <ArtistsGrid /> */}
         </div>

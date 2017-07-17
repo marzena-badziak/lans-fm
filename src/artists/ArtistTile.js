@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import propTypes from "prop-types";
-import { searchArtist } from "./user-interface/search-actions";
+import { searchArtist } from "./search-actions";
 import { connect } from "react-redux";
 import axios from "axios";
-import { getAlbums } from "./user-interface/search-actions.js";
+import { getAlbums } from "./search-actions.js";
 import RaisedButton from "material-ui/RaisedButton";
 import { Card, CardActions, CardHeader, CardText } from "material-ui/Card";
 import { List, ListItem } from "material-ui/List";
@@ -142,7 +142,7 @@ class ArtistTile extends Component {
         <div style={{ textAlign: "center" }}>
           <RaisedButton
             style={{ margin: "5px" }}
-            backgroundColor="#751aff"
+            backgroundColor="#AA8899"
             label="Search similar"
             labelColor="#ffffff"
             value={this.props.name}
@@ -150,13 +150,13 @@ class ArtistTile extends Component {
           />
           <RaisedButton
             label="Albums"
-            backgroundColor="#a366ff"
+            backgroundColor="#AA8899"
             labelColor="#ffffff"
             onMouseEnter={e => this.setUlDisplay(e)}
           />
           <RaisedButton
             label="Play"
-            backgroundColor="#a366ff"
+            backgroundColor="#AA8899"
             labelColor="#ffffff"
             onClick={e => this.renderVideo()}
           />

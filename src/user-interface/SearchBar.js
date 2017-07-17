@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { searchArtist } from "./search-actions.js";
+import { searchArtist } from "../artists/search-actions.js";
 import { connect } from "react-redux";
 import propTypes from "prop-types";
 // import { Router, Route, IndexRoute, hashHistory } from "react-router";
@@ -97,7 +97,7 @@ padding 15px;
   -moz-border-radius: 0px 10px 10px 0px;
   -webkit-border-radius: 0px 10px 10px 0px;
   border: 1px solid #000000;
-  background-color: #f2b3de;
+  background-color: #DD8899;;
 `;
 const StyledSearchInput = styled.input`
 color:black;
