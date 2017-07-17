@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import ArtistTile from "./ArtistTile.js";
 import propTypes from "prop-types";
+import { GridList, GridTile } from "material-ui/GridList";
 
 // const axios = require("axios");
 
