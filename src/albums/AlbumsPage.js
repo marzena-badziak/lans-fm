@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getAlbums } from "../artists/search-actions.js";
 import AlbumTile from "./AlbumTile";
 import styled from "styled-components";
+import qs from "qs";
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
 
@@ -29,7 +30,7 @@ class AlbumsPage extends Component {
   renderTiles() {
     if (this.props.albums.albums.length !== 0) {
       return this.props.albums.albums.album.map((album, i) => {
-        if (!(album.name === "(null)")) {
+        if (!(album.name == "(null)")) {
           return (
             <AlbumTile
               key={i}
@@ -59,11 +60,11 @@ class AlbumsPage extends Component {
   artistImageCheck = () => {
     if (
       this.props.results.filter(
-        artist => artist.name === this.props.params.AritstName
+        artist => artist.name == this.props.params.AritstName
       )[0]
     ) {
       return this.props.results.filter(
-        artist => artist.name === this.props.params.AritstName
+        artist => artist.name == this.props.params.AritstName
       )[0].image[2]["#text"];
     }
   };
@@ -97,7 +98,7 @@ const SearchResultsContainer = styled.div`
   padding: 20px 0;
 `;
 const mapStateToProps = state => {
-  console.log (state.albums);
+  console.log(state.albums);
   return {
     results: state.search.artistsSimilar,
     albums: state.albums,

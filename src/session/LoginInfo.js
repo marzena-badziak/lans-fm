@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import FlatButton from "material-ui/FlatButton";
 import { connect } from "react-redux";
+import { lastfmKey } from "../lib/lastfm-api";
 
 class LoginInfo extends Component {
 

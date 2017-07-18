@@ -14,25 +14,25 @@ const search = (
     case "SEARCH_ATTEMPT":
       return {
         ...state,
-        message: "Searching",
+        message: "Trwa wyszukiwanie",
         artistEntered: action.artistEntered
       };
     case "SEARCH_SUCCESS":
       return {
         ...state,
-        message: "Search results for: ",
+        message: "Wyniki wyszukiwania dla: ",
         artistsSimilar: action.artistsSimilar
       };
     case "SEARCH_FAIL":
       return {
         ...state,
-        message: "Error"
+        message: "Blad"
       };
 
     case "SEARCH_NO_ARTIST":
       return {
         ...state,
-        message: "There is no artist in Last.fm database",
+        message: "Brak Artysty w bazie Last.fm",
 
         artistsSimilar: []
       };
@@ -88,7 +88,7 @@ const session = (
     case "LOGIN_ATTEMPT":
       return {
         ...state,
-        message: "Logging in"
+        message: "Trwa logowanie"
       };
     case "LOGIN_SUCCESS":
       return {
@@ -96,12 +96,12 @@ const session = (
         apiSig: action.apiSig,
         sessionKey: action.sessionKey,
         username: action.username,
-        message: 'Logged as'
+        message: 'Zalogowano jako'
       };
     case "LOGIN_FAIL":
       return {
         ...state,
-        message: "Error"
+        message: "Blad"
       };
     case 'USER_LOGOUT':
       return state = undefined

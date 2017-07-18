@@ -2,11 +2,15 @@ import React, { Component } from "react";
 import {
   Card,
   CardActions,
+  CardHeader,
   CardMedia,
-  CardTitle
+  CardTitle,
+  CardText
 } from "material-ui/Card";
 import styled from "styled-components";
 import FlatButton from "material-ui/FlatButton";
+import axios from "axios";
+import lastfmApi from "../lib/lastfm-api";
 import propTypes from "prop-types";
 import { withRouter } from "react-router";
 /*  scrobbleAlbum = () => {
@@ -22,7 +26,6 @@ import { withRouter } from "react-router";
         console.log(error);
       })
     }*/
-
 
 class AlbumTile extends Component {
   checkImage = () => {
@@ -44,6 +47,7 @@ class AlbumTile extends Component {
         </CardMedia>
         <CardActions>
           <FlatButton label="Show Album" />
+          <FlatButton label="Scrobble" />
           <FlatButton
             label="Show Album"
             onClick={() =>

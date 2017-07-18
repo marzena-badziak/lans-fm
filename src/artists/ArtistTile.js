@@ -4,7 +4,11 @@ import propTypes from "prop-types";
 import { searchArtist } from "./search-actions";
 import { connect } from "react-redux";
 import axios from "axios";
+
 import RaisedButton from "material-ui/RaisedButton";
+import { Card, CardActions, CardHeader, CardText } from "material-ui/Card";
+import { List, ListItem } from "material-ui/List";
+import Avatar from "material-ui/Avatar";
 import ShowVideo from "./ShowVideo";
 import { withRouter } from "react-router";
 
@@ -143,7 +147,14 @@ class ArtistTile extends Component {
     );
   }
 }
-
+const StyledSpan = styled.span`
+  font-size: large;
+  align-self: center;
+`;
+const StyledAlbumElement = styled.li`
+  display: flex;
+  justify-content: space-around;
+`;
 const StyledArtistTile = styled.div`
   display: inline-block;
   margin: 15px;
