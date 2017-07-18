@@ -55,7 +55,7 @@ class ArtistTile extends Component {
           videoFound: true
         });
 
-        var ytTitle = response.data.items[0].snippet.title;
+        let ytTitle = response.data.items[0].snippet.title;
         console.log(ytTitle);
 
         const getArtistTitle = require("get-artist-title");
