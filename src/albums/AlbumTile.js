@@ -28,7 +28,7 @@ import { withRouter } from "react-router";
     }*/
 
 class AlbumTile extends Component {
-  checkImage = () => {
+  setImage = () => {
     if (this.props.image) {
       return this.props.image;
     } else {
@@ -43,7 +43,7 @@ class AlbumTile extends Component {
             <CardTitle title={this.props.title} subtitle={this.props.artist} />
           }
         >
-          <img src={this.checkImage()} alt={`${this.props.title} cover`} />
+          <img src={this.setImage()} alt={`${this.props.title} cover`} />
         </CardMedia>
         <CardActions>
           <FlatButton label="Scrobble" />

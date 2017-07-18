@@ -52,7 +52,7 @@ const albums = (state = { albums: [], message: "" }, action) => {
     case "SEARCH_ALBUMS":
       return {
         ...state,
-        message: "",
+        message: "Found albums",
         albums: action.payload
       };
     case "NO_ALBUMS":
