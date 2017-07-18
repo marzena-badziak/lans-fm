@@ -9,14 +9,10 @@ import {
 } from "material-ui/Card";
 import styled from "styled-components";
 import FlatButton from "material-ui/FlatButton";
-<<<<<<< HEAD
 import axios from "axios";
 import lastfmApi from "../lib/lastfm-api"
-
-
-
-
-class AlbumTile extends Component {
+import propTypes from "prop-types";
+import { withRouter } from "react-router";
 /*  scrobbleAlbum = () => {
     let scrobbleRequest = Qs.stringify(params, {arrayFormat: 'brackets'})
 
@@ -31,9 +27,6 @@ class AlbumTile extends Component {
       })
     }*/
 
-=======
-import propTypes from "prop-types";
-import { withRouter } from "react-router";
 
 class AlbumTile extends Component {
   checkImage = () => {
@@ -43,7 +36,6 @@ class AlbumTile extends Component {
       return "https://lastfm-img2.akamaized.net/i/u/174s/c6f59c1e5e7240a4c0d427abd71f3dbb.png";
     }
   };
->>>>>>> 874fbfb436e874973c908792656a26f86d1aa029
   render() {
     return (
       <StyledAlbumCard>
@@ -55,9 +47,7 @@ class AlbumTile extends Component {
           <img src={this.checkImage()} alt={`${this.props.title} cover`} />
         </CardMedia>
         <CardActions>
-<<<<<<< HEAD
           <FlatButton label="Show Album" />
-=======
           <FlatButton label="Scrobble" />
           <FlatButton
             label="Show Album"

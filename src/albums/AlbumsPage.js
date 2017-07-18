@@ -6,6 +6,7 @@ import styled from "styled-components";
 import qs from 'qs';
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
+
 class AlbumsPage extends Component {
   constructor(props) {
     super(props);
@@ -28,11 +29,13 @@ class AlbumsPage extends Component {
   }
   renderTiles() {
     if (this.props.albums.albums.album) {
+      let scrobbleRequest = "";
       return this.props.albums.albums.album.map((album, i) => {
         if (!(album.name == "(null)")) {
+          scrobbleRequest += `&track[${i}]=${track.name}&artist[${i}]=${track.artist.name}&timestamp[${i}]=&mbid[${i}]=${track.mbid}`;
           return (
             <AlbumTile
-              key={i}
+              key={i}1
               image={album.image[2]["#text"]}
               title={album.name}
               artist={album.artist.name}
@@ -60,7 +63,13 @@ class AlbumsPage extends Component {
     }
   };
   render() {
-    console.log(qs.stringify(this.props.albums, {arrayFormat: 'brackets'}))
+
+    /*for(var i = 0; i < this.props.albums.albums.album.lenght;  i++){
+      scrobbleRequest += this.props.albums.albums.album[i].artist;
+    }*/
+    const picked = _.without(this.props.albums.albums)
+    console.log(picked);
+    console.log(qs.stringify(picked))
     return (
       <div className="container">
         <h2>
