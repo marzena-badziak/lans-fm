@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import ArtistTile from "./ArtistTile.js";
 import propTypes from "prop-types";
 import CircularProgress from "material-ui/CircularProgress";
-// const axios = require("axios");
 
 class ArtistsGrid extends Component {
   render() {
@@ -20,13 +19,19 @@ class ArtistsGrid extends Component {
         />
       );
     });
-    // console.log(grid);
     return (
       <div>
         <h2 style={{ paddingBottom: "20px" }}>
           {this.props.message} {this.props.artistEntered}
           {this.props.message === "Trwa wyszukiwanie"
+<<<<<<< HEAD
             ? <CircularProgress style={{ display: "block" }} />
+=======
+            ? <CircularProgress
+                color="#AA8899"
+                style={{ display: "block", margin: "80px auto" }}
+              />
+>>>>>>> 393a518fe22a552a70a5aec70200eea598e03120
             : false}
         </h2>
         <SearchResultsContainer className="row">

@@ -1,16 +1,9 @@
 import React, { Component } from "react";
 import propTypes from "prop-types";
-
-/**
- * ShowVideo
- */
+import axios from "axios";
+import styled from "styled-components";
 
 export class ShowVideo extends Component {
-  // eslint-disable-line react/prefer-stateless-function
-  // getTopTracks = artist => {
-  //
-  // }
-
   render() {
     // console.log("showVideo render: " + this.props.videoId);
     var videoFound = "";
@@ -37,13 +30,7 @@ export class ShowVideo extends Component {
               className="youtube-wrapper"
               style={{ zIndex: "5", position: "relative" }}
             >
-              <iframe
-                style={{
-                  zIndex: "1000",
-                  position: "relative",
-                  top: "-342px",
-                  left: "0"
-                }}
+              <StyledIframe
                 title="YouTube video player"
                 className="youtube-player"
                 type="text/html"
@@ -57,33 +44,15 @@ export class ShowVideo extends Component {
               />
             </div>}
       </div>
-
-      // <div
-      //   className="youtube-wrapper"
-      //   style={{ zIndex: "5", position: "relative" }}
-      // >
-      //   <iframe
-      //     style={{
-      //       zIndex: "1000",
-      //       position: "relative",
-      //       top: "-372px",
-      //       left: "0"
-      //     }}
-      //     title="YouTube video player"
-      //     className="youtube-player"
-      //     type="text/html"
-      //     width="260"
-      //     height="260"
-      //     wmode="Opaque"
-      //     src={`http://www.youtube.com/embed/${this.props
-      //       .videoId}?wmode=window`}
-      //     frameBorder="0"
-      //     allowFullScreen
-      //   />
-      // </div>
     );
   }
 }
+
+const StyledIframe = styled.iframe`
+  position: relative;
+  top: -342px;
+  left: 0;
+`;
 
 ShowVideo.propTypes = {
   videoId: propTypes.string.isRequired,
