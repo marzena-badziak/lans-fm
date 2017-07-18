@@ -4,13 +4,13 @@ import propTypes from "prop-types";
 import { searchArtist } from "./search-actions";
 import { connect } from "react-redux";
 import axios from "axios";
-
 import RaisedButton from "material-ui/RaisedButton";
 import { Card, CardActions, CardHeader, CardText } from "material-ui/Card";
 import { List, ListItem } from "material-ui/List";
 import Avatar from "material-ui/Avatar";
 import ShowVideo from "./ShowVideo";
 import { withRouter } from "react-router";
+
 class ArtistTile extends Component {
   constructor(props) {
     super(props);
@@ -35,15 +35,19 @@ class ArtistTile extends Component {
     e.preventDefault();
     this.props.router.push(`${this.props.name}/albums`);
   };
+  playVideo = () => {
+    var searchRequest =
+      "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&q=" +
+      this.props.name +
+      "+VEVO" +
+      "&type=video&key=AIzaSyBdXp1WnmYGXXuDFybXxK_94awGD5Qm-Zw";
+    console.log(searchRequest);
+    this.getYoutubeVideoId(searchRequest);
+  };
 
-  renderVideo = () => {
+  getYoutubeVideoId = searchRequest => {
     axios
-      .get(
-        "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&q=" +
-          this.props.name +
-          "+VEVO" +
-          "&type=video&key=AIzaSyBdXp1WnmYGXXuDFybXxK_94awGD5Qm-Zw"
-      )
+      .get(searchRequest)
       .then(response => {
         this.setState({
           videoId: response.data.items[0].id.videoId,
@@ -64,7 +68,7 @@ class ArtistTile extends Component {
       })
       .catch(err => {
         this.setState({ playVideo: true, videoFound: false });
-        console.log("no video found, videoFound: " + this.state.videoFound);
+        console.log("videoFound: " + this.state.videoFound);
       });
   };
 
@@ -128,7 +132,7 @@ class ArtistTile extends Component {
             label="Play"
             backgroundColor="#AA8899"
             labelColor="#ffffff"
-            onClick={e => this.renderVideo()}
+            onClick={e => this.playVideo()}
           />
           <form action="http://www.last.fm/api/auth ">
             <input
