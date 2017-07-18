@@ -25,7 +25,7 @@ class ArtistsGrid extends Component {
       <div>
         <h2 style={{ paddingBottom: "20px" }}>
           {this.props.message} {this.props.artistEntered}
-          {this.props.message == "Trwa wyszukiwanie"
+          {this.props.message === "Trwa wyszukiwanie"
             ? <CircularProgress style={{ display: "block" }} />
             : false}
         </h2>

@@ -15,16 +15,23 @@ const lastfmApi = (method, options) => {
   return request;
 };
 
-const lastfmScrobble = (scrobbleRequest) => {
-  let request = `http://ws.audioscrobbler.com/2.0/?method=${method}`;
+const lastfmScrobble = (scrobbleRequest, options) => {
+  let request = `http://ws.audioscrobbler.com/2.0/?method=track.scrobble`;
   Object.entries(options).forEach(([key, value]) => {
     request = `${request}&${key}=${value}`;
   });
-  request = `${request}&api_key=${lastfmKey.api_key}&format=json`;
+  request = `${request}${scrobbleRequest}&api_key=${lastfmKey.api_key}&format=json`;
   return request;
 }
-      let scrobbleRequest = "";
-      scrobbleRequest += `&track[${i}]=${track.name}&artist[${i}]=${track.artist.name}&timestamp[${i}]=&mbid[${i}]=${track.mbid}`;
+
+//_.forEach(this.props.track, function(value) {
+//  lenghtOfAlbum += this.props.track.duration;
+//});
+
+//      const currentDate = _.now();
+//      let scrobbleRequest = "", lenghtOfAlbum=0;
+//      scrobbleRequest += `&track[${i}]=${track.name}&artist[${i}]=${track.artist.name}&timestamp[${i}]=&mbid[${i}]=${track.mbid}`;
+
 /*var apiClient = axios.create({
   baseURL: "http://ws.audioscrobbler.com/2.0/",
   headers: {

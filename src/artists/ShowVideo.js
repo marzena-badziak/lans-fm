@@ -1,9 +1,5 @@
-import React, { Component, PropTypes } from "react";
-// import lastfmApi from "./lib/lastfm-api";
-// import propTypes from "prop-types";
-// var gapi = require("gapi");
+import React, { Component} from "react";
 import propTypes from "prop-types";
-import axios from "axios";
 
 /**
  * ShowVideo
