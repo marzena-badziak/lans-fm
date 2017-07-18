@@ -1,7 +1,4 @@
-import React from "react";
-import { connect } from "react-redux";
 import { lastfmApi, lastfmKey } from "../lib/lastfm-api";
-import { hashHistory } from "react-router";
 import axios from "axios";
 import md5 from "md5";
 
@@ -15,7 +12,6 @@ export const loginAction = token => {
     dispatch({
       type: "LOGIN_ATTEMPT",
     });
-    console.log(`${lastfmApi('auth.getSession', loginOptions)}`)
     axios
       .get(
         `${lastfmApi('auth.getSession', loginOptions)}`

@@ -7,7 +7,7 @@ import axios from "axios";
 export const searchArtist = artist => {
   const getsimilarOptions = {
     artist: artist.artist,
-    limit: "250"
+    limit: "50"
   };
 
   return dispatch => {
