@@ -1,5 +1,5 @@
 import _ from "lodash"
-
+//
 export const scrobbleAlbum = (album) => {
   let scrobbleRequest = "";
   let timestampOfScrobble = _.now();
@@ -8,4 +8,4 @@ export const scrobbleAlbum = (album) => {
     scrobbleRequest +=
       `&track[${track.rank - 1}]=${track.name}&artist[${track.rank - 1}]=${track.artist.name}&timestamp[${track.rank - 1}]=${timestampOfScrobble}&mbid[${track.rank - 1}]=${track.mbid}`;
     });
-}
+}1
