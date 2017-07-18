@@ -28,7 +28,7 @@ class AlbumsPage extends Component {
   }
   renderTiles() {
     console.log(this.props);
-    if (this.props.albums.albums.album) {
+    if (this.props.albums.albums.length !== 0) {
       return this.props.albums.albums.album.map((album, i) => {
         if (!(album.name == "(null)")) {
           return (
@@ -42,11 +42,19 @@ class AlbumsPage extends Component {
         }
       });
     } else {
-      return (
-        <div>
-          <CircularProgress />
-        </div>
-      );
+      if (this.props.albums.message == "Searching") {
+        return (
+          <div>
+            <CircularProgress />
+          </div>
+        );
+      } else {
+        return (
+          <div>
+            {" "}{this.props.albums.message}
+          </div>
+        );
+      }
     }
   }
   artistImageCheck = () => {
@@ -92,7 +100,8 @@ const SearchResultsContainer = styled.div`
 const mapStateToProps = state => {
   return {
     results: state.search.artistsSimilar,
-    albums: state.albums
+    albums: state.albums,
+    message: state.message
   };
 };
 export default connect(mapStateToProps)(AlbumsPage);
