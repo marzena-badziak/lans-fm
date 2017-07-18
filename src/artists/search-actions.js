@@ -79,18 +79,20 @@ export const getAlbums = data => {
   };
 };
 export const getAlbumInfo = data => {
+  console.log("aa");
   const getAlbumOptions = {
     artist: data.artist,
     album: data.album
   };
   console.log(getAlbumOptions);
   return dispatch => {
-    //  dispatch({
-    //    type: "SEARCH_ALBUMS_ATTEMPT"
-    //  });
+    dispatch({
+      type: "GET_INFO_ATTEMPT"
+    });
     axios
       .get(`${lastfmApi("album.getInfo", getAlbumOptions)}`)
       .then(function(response) {
+        console.log("aasd");
         console.log(response);
         dispatch({
           type: "GET_ALBUM_INFO",

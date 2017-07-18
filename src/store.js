@@ -64,11 +64,17 @@ const albums = (state = { albums: [], message: "" }, action) => {
       return state;
   }
 };
-const album = (state = { album: {} }, action) => {
+const album = (state = { album: {}, message: "" }, action) => {
   switch (action.type) {
     case "GET_ALBUM_INFO":
       return {
-        album: action.payload
+        album: action.payload,
+        message: "GOT_ALBUMS"
+      };
+    case "GET_INFO_ATTEMPT":
+      return {
+        album: [],
+        message: "Getting info"
       };
     default:
       return state;
@@ -96,15 +102,15 @@ const session = (
         apiSig: action.apiSig,
         sessionKey: action.sessionKey,
         username: action.username,
-        message: 'Zalogowano jako'
+        message: "Zalogowano jako"
       };
     case "LOGIN_FAIL":
       return {
         ...state,
         message: "Blad"
       };
-    case 'USER_LOGOUT':
-      return state = undefined
+    case "USER_LOGOUT":
+      return (state = undefined);
 
     default:
       return state;
