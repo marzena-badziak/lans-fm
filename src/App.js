@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+// zbedny komentarz
 // import logo from "./logo.svg";
 import { Router, Route, IndexRoute, hashHistory } from "react-router";
 import "./App.css";
+// zbedny komentarz
 // import store from "./user-interface/store";
 import Home from "./Home";
 import Layout from "./Layout";

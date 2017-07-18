@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+// zbedny komentarz
 //import {lastfmApi, lastfmKey} from "../lib/lastfm-api";
 import { hashHistory } from "react-router";
 import axios from "axios";
@@ -9,9 +10,11 @@ const lastfmKey = {
   api_key: "5df8d91bac81fb9ea65ca73b43ecec62",
   secret: "1186a5beaa848cba51f710c4685be2e9"
 };
+// zbedny komentarz
 //    `http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=${artist.artist}&api_key=${lastfmKey.api_key}&limit=15&format=json`
 
 const lastfmApi = (method, options) => {
+  // co tu sie dzieje?
   let request = `http://ws.audioscrobbler.com/2.0/?method=${method}`;
   Object.entries(options).forEach(([key, value]) => {
     request = `${request}&${key}=${value}`;
@@ -23,18 +26,21 @@ const lastfmApi = (method, options) => {
 export const loginAction = token => {
   const loginOptions = {
     token: `${token}`,
-    api_sig: md5(`api_key${lastfmKey.api_key}methodauth.getSessiontoken${token}${lastfmKey.secret}`)
+    // co to za md5??
+    api_sig: md5(
+      `api_key${lastfmKey.api_key}methodauth.getSessiontoken${token}${lastfmKey.secret}`
+    )
   };
 
   return dispatch => {
     dispatch({
-      type: "LOGIN_ATTEMPT",
+      type: "LOGIN_ATTEMPT"
     });
-    console.log(`${lastfmApi('auth.getSession', loginOptions)}`)
+    // console.log
+    console.log(`${lastfmApi("auth.getSession", loginOptions)}`);
     axios
-      .get(
-        `${lastfmApi('auth.getSession', loginOptions)}`
-      )
+      // co robi ta metoda?
+      .get(`${lastfmApi("auth.getSession", loginOptions)}`)
       .then(function(response) {
         dispatch({
           type: "LOGIN_SUCCESS",
@@ -46,6 +52,7 @@ export const loginAction = token => {
       .catch(function(error) {
         console.log(error);
       });
+    // zbędny komentarz
     /*   .then((response) => {
             dispatch({
                 type: "LOGIN_SUCCESS",

@@ -13,6 +13,7 @@ import propTypes from "prop-types";
 import { withRouter } from "react-router";
 
 class AlbumTile extends Component {
+  // nazwa nieadekwatna do tego co robi funkcja
   checkImage = () => {
     if (this.props.image) {
       return this.props.image;
@@ -26,8 +27,7 @@ class AlbumTile extends Component {
         <CardMedia
           overlay={
             <CardTitle title={this.props.title} subtitle={this.props.artist} />
-          }
-        >
+          }>
           <img src={this.checkImage()} alt={`${this.props.title} cover`} />
         </CardMedia>
         <CardActions>

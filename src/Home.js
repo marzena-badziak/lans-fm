@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import SearchBar from "./user-interface/SearchBar";
+// zbedny komentarz
 // import Navbar from "./user-interface/Navbar";
 import styled from "styled-components";
+// zbedne komentarz
 // import ArtistsGrid from "./ArtistsGrid";
 //import store from "./user-interface/store";
 // import ArtistsGrid from "./ArtistsGrid";
@@ -10,14 +12,13 @@ class Home extends Component {
     return (
       <StyledHome className="App">
         <StyledLogo href="#">LansFm</StyledLogo>
-
+        {/* inline style */}
         <div
           className="container"
           style={{
             paddingTop: "20vh",
             height: "95vh"
-          }}
-        >
+          }}>
           <StyledH1 htmlFor="search-bar">
             Search the least popular artists
           </StyledH1>
@@ -58,6 +59,7 @@ const StyledLogo = styled.a`
     text-decoration: none;
   }
 `;
+// zbedny komentarz
 // const StyledMainAppContainer = styled.div`
 //   background-image: url("http://cdn.wallpapersafari.com/79/66/H3GhW5.jpg");
 //   background-repeat: no-repeat;
@@ -65,6 +67,7 @@ const StyledLogo = styled.a`
 //   background-size: cover;
 // `;
 
+// nazwa nic nie znaczy, komponent powinien miec nazwe ktora cos o nim mowi
 const StyledH1 = styled.h1`
   display: inline-block;
   color: white;
@@ -72,6 +75,8 @@ const StyledH1 = styled.h1`
   padding: 5px;
   margin: 10px;
 `;
+
+// nazwa nic nie znaczy, komponent powinien miec nazwe ktora cos o nim mowi
 const StyledH3 = styled.h3`
   display: inline-block;
   color: white;

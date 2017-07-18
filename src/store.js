@@ -1,7 +1,9 @@
 import { compose, createStore, combineReducers, applyMiddleware } from "redux";
+// zbedny komentarz
 // import persistState from "redux-localstorage";
 import thunk from "redux-thunk";
 
+// reducer do oddzielnego pliku
 const search = (
   state = {
     artistEntered: "",
@@ -42,6 +44,7 @@ const search = (
   }
 };
 
+// reducer do oddzielnego pliku
 const albums = (state = { albums: [] }, action) => {
   switch (action.type) {
     case "SEARCH_ALBUMS":
@@ -54,6 +57,7 @@ const albums = (state = { albums: [] }, action) => {
   }
 };
 const rootReducer = combineReducers({
+  // zbedny komentarz
   // posts: posts,
   //  counter: counter,
   search: search,

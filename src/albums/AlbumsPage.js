@@ -5,6 +5,7 @@ import AlbumTile from "./AlbumTile";
 import styled from "styled-components";
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
+// linijka przerwy pomiedzy importami
 class AlbumsPage extends Component {
   constructor(props) {
     super(props);
@@ -13,27 +14,33 @@ class AlbumsPage extends Component {
     };
   }
   fetchAlbums = e => {
+    // a
     console.log("a");
     this.props.dispatch(
       getAlbums({
+        // nazwa zmiennej z małej litery
         data: this.props.params.AritstName
       })
     );
   };
   componentDidMount() {
     this.fetchAlbums();
+    // dopiero chyba startuje fetch? nic jeszcze nie jest "fetched" w tym momencie
     this.setState({
       fetched: true
     });
   }
   renderTiles() {
+    // zbedny komentarz
     console.log(this.props);
+    // co tu się dzieje? jakoś nie tak poszło z tymi zagniezdzeniami
     if (this.props.albums.albums.album) {
       return this.props.albums.albums.album.map((album, i) => {
         if (!(album.name == "(null)")) {
           return (
             <AlbumTile
               key={i}
+              {/* czemu akurat ten obrazek? */}
               image={album.image[2]["#text"]}
               title={album.name}
               artist={album.artist.name}
@@ -49,6 +56,9 @@ class AlbumsPage extends Component {
       );
     }
   }
+  // jak potrzebujemy jeden element z kolekcji to 'find'
+  // warunek w 'if' nie powinien byc tak duzy, wydziel do metody albo do zmiennej
+  // plus tutaj dwa razy wolasz ta sama petle
   artistImageCheck = () => {
     if (
       this.props.results.filter(

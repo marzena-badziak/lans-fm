@@ -4,12 +4,15 @@ import { connect } from "react-redux";
 import ArtistTile from "./ArtistTile.js";
 import propTypes from "prop-types";
 import CircularProgress from "material-ui/CircularProgress";
+// zbedny komentarz
 // const axios = require("axios");
 
 class ArtistsGrid extends Component {
   render() {
     var grid = [];
+    // zbedny komentarz
     // console.log(this.props.results);
+    // mozna uzyc map tutaj i przeniesc to do metody innej
     this.props.results.forEach(artist => {
       grid.push(
         <ArtistTile
@@ -20,9 +23,11 @@ class ArtistsGrid extends Component {
         />
       );
     });
+    // zbedny komentarz
     // console.log(grid);
     return (
       <div>
+        {/* inline style */}
         <h2 style={{ paddingBottom: "20px" }}>
           {this.props.message} {this.props.artistEntered}
           {this.props.message == "Trwa wyszukiwanie"

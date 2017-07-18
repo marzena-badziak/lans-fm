@@ -4,6 +4,7 @@ class AlbumPage extends Component {
   render() {
     return (
       <div>
+        {/* console.log  */}
         {console.log(this.props.params)}
         {this.props.params.AritstName}
         {this.props.params.albumName}

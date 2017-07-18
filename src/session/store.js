@@ -1,3 +1,4 @@
+// podwojny plik store??
 import { compose, createStore, combineReducers, applyMiddleware } from "redux";
 import persistState from "redux-localstorage";
 import thunk from "redux-thunk";
@@ -23,7 +24,7 @@ const session = (
         apiSig: action.apiSig,
         sessionKey: action.sessionKey,
         username: action.username,
-        message: 'Zalogowano jako'
+        message: "Zalogowano jako"
       };
     case "LOGIN_FAIL":
       return {

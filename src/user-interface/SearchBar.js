@@ -8,6 +8,7 @@ import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 import FontIcon from "material-ui/FontIcon";
 
+// albo robimy import albo require, nie mieszajcie dwoch
 var FontAwesome = require("react-fontawesome");
 var MediaQuery = require("react-responsive");
 
@@ -79,10 +80,11 @@ const StyledSearchSpan = styled.div`
   align-items: center;
   padding: 0 15px;
   border-radius: 0px 10px 10px 0px;
+  // nie trzeba pisac vendor prefixow
   -moz-border-radius: 0px 10px 10px 0px;
   -webkit-border-radius: 0px 10px 10px 0px;
   border: 1px solid #000000;
-  background-color: #DD8899;
+  background-color: #dd8899;
   cursor: pointer;
 `;
 const StyledSearchInput = styled.input`
@@ -91,6 +93,7 @@ const StyledSearchInput = styled.input`
   height: inherit;
   padding: 0 15px;
   border-radius: 10px 0px 0px 10px;
+  // nie trzeba pisac vendor prefixow
   -moz-border-radius: 10px 0px 0px 01px;
   -webkit-border-radius: 10px 0px 0px 10px;
   border: 1px solid #000000;
