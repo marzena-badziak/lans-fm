@@ -1,5 +1,3 @@
-// import axios from "axios";
-
 const lastfmKey = {
   api_key: "5df8d91bac81fb9ea65ca73b43ecec62",
   secret: "1186a5beaa848cba51f710c4685be2e9"
@@ -14,6 +12,16 @@ const lastfmApi = (method, options) => {
   request = `${request}&api_key=${lastfmKey.api_key}&format=json`;
   return request;
 };
+
+const lastfmScrobble = (scrobbleRequest, options) => {
+  let request = `http://ws.audioscrobbler.com/2.0/?method=track.scrobble`;
+  Object.entries(options).forEach(([key, value]) => {
+    request = `${request}&${key}=${value}`;
+  });
+  request = `${request}${scrobbleRequest}&api_key=${lastfmKey.api_key}&format=json`;
+  return request;
+}
+
 /*var apiClient = axios.create({
   baseURL: "http://ws.audioscrobbler.com/2.0/",
   headers: {
@@ -36,5 +44,4 @@ const configureApi = store => {
 };
 
 export { configureApi };*/
-export { lastfmApi, lastfmKey };
-export default lastfmApi;
+export {lastfmApi, lastfmKey};

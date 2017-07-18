@@ -5,6 +5,7 @@ import AlbumTile from "./AlbumTile";
 import styled from "styled-components";
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
+
 class AlbumsPage extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +14,6 @@ class AlbumsPage extends Component {
     };
   }
   fetchAlbums = e => {
-    console.log("a");
     this.props.dispatch(
       getAlbums({
         data: this.props.params.AritstName
@@ -27,10 +27,9 @@ class AlbumsPage extends Component {
     });
   }
   renderTiles() {
-    console.log(this.props);
-    if (this.props.albums.albums.album) {
+    if (this.props.albums.albums.length !== 0) {
       return this.props.albums.albums.album.map((album, i) => {
-        if (!(album.name == "(null)")) {
+        if (!(album.name === "(null)")) {
           return (
             <AlbumTile
               key={i}
@@ -42,21 +41,29 @@ class AlbumsPage extends Component {
         }
       });
     } else {
-      return (
-        <div>
-          <CircularProgress />
-        </div>
-      );
+      if (this.props.albums.message == "Searching") {
+        return (
+          <div>
+            <CircularProgress />
+          </div>
+        );
+      } else {
+        return (
+          <div>
+            {" "}{this.props.albums.message}
+          </div>
+        );
+      }
     }
   }
   artistImageCheck = () => {
     if (
       this.props.results.filter(
-        artist => artist.name == this.props.params.AritstName
+        artist => artist.name === this.props.params.AritstName
       )[0]
     ) {
       return this.props.results.filter(
-        artist => artist.name == this.props.params.AritstName
+        artist => artist.name === this.props.params.AritstName
       )[0].image[2]["#text"];
     }
   };
@@ -90,9 +97,11 @@ const SearchResultsContainer = styled.div`
   padding: 20px 0;
 `;
 const mapStateToProps = state => {
+  console.log (state.albums);
   return {
     results: state.search.artistsSimilar,
-    albums: state.albums
+    albums: state.albums,
+    message: state.message
   };
 };
 export default connect(mapStateToProps)(AlbumsPage);

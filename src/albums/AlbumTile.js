@@ -2,15 +2,27 @@ import React, { Component } from "react";
 import {
   Card,
   CardActions,
-  CardHeader,
   CardMedia,
-  CardTitle,
-  CardText
+  CardTitle
 } from "material-ui/Card";
 import styled from "styled-components";
 import FlatButton from "material-ui/FlatButton";
 import propTypes from "prop-types";
 import { withRouter } from "react-router";
+/*  scrobbleAlbum = () => {
+    let scrobbleRequest = Qs.stringify(params, {arrayFormat: 'brackets'})
+
+    });
+    axios
+      .get(`${lastfmApi("artist.getsimilar", '')}`)
+      .then(function(response) {
+        return 0;
+      })
+      .catch(function(error) {
+        console.log(error);
+      })
+    }*/
+
 
 class AlbumTile extends Component {
   checkImage = () => {
@@ -31,7 +43,7 @@ class AlbumTile extends Component {
           <img src={this.checkImage()} alt={`${this.props.title} cover`} />
         </CardMedia>
         <CardActions>
-          <FlatButton label="Scrobble" />
+          <FlatButton label="Show Album" />
           <FlatButton
             label="Show Album"
             onClick={() =>
