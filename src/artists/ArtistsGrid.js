@@ -24,14 +24,10 @@ class ArtistsGrid extends Component {
         <h2 style={{ paddingBottom: "20px" }}>
           {this.props.message} {this.props.artistEntered}
           {this.props.message === "Trwa wyszukiwanie"
-<<<<<<< HEAD
-            ? <CircularProgress style={{ display: "block" }} />
-=======
             ? <CircularProgress
                 color="#AA8899"
                 style={{ display: "block", margin: "80px auto" }}
               />
->>>>>>> 393a518fe22a552a70a5aec70200eea598e03120
             : false}
         </h2>
         <SearchResultsContainer className="row">

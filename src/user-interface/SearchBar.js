@@ -4,15 +4,6 @@ import { connect } from "react-redux";
 import propTypes from "prop-types";
 import { withRouter } from "react-router";
 import styled from "styled-components";
-<<<<<<< HEAD
-=======
-// import RaisedButton from "material-ui/RaisedButton";
-// import TextField from "material-ui/TextField";
-import FontIcon from "material-ui/FontIcon";
-
-var FontAwesome = require("react-fontawesome");
-var MediaQuery = require("react-responsive");
->>>>>>> 393a518fe22a552a70a5aec70200eea598e03120
 
 class SearchBar extends Component {
   constructor(props) {
@@ -46,12 +37,8 @@ class SearchBar extends Component {
             id="search-bar"
             type="text"
             value={this.state.searchValue}
-<<<<<<< HEAD
             placeholder="Type artist name to find similar artists"
             //  className="form-control"
-=======
-            placeholder="Your favourite artist"
->>>>>>> 393a518fe22a552a70a5aec70200eea598e03120
           />
           <StyledSearchSpan onClick={e => this.fetchArtist(e)}>
             Search
@@ -81,12 +68,7 @@ padding 15px;
   -moz-border-radius: 0px 10px 10px 0px;
   -webkit-border-radius: 0px 10px 10px 0px;
   border: 1px solid #000000;
-<<<<<<< HEAD
   background-color: #DD8899;;
-=======
-  background-color: #dd8899;
-  cursor: pointer;
->>>>>>> 393a518fe22a552a70a5aec70200eea598e03120
 `;
 const StyledSearchInput = styled.input`
 color:black;
