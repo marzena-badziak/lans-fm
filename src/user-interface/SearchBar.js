@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import propTypes from "prop-types";
 import { withRouter } from "react-router";
 import styled from "styled-components";
-import RaisedButton from "material-ui/RaisedButton";
-import TextField from "material-ui/TextField";
+// import RaisedButton from "material-ui/RaisedButton";
+// import TextField from "material-ui/TextField";
 import FontIcon from "material-ui/FontIcon";
 
 var FontAwesome = require("react-fontawesome");
@@ -44,8 +44,7 @@ class SearchBar extends Component {
             type="text"
             value={this.state.searchValue}
             placeholder="Your favourite artist"
-            //  className="form-control"
-          />{" "}
+          />
           <StyledSearchSpan onClick={e => this.fetchArtist(e)}>
             <MediaQuery query="(min-device-width: 768px)">Search </MediaQuery>
             <MediaQuery query="(max-device-width: 767px)">
@@ -82,7 +81,7 @@ const StyledSearchSpan = styled.div`
   -moz-border-radius: 0px 10px 10px 0px;
   -webkit-border-radius: 0px 10px 10px 0px;
   border: 1px solid #000000;
-  background-color: #DD8899;
+  background-color: #dd8899;
   cursor: pointer;
 `;
 const StyledSearchInput = styled.input`
