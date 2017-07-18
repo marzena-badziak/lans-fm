@@ -55,28 +55,50 @@ export const getAlbums = data => {
     limit: "10"
   };
   return dispatch => {
+    dispatch({
+      type: "SEARCH_ALBUMS_ATTEMPT"
+    });
     axios
       .get(`${lastfmApi("artist.gettopalbums", getAlbumOptions)}`)
       .then(function(response) {
+        console.log(response);
+        if (response.data.topalbums) {
+          dispatch({
+            type: "SEARCH_ALBUMS",
+            payload: response.data.topalbums
+          });
+        } else {
+          dispatch({
+            type: "NO_ALBUMS"
+          });
+        }
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
+};
+export const getAlbumInfo = data => {
+  const getAlbumOptions = {
+    artist: data.artist,
+    album: data.album
+  };
+  console.log(getAlbumOptions);
+  return dispatch => {
+    //  dispatch({
+    //    type: "SEARCH_ALBUMS_ATTEMPT"
+    //  });
+    axios
+      .get(`${lastfmApi("album.getInfo", getAlbumOptions)}`)
+      .then(function(response) {
+        console.log(response);
         dispatch({
-          type: "SEARCH_ALBUMS",
-          payload: response.data.topalbums
+          type: "GET_ALBUM_INFO",
+          payload: response.data.album
         });
       })
       .catch(function(error) {
         console.log(error);
       });
-    /*   .then((response) => {
-            dispatch({
-                type: "LOGIN_SUCCESS",
-                data: {
-                    username: user.username,
-                    token: response.data.data.auth_token,
-                    user_id: response.data.data.user_id
-                }
-            });
-            hashHistory.push("artists-similar");
-
-        })*/
   };
 };
