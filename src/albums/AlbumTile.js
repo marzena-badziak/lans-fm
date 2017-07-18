@@ -46,7 +46,6 @@ class AlbumTile extends Component {
           <img src={this.checkImage()} alt={`${this.props.title} cover`} />
         </CardMedia>
         <CardActions>
-          <FlatButton label="Show Album" />
           <FlatButton label="Scrobble" />
           <FlatButton
             label="Show Album"
