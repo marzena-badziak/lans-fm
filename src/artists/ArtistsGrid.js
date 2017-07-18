@@ -9,7 +9,7 @@ import CircularProgress from "material-ui/CircularProgress";
 class ArtistsGrid extends Component {
   render() {
     var grid = [];
-    console.log(this.props.results);
+    // console.log(this.props.results);
     this.props.results.forEach(artist => {
       grid.push(
         <ArtistTile

@@ -50,6 +50,17 @@ class ArtistTile extends Component {
           playVideo: true,
           videoFound: true
         });
+
+        var ytTitle = response.data.items[0].snippet.title;
+        console.log(ytTitle);
+
+        const getArtistTitle = require("get-artist-title");
+
+        const [artist, title] = getArtistTitle(ytTitle, {
+          defaultArtist: response.data.items[0].snippet.channelTitle
+        });
+        console.log("artist: " + artist);
+        console.log("title: " + title);
       })
       .catch(err => {
         this.setState({ playVideo: true, videoFound: false });
