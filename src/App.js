@@ -20,7 +20,7 @@ class App extends Component {
             <Route component={Layout}>
               <Route path="searchResults" component={ArtistsGrid} />
               <Route path="login" component={Login} />
-              <Route path=":AritstName/albums" component={AlbumsPage} />
+              <Route path=":aritstName/albums" component={AlbumsPage} />
               <Route
                 path=":AritstName/albums/:albumName"
                 component={AlbumPage}

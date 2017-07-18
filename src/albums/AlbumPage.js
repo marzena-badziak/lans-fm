@@ -15,20 +15,9 @@ class AlbumPage extends Component {
     super(props);
     this.state = {
       fetched: false,
-      open: false
+      open: {3:true}
     };
   }
-  handleToggle = () => {
-    this.setState({
-      open: !this.state.open
-    });
-  };
-
-  handleNestedListToggle = item => {
-    this.setState({
-      open: item.state.open
-    });
-  };
 
   fetchAlbum = e => {
     this.props.dispatch(
@@ -48,12 +37,12 @@ class AlbumPage extends Component {
           <ListItem
             primaryText={track.name}
             key={i}
-            onClick={() => this.handleToggle}
-            open={this.state.open}
+          //  onClick={(e)=>this.setState({ open:{i : !this.state.open[i]} })}
+          //  open={this.state.open[i]}
             nestedItems={[
-              <FlatButton label="Scrobble" />,
-              <FlatButton label="Youtube" />,
-              <FlatButton label="Spotify" />
+              <ListItem><FlatButton label="Scrobble" /></ListItem>,
+              <ListItem><FlatButton label="Scrobble" /></ListItem>,
+              <ListItem><FlatButton label="Scrobble" /></ListItem>
             ]}
           />
         );
@@ -66,7 +55,6 @@ class AlbumPage extends Component {
     return (
       <div className="container">
         <Paper>
-          {console.log(this.props.album.album == {})}
           {this.props.album.message === "GOT_ALBUMS"
             ? <Avatar
                 src={this.props.album.album.image[2]["#text"]}
