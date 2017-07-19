@@ -103,7 +103,12 @@ class ListElement extends Component {
                   .format("mm:ss")}
               </span>
               <span
-                style={{ display: "flex", alignItems: "center" }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "25px",
+                  height: "25px"
+                }}
                 onClick={() => this.changeDropdownState()}
               >
                 <FontAwesome
@@ -111,6 +116,7 @@ class ListElement extends Component {
                   name="options"
                   size="lg"
                   aria-hidden="true"
+                  style={{ paddingLeft: "12px" }}
                 />
               </span>
             </div>
