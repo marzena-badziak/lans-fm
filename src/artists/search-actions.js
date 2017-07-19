@@ -85,13 +85,12 @@ export const getAlbumInfo = data => {
   };
   console.log(getAlbumOptions);
   return dispatch => {
-    //  dispatch({
-    //    type: "SEARCH_ALBUMS_ATTEMPT"
-    //  });
+    dispatch({
+      type: "GET_INFO_ATTEMPT"
+    });
     axios
       .get(`${lastfmApi("album.getInfo", getAlbumOptions)}`)
       .then(function(response) {
-        console.log(response);
         dispatch({
           type: "GET_ALBUM_INFO",
           payload: response.data.album

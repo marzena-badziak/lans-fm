@@ -14,7 +14,7 @@ const search = (
     case "SEARCH_ATTEMPT":
       return {
         ...state,
-        message: "Searching",
+        message: "Searching: ",
         artistEntered: action.artistEntered
       };
     case "SEARCH_SUCCESS":
@@ -32,7 +32,7 @@ const search = (
     case "SEARCH_NO_ARTIST":
       return {
         ...state,
-        message: "There is no artist in Last.fm database",
+        message: "No such artist in Last.fm database",
 
         artistsSimilar: []
       };
@@ -52,7 +52,7 @@ const albums = (state = { albums: [], message: "" }, action) => {
     case "SEARCH_ALBUMS":
       return {
         ...state,
-        message: "",
+        message: "Found albums",
         albums: action.payload
       };
     case "NO_ALBUMS":
@@ -64,11 +64,17 @@ const albums = (state = { albums: [], message: "" }, action) => {
       return state;
   }
 };
-const album = (state = { album: {} }, action) => {
+const album = (state = { album: {}, message: "" }, action) => {
   switch (action.type) {
     case "GET_ALBUM_INFO":
       return {
-        album: action.payload
+        album: action.payload,
+        message: "GOT_ALBUMS"
+      };
+    case "GET_INFO_ATTEMPT":
+      return {
+        album: [],
+        message: "Getting info"
       };
     default:
       return state;
@@ -88,7 +94,7 @@ const session = (
     case "LOGIN_ATTEMPT":
       return {
         ...state,
-        message: "Logging in"
+        message: "Trwa logowanie"
       };
     case "LOGIN_SUCCESS":
       return {
@@ -96,15 +102,15 @@ const session = (
         apiSig: action.apiSig,
         sessionKey: action.sessionKey,
         username: action.username,
-        message: 'Logged as'
+        message: "Zalogowano jako"
       };
     case "LOGIN_FAIL":
       return {
         ...state,
-        message: "Error"
+        message: "Blad"
       };
-    case 'USER_LOGOUT':
-      return state = undefined
+    case "USER_LOGOUT":
+      return (state = undefined);
 
     default:
       return state;

@@ -6,26 +6,72 @@ import { connect } from "react-redux";
 import LoginInfo from "../session/LoginInfo";
 
 class Navbar extends Component {
-
-
   render() {
     return (
-      <AppBar
+      <StyledAppBar
         style={{ backgroundColor: "#8585ad" }}
         iconElementLeft={<StyledLogo href="#">LansFm</StyledLogo>}
         title={
-          <SearchBar
+          <StyledSearchBar
             boxShadow=" 0px 0px 0px 0px rgba(0, 0, 0, 0)"
-            width="50%"
+            // width="50%"
             height="50px"
             style={{ marginTop: "7px" }}
           />
         }
-        iconElementRight={<LoginInfo />} showMenuIconButton={true}
+        iconElementRight={<LoginInfo />}
+        showMenuIconButton={true}
       />
     );
   }
 }
+
+const StyledSearchBar = styled(SearchBar)`
+  width: 50vw;
+  font-size: 16px;
+  /* Smartphones (portrait and landscape) ----------- */
+  @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    width: 45vw;
+    font-size: 10px;
+    margin: 3px;
+  }
+  /* Smartphones (portrait) ----------- */
+  @media only screen and (max-width : 320px) {
+    width: 45vw;
+    font-size: 10px;
+    margin: 3px;
+  }
+`;
+const StyledAppBar = styled(AppBar)`
+  background-color: #BB77AA;
+  display: flex;
+  align-items: baseline;
+  padding: 2px;
+  /* Smartphones (portrait and landscape) ----------- */
+  @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    padding: 2px;
+  }
+
+  /* Smartphones (portrait) ----------- */
+  @media only screen and (max-width : 320px) {
+    padding: 2px;
+  }
+
+`;
+
+const StyledForm = styled.form`
+  /* Smartphones (portrait and landscape) ----------- */
+  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Smartphones (portrait) ----------- */
+  @media only screen and (max-width: 320px) {
+    margin: 0;
+    padding: 0;
+  }
+`;
 
 const StyledLogo = styled.a`
   font-family: Righteous;
@@ -34,6 +80,16 @@ const StyledLogo = styled.a`
   &:hover {
     color: #e7f7ff;
     text-decoration: none;
+  }
+  /* Smartphones (portrait and landscape) ----------- */
+  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    font-size: medium;
+  }
+
+  /* Smartphones (portrait) ----------- */
+  @media only screen and (max-width: 320px) {
+    font-size: medium;
+  }
 `;
 const mapStateToProps = state => {
   return {

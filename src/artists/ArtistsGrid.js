@@ -8,7 +8,6 @@ import CircularProgress from "material-ui/CircularProgress";
 class ArtistsGrid extends Component {
   render() {
     var grid = [];
-    // console.log(this.props.results);
     this.props.results.forEach(artist => {
       grid.push(
         <ArtistTile
@@ -23,13 +22,10 @@ class ArtistsGrid extends Component {
       <div>
         <h2 style={{ paddingBottom: "20px" }}>
           {this.props.message} {this.props.artistEntered}
-          {this.props.message === "Trwa wyszukiwanie"
-            ? <CircularProgress
-                color="#AA8899"
-                style={{ display: "block", margin: "80px auto" }}
-              />
-            : false}
         </h2>
+        {this.props.message === "Searching: "
+          ? <StyledCircularProgress color="#aa8899" />
+          : false}
         <SearchResultsContainer className="row">
           <dbody>
             {grid}
@@ -50,6 +46,11 @@ const SearchResultsContainer = styled.div`
   float: none;
   margin: 0 auto;
   padding: 20px 0;
+`;
+const StyledCircularProgress = styled(CircularProgress)`
+  display: block;
+  margin: 0 auto;
+  margin-top: 60px;
 `;
 
 const mapStateToProps = state => {

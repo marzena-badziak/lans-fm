@@ -7,6 +7,9 @@ import axios from "axios";
 import RaisedButton from "material-ui/RaisedButton";
 import ShowVideo from "./ShowVideo";
 import { withRouter } from "react-router";
+import FontAwesome from "react-fontawesome";
+import { lastfmApi, lastfmKey } from "../lib/lastfm-api";
+import md5 from "md5";
 
 class ArtistTile extends Component {
   constructor(props) {
@@ -51,7 +54,8 @@ class ArtistTile extends Component {
           playVideo: true,
           videoFound: true
         });
-
+        let timestamp = Date.now();
+        console.log("timestamp: " + timestamp);
         let ytTitle = response.data.items[0].snippet.title;
         console.log(ytTitle);
 
@@ -62,6 +66,40 @@ class ArtistTile extends Component {
         });
         console.log("artist: " + artist);
         console.log("title: " + title);
+        console.log(lastfmKey);
+        console.log(this.props.session);
+        var sig = md5(
+          `api_key${lastfmKey.api_key}methodtrack.scrobble${this.props.session
+            .token}${lastfmKey.secret}`
+        );
+        axios
+          // .post("http://ws.audioscrobbler.com/2.0/?format=json", {
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //     Accept: "application/json"
+          //   },
+          //   data: {
+          //     "artist[0]": artist,
+          //     "track[0]": title,
+          //     "timestamp[0]": timestamp,
+          //     api_sig: this.props.session.apiSig,
+          //     sk: this.props.session.sessionKey,
+          //     api_key: lastfmKey.api_key,
+          //     method: "track.scrobble"
+          //   }
+          // })
+          .post(
+            `http://ws.audioscrobbler.com/2.0/?method=track.scrobble&artist=
+            ${artist}&track=${title}&timestamp=${timestamp}
+            &api_sig=${sig}&sk=${this.props.session
+              .sessionKey}&api_key=${lastfmKey.api_key}`
+          )
+          .then(response => {
+            console.log(response);
+          })
+          .catch(err => {
+            console.log(err);
+          });
       })
       .catch(err => {
         this.setState({ playVideo: true, videoFound: false });
@@ -76,44 +114,51 @@ class ArtistTile extends Component {
   };
   render() {
     return (
-      <StyledArtistTile
-        className="col-xs-4 col-md-3"
-        onMouseLeave={this.hideAlbums}
-      >
-        {this.props.name.length > 22
-          ? <h4
-              style={{
-                marginTop: "5px",
-                marginBottom: "13px",
-                paddingTop: "0",
-                fontWeight: "bold"
-              }}
-            >
-              {this.props.name}
-            </h4>
-          : <h3
-              style={{ marginTop: "0px", paddingTop: "0", fontWeight: "bold" }}
-            >
-              {this.props.name}
-            </h3>}
-        <p style={{ fontSize: "8px", padding: "0" }}>
-          Match strength:{" "}
-          <strong style={{ color: "#003366" }}>
-            {parseFloat(this.props.match).toFixed(2)}
-          </strong>
-        </p>
-
+      <StyledArtistTile onMouseLeave={this.hideAlbums}>
+        <StyledArtistName>
+          {this.props.name.length > 30
+            ? <h4
+                style={{
+                  marginTop: "5px",
+                  marginBottom: "13px",
+                  paddingTop: "0",
+                  fontWeight: "bold"
+                }}
+              >
+                {this.props.name}
+              </h4>
+            : <h3
+                style={{
+                  marginTop: "0px",
+                  paddingTop: "0",
+                  fontWeight: "bold"
+                }}
+              >
+                {this.props.name}
+              </h3>}
+        </StyledArtistName>
         <img
           src={this.props.img}
           alt={this.props.name}
           width="260px"
           height="260px"
+          style={{ position: "relative" }}
           // onClick={}
         />
-        <div style={{ textAlign: "center" }}>
-          <RaisedButton
-            style={{ margin: "5px" }}
-            backgroundColor="#AA8899"
+        <StyledYouTubeFontAwesome
+          onClick={e => this.playVideo()}
+          className="fa fa-youtube-play"
+          name="play"
+          size="4x"
+        />
+        <div
+          style={{
+            position: "relative",
+            textAlign: "center"
+          }}
+        >
+          <StyledRaisedButton
+            backgroundColor="#aa8899"
             label="Search similar"
             labelColor="#ffffff"
             value={this.props.name}
@@ -121,15 +166,9 @@ class ArtistTile extends Component {
           />
           <RaisedButton
             label="Albums"
-            backgroundColor="#AA8899"
+            backgroundColor="#aa8899"
             labelColor="#ffffff"
             onClick={e => this.getAlbums(e)}
-          />
-          <RaisedButton
-            label="Play"
-            backgroundColor="#AA8899"
-            labelColor="#ffffff"
-            onClick={e => this.playVideo()}
           />
         </div>
         {this.state.playVideo
@@ -144,14 +183,67 @@ class ArtistTile extends Component {
   }
 }
 
+const StyledAlbumElement = styled.li`
+  display: flex;
+  justify-content: space-around;
+`;
 const StyledArtistTile = styled.div`
+  overflow: hidden;
+  position: relative;
   display: inline-block;
   margin: 15px;
   width: 260px;
-  height: 380px;
+  height: 360px;
   text-align: left;
   z-index: 1;
   padding: 0;
+`;
+
+const StyledArtistName = styled.div`
+  overflow: visible;
+  height: 60px;
+  z-index: 4;
+
+  background: rgb(170, 136, 153);
+  background: -moz-linear-gradient(
+    45deg,
+    rgba(170, 136, 153, 1) 0%,
+    rgba(255, 224, 238, 1) 63%,
+    rgba(255, 224, 238, 1) 63%
+  );
+  background: -webkit-linear-gradient(
+    45deg,
+    rgba(170, 136, 153, 1) 0%,
+    rgba(255, 224, 238, 1) 63%,
+    rgba(255, 224, 238, 1) 63%
+  );
+  background: linear-gradient(
+    45deg,
+    rgba(170, 136, 153, 1) 0%,
+    rgba(255, 224, 238, 1) 63%,
+    rgba(255, 224, 238, 1) 63%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(
+      startColorstr='#aa8899',
+      endColorstr='#ffe0ee',
+      GradientType=1
+    );
+`;
+const StyledYouTubeFontAwesome = styled(FontAwesome)`
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.75);
+  color: #b31217;
+  position: absolute;
+  z-index: 5;
+  top: 60px;
+  left: 10px;
+  cursor: pointer;
+  &:hover {
+    color: #e52d27;
+  }
+`;
+
+const StyledRaisedButton = styled(RaisedButton)`
+  margin: 3px;
 `;
 
 ArtistTile.propTypes = {
@@ -160,4 +252,13 @@ ArtistTile.propTypes = {
   match: propTypes.string.isRequired
 };
 
-export default connect()(withRouter(ArtistTile));
+const mapStateToProps = state => {
+  return {
+    results: state.search.artistsSimilar,
+    artistEntered: state.search.artistEntered,
+    message: state.search.message,
+    session: state.session
+  };
+};
+
+export default connect(mapStateToProps)(withRouter(ArtistTile));
