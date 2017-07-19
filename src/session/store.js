@@ -23,7 +23,7 @@ const session = (
         apiSig: action.apiSig,
         sessionKey: action.sessionKey,
         username: action.username,
-        message: 'Zalogowano jako'
+        message: "Zalogowano jako"
       };
     case "LOGIN_FAIL":
       return {
@@ -50,7 +50,8 @@ const rootReducer = combineReducers({
   // posts: posts,
   //  counter: counter,
   search: search,
-  albums: albums
+  albums: albums,
+  session: session
 });
 
 const enhancer = compose(applyMiddleware(thunk));
