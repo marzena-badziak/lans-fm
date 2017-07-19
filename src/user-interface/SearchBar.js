@@ -4,12 +4,8 @@ import { connect } from "react-redux";
 import propTypes from "prop-types";
 import { withRouter } from "react-router";
 import styled from "styled-components";
-import RaisedButton from "material-ui/RaisedButton";
-import TextField from "material-ui/TextField";
-import FontIcon from "material-ui/FontIcon";
-
-var FontAwesome = require("react-fontawesome");
-var MediaQuery = require("react-responsive");
+import FontAwesome from "react-fontawesome";
+import MediaQuery from "react-responsive";
 
 class SearchBar extends Component {
   constructor(props) {
@@ -44,7 +40,6 @@ class SearchBar extends Component {
             type="text"
             value={this.state.searchValue}
             placeholder="Your favourite artist"
-            //  className="form-control"
           />{" "}
           <StyledSearchSpan onClick={e => this.fetchArtist(e)}>
             <MediaQuery query="(min-device-width: 768px)">Search </MediaQuery>
@@ -52,11 +47,9 @@ class SearchBar extends Component {
               <FontAwesome
                 className="fa fa-search"
                 name="search"
-                size="1x"
                 style={{ textShadow: "0 1px 0 rgba(0, 0, 0, 0.1)" }}
               />
             </MediaQuery>
-            <i className="material-icons" value="&#xE87C" />
           </StyledSearchSpan>
         </StyledSearchBar>
       </form>
@@ -79,10 +72,8 @@ const StyledSearchSpan = styled.div`
   align-items: center;
   padding: 0 15px;
   border-radius: 0px 10px 10px 0px;
-  -moz-border-radius: 0px 10px 10px 0px;
-  -webkit-border-radius: 0px 10px 10px 0px;
   border: 1px solid #000000;
-  background-color: #DD8899;
+  background-color: #dd8899;
   cursor: pointer;
 `;
 const StyledSearchInput = styled.input`
@@ -91,8 +82,6 @@ const StyledSearchInput = styled.input`
   height: inherit;
   padding: 0 15px;
   border-radius: 10px 0px 0px 10px;
-  -moz-border-radius: 10px 0px 0px 01px;
-  -webkit-border-radius: 10px 0px 0px 10px;
   border: 1px solid #000000;
   ::-webkit-input-placeholder {
     text-align: center;

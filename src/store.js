@@ -14,25 +14,25 @@ const search = (
     case "SEARCH_ATTEMPT":
       return {
         ...state,
-        message: "Trwa wyszukiwanie",
+        message: "Searching: ",
         artistEntered: action.artistEntered
       };
     case "SEARCH_SUCCESS":
       return {
         ...state,
-        message: "Wyniki wyszukiwania dla: ",
+        message: "Search results for: ",
         artistsSimilar: action.artistsSimilar
       };
     case "SEARCH_FAIL":
       return {
         ...state,
-        message: "Blad"
+        message: "Error"
       };
 
     case "SEARCH_NO_ARTIST":
       return {
         ...state,
-        message: "Brak Artysty w bazie Last.fm",
+        message: "No such artist in Last.fm database",
 
         artistsSimilar: []
       };
