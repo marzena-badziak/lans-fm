@@ -35,24 +35,27 @@ class AlbumTile extends Component {
       return "https://lastfm-img2.akamaized.net/i/u/174s/c6f59c1e5e7240a4c0d427abd71f3dbb.png";
     }
   };
+  openAlbum = () => {
+    return this.props.router.push(
+      `${this.props.artist}/albums/${this.props.title}`
+    );
+  };
   render() {
     return (
-      <StyledAlbumCard>
-        <CardMedia
+      <StyledAlbumCard onClick={() => this.openAlbum()}>
+        <AlbumImage
           overlay={
             <CardTitle title={this.props.title} subtitle={this.props.artist} />
           }
         >
           <img src={this.setImage()} alt={`${this.props.title} cover`} />
-        </CardMedia>
+        </AlbumImage>
         <CardActions>
-          <FlatButton label="Scrobble" />
+          <FlatButton label="Scrobble" backgroundColor="plum" />
           <FlatButton
             label="Show Album"
-            onClick={() =>
-              this.props.router.push(
-                `${this.props.artist}/albums/${this.props.title}`
-              )}
+            backgroundColor="hotpink"
+            onClick={() => this.openAlbum()}
           />
         </CardActions>
       </StyledAlbumCard>
@@ -62,6 +65,16 @@ class AlbumTile extends Component {
 const StyledAlbumCard = styled(Card)`
 width: 300px;
 margin-top: 30px;
+
+
+`;
+const AlbumImage = styled(CardMedia)`
+
+transition: .2s all;
+
+&:hover{
+  -webkit-filter: brightness(50%)
+}
 `;
 
 AlbumTile.propTypes = {
