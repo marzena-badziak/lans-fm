@@ -1,13 +1,10 @@
 import React, { Component } from "react";
-// import logo from "./logo.svg";
 import { Router, Route, IndexRoute, hashHistory } from "react-router";
 import "./App.css";
-// import store from "./user-interface/store";
 import Home from "./Home";
 import Layout from "./Layout";
 import ArtistsGrid from "./artists/ArtistsGrid";
 import Login from "./session/Login";
-
 import AlbumsPage from "./albums/AlbumsPage";
 import AlbumPage from "./albums/AlbumPage";
 class App extends Component {

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import SearchBar from "./SearchBar";
 import styled from "styled-components";
 import AppBar from "material-ui/AppBar";
-import FlatButton from "material-ui/FlatButton";
 import { connect } from "react-redux";
 import LoginInfo from "../session/LoginInfo";
 
