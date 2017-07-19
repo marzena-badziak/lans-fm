@@ -21,39 +21,38 @@ class AlbumsPage extends Component {
   componentDidMount() {
     this.fetchAlbums();
   }
-  displayAvaliableAlbums(album,i){
-        if (!(album.name == "(null)")) {
-          return (
-            <AlbumTile
-              key={i}
-              image={album.image[2]["#text"]}
-              title={album.name}
-              artist={album.artist.name}
-            />
-          );
-        }
-  }
-  mapAlbums(){
-      return this.props.albums.albums.album.map((album, i) => {
-       return this.displayAvaliableAlbums(album,i)
-      });
+  displayAvaliableAlbums(album, i) {
+    if (!(album.name == "(null)")) {
+      return (
+        <AlbumTile
+          key={i}
+          image={album.image[2]["#text"]}
+          title={album.name}
+          artist={album.artist.name}
+        />
+      );
     }
-  displayPlaceHolder(placeholder){
+  }
+  mapAlbums() {
+    return this.props.albums.albums.album.map((album, i) => {
+      return this.displayAvaliableAlbums(album, i);
+    });
+  }
+  displayPlaceHolder(placeholder) {
     return (
       <div>
         {placeholder}
       </div>
-    )
+    );
   }
   renderTiles() {
     if (this.props.albums.albums.length !== 0) {
-     return this.mapAlbums()
-    }
-   else {
+      return this.mapAlbums();
+    } else {
       if (this.props.albums.message == "Searching") {
-        return this.displayPlaceHolder(<CircularProgress/>)
+        return this.displayPlaceHolder(<CircularProgress />);
       } else {
-        return this.displayPlaceHolder(this.props.albums.message)
+        return this.displayPlaceHolder(this.props.albums.message);
       }
     }
   }
@@ -68,18 +67,43 @@ class AlbumsPage extends Component {
   };
   render() {
     return (
-      <div className="container">
-        <h2>
-          {this.props.params.aritstName}
-        </h2>
-        <Avatar
-          src={this.artistImageCheck()}
-          alt={`${this.props.params.aritstName} foto`}
-          size={200}
-        />
-        <SearchResultsContainer>
-          {this.renderTiles()}
-        </SearchResultsContainer>
+      <div>
+        <div
+          style={{
+            position: "absolute",
+            left: "0",
+            display: "block",
+            margin: "10px"
+          }}
+        >
+          <ul
+            style={{
+              display: "inline-block",
+              listStyleType: "none",
+              margin: "2px",
+              padding: "0"
+            }}
+          >
+            <li
+              style={{ display: "inline", margin: "0 auto", marginTop: "10px" }}
+            >
+              / search results
+            </li>
+          </ul>
+        </div>
+        <div className="container">
+          <h2>
+            {this.props.params.aritstName}
+          </h2>
+          <Avatar
+            src={this.artistImageCheck()}
+            alt={`${this.props.params.aritstName} foto`}
+            size={200}
+          />
+          <SearchResultsContainer>
+            {this.renderTiles()}
+          </SearchResultsContainer>
+        </div>
       </div>
     );
   }

@@ -38,26 +38,63 @@ class AlbumPage extends Component {
   }
   render() {
     return (
-      <div
-        className="container"
-        style={{ display: "flex", justifyContent: "center" }}
-      >
-        <Paper style={{ width: "70%" }}>
-          {this.props.album.message === "GOT_ALBUMS"
-            ? <div>
-                <Avatar
-                  src={this.props.album.album.image[2]["#text"]}
-                  size={150}
-                />
-                <h2 style={{ display: "block", textAlign: "center" }}>
-                  {this.props.params.albumName}
-                </h2>
-              </div>
-            : false}
-          <List>
-            {this.showTracks()}
-          </List>
-        </Paper>
+      <div>
+        <div
+          style={{
+            position: "absolute",
+            left: "0",
+            display: "block",
+            margin: "10px"
+          }}
+        >
+          <ul
+            style={{
+              display: "inline-block",
+              listStyleType: "none",
+              margin: "2px",
+              padding: "0"
+            }}
+          >
+            <li
+              style={{ display: "inline", margin: "0 auto", marginTop: "10px" }}
+            >
+              {" "}/ search results{" "}
+            </li>
+            <li
+              style={{ display: "inline", margin: "0 auto", marginTop: "10px" }}
+            >
+              / {this.props.params.AritstName}
+            </li>
+          </ul>
+        </div>
+        <div
+          className="container"
+          style={{
+            display: "flex",
+            // flexDirection: "column",
+            justifyContent: "center"
+            // flexWrap: "nowrap"
+          }}
+        >
+          <Paper
+            style={{ width: "70%", marginTop: "30px", paddingTop: "10px" }}
+          >
+            {this.props.album.message === "GOT_ALBUMS"
+              ? <div>
+                  <Avatar
+                    src={this.props.album.album.image[2]["#text"]}
+                    size={150}
+                  />
+                  <h2 style={{ display: "block", textAlign: "center" }}>
+                    {this.props.params.albumName}
+                  </h2>
+                </div>
+              : false}
+            <List>
+              {this.showTracks()}
+            </List>
+          </Paper>
+        </div>
       </div>
     );
   }
