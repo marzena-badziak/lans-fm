@@ -6,6 +6,7 @@ import styled from "styled-components";
 import qs from "qs";
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
+import { withRouter } from "react-router";
 
 class AlbumsPage extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class AlbumsPage extends Component {
   fetchAlbums = e => {
     this.props.dispatch(
       getAlbums({
-        data: this.props.params.aritstName
+        data: this.props.params.artistName
       })
     );
   };
@@ -58,12 +59,17 @@ class AlbumsPage extends Component {
   }
   artistImageCheck = () => {
     const artistImg = this.props.results.find(
-      artist => artist.name == this.props.params.aritstName
+      artist => artist.name == this.props.params.artistName
     );
     console.log(artistImg);
     if (artistImg) {
       return artistImg.image[2]["#text"];
     }
+  };
+  goBackToSearchResults = e => {
+    e.preventDefault();
+    console.log("back to search");
+    this.props.router.push("searchResults");
   };
   render() {
     return (
@@ -85,7 +91,13 @@ class AlbumsPage extends Component {
             }}
           >
             <li
-              style={{ display: "inline", margin: "0 auto", marginTop: "10px" }}
+              style={{
+                display: "inline",
+                margin: "0 auto",
+                marginTop: "10px",
+                cursor: "pointer"
+              }}
+              onClick={this.goBackToSearchResults}
             >
               / search results
             </li>
@@ -93,11 +105,11 @@ class AlbumsPage extends Component {
         </div>
         <div className="container">
           <h2>
-            {this.props.params.aritstName}
+            {this.props.params.artistName}
           </h2>
           <Avatar
             src={this.artistImageCheck()}
-            alt={`${this.props.params.aritstName} foto`}
+            alt={`${this.props.params.artistName} foto`}
             size={200}
           />
           <SearchResultsContainer>
@@ -127,4 +139,4 @@ const mapStateToProps = state => {
     message: state.message
   };
 };
-export default connect(mapStateToProps)(AlbumsPage);
+export default connect(mapStateToProps)(withRouter(AlbumsPage));

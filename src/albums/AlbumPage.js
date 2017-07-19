@@ -10,6 +10,8 @@ import FontAwesome from "react-fontawesome";
 import styled from "styled-components";
 import Divider from "material-ui/Divider";
 import moment from "moment";
+import { withRouter } from "react-router";
+
 class AlbumPage extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +20,7 @@ class AlbumPage extends Component {
   fetchAlbum = e => {
     this.props.dispatch(
       getAlbumInfo({
-        artist: this.props.params.AritstName,
+        artist: this.props.params.artistName,
         album: this.props.params.albumName
       })
     );
@@ -36,6 +38,16 @@ class AlbumPage extends Component {
       return <CircularProgress />;
     }
   }
+  goBackToSearchResults = e => {
+    e.preventDefault();
+    console.log("back to search");
+    this.props.router.push("searchResults");
+  };
+  goBackToArtistPage = e => {
+    e.preventDefault();
+    console.log("back to artist page");
+    this.props.router.push(`${this.props.params.artistName}/albums`);
+  };
   render() {
     return (
       <div>
@@ -56,14 +68,26 @@ class AlbumPage extends Component {
             }}
           >
             <li
-              style={{ display: "inline", margin: "0 auto", marginTop: "10px" }}
+              style={{
+                display: "inline",
+                margin: "0 auto",
+                marginTop: "10px",
+                cursor: "pointer"
+              }}
+              onClick={this.goBackToSearchResults}
             >
               {" "}/ search results{" "}
             </li>
             <li
-              style={{ display: "inline", margin: "0 auto", marginTop: "10px" }}
+              style={{
+                display: "inline",
+                margin: "0 auto",
+                marginTop: "10px",
+                cursor: "pointer"
+              }}
+              onClick={this.goBackToArtistPage}
             >
-              / {this.props.params.AritstName}
+              / {this.props.params.artistName}
             </li>
           </ul>
         </div>
@@ -77,7 +101,7 @@ class AlbumPage extends Component {
           }}
         >
           <Paper
-            style={{ width: "70%", marginTop: "30px", paddingTop: "10px" }}
+            style={{ width: "70%", marginTop: "40px", paddingTop: "10px" }}
           >
             {this.props.album.message === "GOT_ALBUMS"
               ? <div>
@@ -119,6 +143,7 @@ class ListElement extends Component {
       });
     }
   };
+
   render() {
     return (
       <div key={this.props.i}>
@@ -223,4 +248,4 @@ const mapStateToProps = state => {
     album: state.album
   };
 };
-export default connect(mapStateToProps)(AlbumPage);
+export default connect(mapStateToProps)(withRouter(AlbumPage));
