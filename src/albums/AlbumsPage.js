@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAlbums } from "../artists/search-actions.js";
+import { getAlbums, getArtistInfo } from "../artists/search-actions.js";
 import AlbumTile from "./AlbumTile";
 import styled from "styled-components";
 import qs from "qs";
@@ -19,8 +19,16 @@ class AlbumsPage extends Component {
       })
     );
   };
+  fetchArtist = e => {
+    this.props.dispatch(
+      getArtistInfo({
+        artist: this.props.params.artistName
+      })
+    );
+  };
   componentDidMount() {
     this.fetchAlbums();
+    this.fetchArtist();
   }
   displayAvaliableAlbums(album, i) {
     if (!(album.name == "(null)")) {
@@ -57,15 +65,7 @@ class AlbumsPage extends Component {
       }
     }
   }
-  artistImageCheck = () => {
-    const artistImg = this.props.results.find(
-      artist => artist.name == this.props.params.artistName
-    );
-    console.log(artistImg);
-    if (artistImg) {
-      return artistImg.image[2]["#text"];
-    }
-  };
+
   goBackToSearchResults = e => {
     e.preventDefault();
     console.log("back to search");
@@ -103,15 +103,24 @@ class AlbumsPage extends Component {
             </li>
           </ul>
         </div>
+
         <div className="container">
-          <h2>
-            {this.props.params.artistName}
-          </h2>
-          <Avatar
-            src={this.artistImageCheck()}
-            alt={`${this.props.params.artistName} foto`}
-            size={200}
-          />
+          <div style={{ display: "flex", alignItems: "flex-end" }}>
+            <Avatar
+              src={
+                this.props.artist.artist.image
+                  ? this.props.artist.artist.image[2]["#text"]
+                  : false
+              }
+              alt={`${this.props.artist.artist.name} foto`}
+              size={200}
+              style={{ marginTop: "10px" }}
+            />
+            <h2>
+              {this.props.artist.artist.name}
+            </h2>
+          </div>
+
           <SearchResultsContainer>
             {this.renderTiles()}
           </SearchResultsContainer>
@@ -132,11 +141,10 @@ const SearchResultsContainer = styled.div`
   padding: 20px 0;
 `;
 const mapStateToProps = state => {
-  console.log(state.albums);
   return {
     results: state.search.artistsSimilar,
     albums: state.albums,
-    message: state.message
+    artist: state.artist
   };
 };
 export default connect(mapStateToProps)(withRouter(AlbumsPage));
