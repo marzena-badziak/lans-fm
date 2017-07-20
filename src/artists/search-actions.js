@@ -83,7 +83,6 @@ export const getAlbumInfo = data => {
     artist: data.artist,
     album: data.album
   };
-  console.log(getAlbumOptions);
   return dispatch => {
     dispatch({
       type: "GET_INFO_ATTEMPT"
@@ -94,6 +93,29 @@ export const getAlbumInfo = data => {
         dispatch({
           type: "GET_ALBUM_INFO",
           payload: response.data.album
+        });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
+};
+export const getArtistInfo = data => {
+  console.log(data);
+  const getArtistOptions = {
+    artist: data.artist
+  };
+  console.log(getArtistOptions);
+  return dispatch => {
+    dispatch({
+      type: "GET_ARTIST_INFO_ATTEMPT"
+    });
+    axios
+      .get(`${lastfmApi("artist.getInfo", getArtistOptions)}`)
+      .then(function(response) {
+        dispatch({
+          type: "GET_ARTIST_INFO",
+          payload: response.data.artist
         });
       })
       .catch(function(error) {

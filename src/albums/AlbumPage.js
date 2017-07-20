@@ -10,8 +10,9 @@ import FontAwesome from "react-fontawesome";
 import styled from "styled-components";
 import Divider from "material-ui/Divider";
 import moment from "moment";
-import { scrobbleAlbum } from "./scrobble-album";
-import _ from "lodash";
+import { withRouter } from "react-router";
+import { scrobbleAlbum } from "./scrobble-album"
+
 class AlbumPage extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +21,7 @@ class AlbumPage extends Component {
   fetchAlbum = e => {
     this.props.dispatch(
       getAlbumInfo({
-        artist: this.props.params.AritstName,
+        artist: this.props.params.artistName,
         album: this.props.params.albumName
       })
     );
@@ -28,6 +29,16 @@ class AlbumPage extends Component {
   componentDidMount() {
     this.fetchAlbum();
   }
+
+  scrobble = e => {
+    this.props.dispatch(
+      scrobbleAlbum({
+        session: this.props.session,
+        album: this.props.album
+      })
+    );
+  };
+
   showTracks() {
     if (this.props.album.message === "GOT_ALBUMS") {
       console.log(this.props.album);
@@ -38,42 +49,89 @@ class AlbumPage extends Component {
       return <CircularProgress />;
     }
   }
-
-  scrobble = e => {
-    _.forEach(this.props.album.album.tracks.track, function(track) {
-      this.props.dispatch(
-        scrobbleAlbum({
-          track: track,
-          session: this.props.session
-        })
-      );
-    })
+  goBackToSearchResults = e => {
+    e.preventDefault();
+    console.log("back to search");
+    this.props.router.push("searchResults");
+  };
+  goBackToArtistPage = e => {
+    e.preventDefault();
+    console.log("back to artist page");
+    this.props.router.push(`${this.props.params.artistName}/albums`);
   };
 
   render() {
     return (
-      <div
-        className="container"
-        style={{ display: "flex", justifyContent: "center" }}
-      >
-      <button onClick={this.scrobble}>KLIK</button>
-
-        <Paper style={{ width: "70%" }}>
-          {this.props.album.message === "GOT_ALBUMS"
-            ? <div>
-                <Avatar
-                  src={this.props.album.album.image[2]["#text"]}
-                  size={150}
-                />
-                <h2 style={{ display: "block", textAlign: "center" }}>
-                  {this.props.params.albumName}
-                </h2>
-              </div>
-            : false}
-          <List>
-            {this.showTracks()}
-          </List>
-        </Paper>
+      <div>
+        <button onclik={this.scrobble()}>klik</button>
+        <div
+          style={{
+            position: "absolute",
+            left: "0",
+            display: "block",
+            margin: "10px"
+          }}
+        >
+          <ul
+            style={{
+              display: "inline-block",
+              listStyleType: "none",
+              margin: "2px",
+              padding: "0"
+            }}
+          >
+            <li
+              style={{
+                display: "inline",
+                margin: "0 auto",
+                marginTop: "10px",
+                cursor: "pointer"
+              }}
+              onClick={this.goBackToSearchResults}
+            >
+              {" "}/ search results{" "}
+            </li>
+            <li
+              style={{
+                display: "inline",
+                margin: "0 auto",
+                marginTop: "10px",
+                cursor: "pointer"
+              }}
+              onClick={this.goBackToArtistPage}
+            >
+              / {this.props.params.artistName}
+            </li>
+          </ul>
+        </div>
+        <div
+          className="container"
+          style={{
+            display: "flex",
+            // flexDirection: "column",
+            justifyContent: "center"
+            // flexWrap: "nowrap"
+          }}
+        >
+          <Paper
+            style={{ width: "70%", marginTop: "40px", paddingTop: "10px" }}
+          >
+            {this.props.album.message === "GOT_ALBUMS"
+              ? <div>
+                  <Avatar
+                    src={this.props.album.album.image[2]["#text"]}
+                    size={150}
+                  />
+                  <h2 style={{ display: "block", textAlign: "center" }}>
+                    {this.props.params.albumName}
+                  </h2>
+                </div>
+              : false}
+            <List>
+              {this.showTracks()}
+            </List>
+          </Paper>
+        </div>
       </div>
     );
   }
@@ -98,6 +156,7 @@ class ListElement extends Component {
       });
     }
   };
+
   render() {
     return (
       <div key={this.props.i}>
@@ -203,4 +262,4 @@ const mapStateToProps = state => {
     session: state.session
   };
 };
-export default connect(mapStateToProps)(AlbumPage);
+export default connect(mapStateToProps)(withRouter(AlbumPage));
