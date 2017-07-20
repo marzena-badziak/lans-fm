@@ -87,7 +87,9 @@ class AlbumsPage extends Component {
               display: "inline-block",
               listStyleType: "none",
               margin: "2px",
-              padding: "0"
+              padding: "0",
+              color: "#aa8899",
+              fontWeight: "bold"
             }}
           >
             <li
