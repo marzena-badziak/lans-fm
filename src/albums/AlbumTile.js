@@ -1,16 +1,7 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardActions,
-  CardHeader,
-  CardMedia,
-  CardTitle,
-  CardText
-} from "material-ui/Card";
+import { Card, CardActions, CardMedia, CardTitle } from "material-ui/Card";
 import styled from "styled-components";
 import FlatButton from "material-ui/FlatButton";
-import axios from "axios";
-import lastfmApi from "../lib/lastfm-api";
 import propTypes from "prop-types";
 import { withRouter } from "react-router";
 import FontAwesome from "react-fontawesome";

@@ -5,7 +5,6 @@ import { List, ListItem } from "material-ui/List";
 import Paper from "material-ui/Paper";
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
-import FlatButton from "material-ui/FlatButton";
 import FontAwesome from "react-fontawesome";
 import styled from "styled-components";
 import Divider from "material-ui/Divider";
@@ -14,10 +13,6 @@ import { withRouter } from "react-router";
 import { scrobbleAlbum } from "./scrobble-album";
 
 class AlbumPage extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   fetchAlbum = e => {
     this.props.dispatch(
       getAlbumInfo({
@@ -153,7 +148,7 @@ class ListElement extends Component {
     };
   }
   changeDropdownState = e => {
-    if (this.state.open == "none") {
+    if (this.state.open === "none") {
       this.setState({
         open: "block",
         top: e.nativeEvent.pageY,

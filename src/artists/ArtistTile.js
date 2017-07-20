@@ -8,7 +8,7 @@ import RaisedButton from "material-ui/RaisedButton";
 import ShowVideo from "./ShowVideo";
 import { withRouter } from "react-router";
 import FontAwesome from "react-fontawesome";
-import { lastfmApi, lastfmKey } from "../lib/lastfm-api";
+import { lastfmKey } from "../lib/lastfm-api";
 import md5 from "md5";
 
 class ArtistTile extends Component {
@@ -109,14 +109,9 @@ class ArtistTile extends Component {
       });
   };
 
-  hideAlbums = e => {
-    this.setState({
-      dropDownDisplay: "none"
-    });
-  };
   render() {
     return (
-      <StyledArtistTile onMouseLeave={this.hideAlbums}>
+      <StyledArtistTile>
         <StyledArtistName>
           {this.props.name.length > 30
             ? <h4
@@ -185,10 +180,6 @@ class ArtistTile extends Component {
   }
 }
 
-const StyledAlbumElement = styled.li`
-  display: flex;
-  justify-content: space-around;
-`;
 const StyledArtistTile = styled.div`
   overflow: hidden;
   position: relative;
