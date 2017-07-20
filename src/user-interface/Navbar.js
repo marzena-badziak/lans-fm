@@ -20,6 +20,8 @@ class Navbar extends Component {
           />
         }
         iconElementRight={<LoginInfo />}
+        iconStyleLeft={{ marginTop: "0px" }}
+        iconStyleRight={{ marginTop: "0px" }}
         showMenuIconButton={true}
       />
     );
@@ -43,9 +45,9 @@ const StyledSearchBar = styled(SearchBar)`
   }
 `;
 const StyledAppBar = styled(AppBar)`
-  background-color: #BB77AA;
+  background-color: #bb77AA;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   padding: 2px;
   /* Smartphones (portrait and landscape) ----------- */
   @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {

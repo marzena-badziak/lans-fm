@@ -6,9 +6,7 @@ import axios from "axios";
 import md5 from "md5";
 
 export const loginAction = token => {
-  console.log("token: " + token);
-  console.log("key: " + lastfmKey.api_key);
-  console.log("secret: " + lastfmKey.secret);
+
 
   const loginOptions = {
     token: `${token}`,
@@ -22,15 +20,19 @@ export const loginAction = token => {
       type: "LOGIN_ATTEMPT"
     });
     console.log(`${lastfmApi("auth.getSession", loginOptions)}`);
+    console.log(token);
     axios
       .get(`${lastfmApi("auth.getSession", loginOptions)}`)
       .then(function(response) {
+        console.log(response.data.session.key)
         dispatch({
           type: "LOGIN_SUCCESS",
           apiSig: loginOptions.api_sig,
           sessionKey: response.data.session.key,
-          username: response.data.session.name
+          username: response.data.session.name,
+          token: loginOptions.token
         });
+        console.log(loginOptions.token);
       })
       .catch(function(error) {
         console.log(error);

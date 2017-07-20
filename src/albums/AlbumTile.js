@@ -13,6 +13,7 @@ import axios from "axios";
 import lastfmApi from "../lib/lastfm-api";
 import propTypes from "prop-types";
 import { withRouter } from "react-router";
+import FontAwesome from "react-fontawesome";
 /*  scrobbleAlbum = () => {
     let scrobbleRequest = Qs.stringify(params, {arrayFormat: 'brackets'})
 
@@ -35,24 +36,41 @@ class AlbumTile extends Component {
       return "https://lastfm-img2.akamaized.net/i/u/174s/c6f59c1e5e7240a4c0d427abd71f3dbb.png";
     }
   };
+  openAlbum = () => {
+    return this.props.router.push(
+      `${this.props.params.artistName}/${this.props.params.artistChoosen}/${this
+        .props.title}`
+    );
+  };
   render() {
     return (
-      <StyledAlbumCard>
-        <CardMedia
+      <StyledAlbumCard onClick={() => this.openAlbum()}>
+        <AlbumImage
           overlay={
             <CardTitle title={this.props.title} subtitle={this.props.artist} />
           }
         >
           <img src={this.setImage()} alt={`${this.props.title} cover`} />
-        </CardMedia>
+        </AlbumImage>
         <CardActions>
-          <FlatButton label="Scrobble" />
+          <FlatButton
+            label="Scrobble"
+            backgroundColor="plum"
+            hoverColor="#ccd4d4"
+            icon={
+              <FontAwesome
+                className="fa fa-lastfm"
+                name="options"
+                size="lg"
+                aria-hidden="true"
+              />
+            }
+          />
           <FlatButton
             label="Show Album"
-            onClick={() =>
-              this.props.router.push(
-                `${this.props.artist}/albums/${this.props.title}`
-              )}
+            backgroundColor="hotpink"
+            onClick={() => this.openAlbum()}
+            hoverColor="#ccd4d4"
           />
         </CardActions>
       </StyledAlbumCard>
@@ -62,6 +80,14 @@ class AlbumTile extends Component {
 const StyledAlbumCard = styled(Card)`
 width: 300px;
 margin-top: 30px;
+`;
+const AlbumImage = styled(CardMedia)`
+
+transition: .2s all;
+
+&:hover{
+  -webkit-filter: brightness(80%)
+}
 `;
 
 AlbumTile.propTypes = {

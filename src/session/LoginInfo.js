@@ -18,7 +18,7 @@ class LoginInfo extends Component {
             name="cb"
             value="http://localhost:3000/#/login"
           />
-          <FlatButton type="submit" label="Login" />
+          <FlatButton type="submit" label="Login" style={{ color: "white" }} />
         </form>
       );
     } else {

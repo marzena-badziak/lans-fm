@@ -15,11 +15,11 @@ class App extends Component {
           <Route path="/">
             <IndexRoute component={Home} />
             <Route component={Layout}>
-              <Route path="searchResults" component={ArtistsGrid} />
+              <Route path=":artistName" component={ArtistsGrid} />
               <Route path="login" component={Login} />
-              <Route path=":aritstName/albums" component={AlbumsPage} />
+              <Route path=":artistName/:artistChoosen" component={AlbumsPage} />
               <Route
-                path=":AritstName/albums/:albumName"
+                path=":artistName/:artistChoosen/:albumName"
                 component={AlbumPage}
               />
             </Route>

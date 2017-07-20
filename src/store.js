@@ -1,6 +1,7 @@
 import { compose, createStore, combineReducers, applyMiddleware } from "redux";
 // import persistState from "redux-localstorage";
 import thunk from "redux-thunk";
+import persistState from "redux-localstorage"
 
 const search = (
   state = {
@@ -81,12 +82,30 @@ const album = (state = { album: {}, message: "" }, action) => {
   }
 };
 
+const artist = (state = { artist: {}, message: "" }, action) => {
+  switch (action.type) {
+    case "GET_ARTIST_INFO":
+      return {
+        artist: action.payload,
+        message: "Got_artist"
+      };
+    case "GET_ARTIST_INFO_ATTEMPT":
+      return {
+        artist: {},
+        message: "Getting info"
+      };
+    default:
+      return state;
+  }
+};
+
 const session = (
   state = {
     apiSig: "",
     sessionKey: "",
     username: "",
-    message: ""
+    message: "",
+    token: ""
   },
   action
 ) => {
@@ -94,7 +113,7 @@ const session = (
     case "LOGIN_ATTEMPT":
       return {
         ...state,
-        message: "Trwa logowanie"
+        message: "Trying to log in"
       };
     case "LOGIN_SUCCESS":
       return {
@@ -102,7 +121,8 @@ const session = (
         apiSig: action.apiSig,
         sessionKey: action.sessionKey,
         username: action.username,
-        message: "Zalogowano jako"
+        token: action.token,
+        message: "Logged as: "
       };
     case "LOGIN_FAIL":
       return {
@@ -121,9 +141,14 @@ const rootReducer = combineReducers({
   search: search,
   albums: albums,
   album: album,
-  session: session
+  session: session,
+  artist: artist
 });
 
-const enhancer = compose(applyMiddleware(thunk));
+const enhancer = compose(
+  applyMiddleware(thunk),
+  persistState("session")
+);
+
 const store = createStore(rootReducer, {}, enhancer);
 export default store;

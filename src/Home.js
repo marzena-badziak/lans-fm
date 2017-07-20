@@ -16,8 +16,8 @@ class Home extends Component {
           </StyledHeaderSecondary>
           <SearchBar
             boxShadow="0px 0px 30px 3px rgba(0, 0, 0, 0.6);"
-            width="100%"
-            height="50px"
+            width="80%"
+            height="60px"
           />
         </StyledContainer>
       </StyledHome>
@@ -33,6 +33,7 @@ const StyledHome = styled.div`
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  height: 100vh;
 `;
 const StyledLogo = styled.a`
   position: relative;
@@ -41,6 +42,7 @@ const StyledLogo = styled.a`
   font-family: Righteous;
   color: white;
   font-size: x-large;
+  text-shadow: 3px 2px 12px rgba(0, 0, 0, 1);
 
   &:hover {
     color: #333;
@@ -48,10 +50,7 @@ const StyledLogo = styled.a`
   }
 `;
 
-const StyledContainer = styled.div`
-  padding-top: 20vh;
-  height: 95vh;
-`;
+const StyledContainer = styled.div`padding-top: 20vh;`;
 
 const StyledHeaderMain = styled.h1`
   display: inline-block;
@@ -59,13 +58,16 @@ const StyledHeaderMain = styled.h1`
   font-weight: 700;
   padding: 5px;
   margin: 10px;
+  font-size: 48px;
+  text-shadow: 3px 2px 12px rgba(0, 0, 0, 1);
 `;
-const StyledHeaderSecondary = styled.h3`
+const StyledHeaderSecondary = styled.h2`
   display: inline-block;
   color: white;
   font-weight: 700;
   padding: 5px;
   margin: 5px;
+  text-shadow: 3px 2px 12px rgba(0, 0, 0, 1);
 `;
 
 export default Home;
