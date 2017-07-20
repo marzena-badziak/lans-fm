@@ -27,13 +27,6 @@ class Home extends Component {
 const StyledHome = styled.div`
   text-align: center;
   margin: 0 auto;
-  background: url('https://files.slack.com/files-pri/T5X6DE6HX-F68Q4HP3M/background.png')
-    no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  height: 100vh;
 `;
 const StyledLogo = styled.a`
   position: relative;
@@ -60,6 +53,10 @@ const StyledHeaderMain = styled.h1`
   margin: 10px;
   font-size: 48px;
   text-shadow: 3px 2px 12px rgba(0, 0, 0, 1);
+  @media only screen and (max-width: 320px) {
+    font-size: 42px;
+    margin: 0 3px;
+  }
 `;
 const StyledHeaderSecondary = styled.h2`
   display: inline-block;
@@ -68,6 +65,11 @@ const StyledHeaderSecondary = styled.h2`
   padding: 5px;
   margin: 5px;
   text-shadow: 3px 2px 12px rgba(0, 0, 0, 1);
+  @media only screen and (max-width: 320px) {
+    font-size: 24px;
+
+    margin: 3px;
+  }
 `;
 
 export default Home;

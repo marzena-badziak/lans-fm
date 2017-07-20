@@ -11,7 +11,7 @@ import styled from "styled-components";
 import Divider from "material-ui/Divider";
 import moment from "moment";
 import { withRouter } from "react-router";
-import { scrobbleAlbum } from "./scrobble-album"
+import { scrobbleAlbum } from "./scrobble-album";
 
 class AlbumPage extends Component {
   constructor(props) {
@@ -63,7 +63,6 @@ class AlbumPage extends Component {
   render() {
     return (
       <div>
-        //<button onClick={this.scrobble}>klik</button>
         <div
           style={{
             position: "absolute",

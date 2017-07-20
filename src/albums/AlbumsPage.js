@@ -107,7 +107,18 @@ class AlbumsPage extends Component {
         </div>
 
         <div className="container">
-          <div style={{ display: "flex", alignItems: "flex-end" }}>
+          <div
+            style={{
+              display: "flex",
+              // flexDirection: "row",
+              // flexWrap: "wrap",
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
+              alignContent: "flex-start",
+              margin: "10px",
+              marginTop: "30px"
+            }}
+          >
             <Avatar
               src={
                 this.props.artist.artist.image
@@ -122,8 +133,19 @@ class AlbumsPage extends Component {
               {this.props.artist.artist.name}
             </h2>
           </div>
+          <h3 style={{ display: "block", margin: "0" }}>Albums:</h3>
 
-          <SearchResultsContainer>
+          <SearchResultsContainer
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              alignItems: "flex-start",
+              alignContent: "flex-start",
+              margin: "0 auto"
+            }}
+          >
             {this.renderTiles()}
           </SearchResultsContainer>
         </div>

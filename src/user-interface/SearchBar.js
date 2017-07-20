@@ -42,14 +42,14 @@ class SearchBar extends Component {
             placeholder="Your favourite artist"
           />{" "}
           <StyledSearchSpan onClick={e => this.fetchArtist(e)}>
-            <MediaQuery query="(min-device-width: 768px)">Search </MediaQuery>
-            <MediaQuery query="(max-device-width: 767px)">
-              <FontAwesome
-                className="fa fa-search"
-                name="search"
-                style={{ textShadow: "0 1px 0 rgba(0, 0, 0, 0.1)" }}
-              />
-            </MediaQuery>
+            {/* <MediaQuery query="(min-device-width: 768px)">Search </MediaQuery>
+            <MediaQuery query="(max-device-width: 767px)"> */}
+            <FontAwesome
+              className="fa fa-search"
+              name="search"
+              style={{ textShadow: "0 1px 0 rgba(0, 0, 0, 0.1)" }}
+            />
+            {/* </MediaQuery> */}
           </StyledSearchSpan>
         </StyledSearchBar>
       </form>
@@ -60,11 +60,11 @@ const StyledSearchBar = styled.div`
   box-shadow: ${props => props.boxShadow};
   border-radius: 15px;
   display: flex;
-  align-items: baseline;
+  align-items: flex-end;
   height: ${props => props.height};
   font-size: 20px;
   width: ${props => props.width};
-  margin: 20px auto;
+  margin: 0 auto;
 `;
 const StyledSearchSpan = styled.div`
   color: white;

@@ -63,8 +63,13 @@ class AlbumTile extends Component {
   }
 }
 const StyledAlbumCard = styled(Card)`
-width: 300px;
+${"" /* overflow: hidden;
+position: relative;
+display: inline-block; */}
+width: 260px;
+margin 0 auto;
 margin-top: 30px;
+
 
 
 `;
