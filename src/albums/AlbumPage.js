@@ -63,7 +63,6 @@ class AlbumPage extends Component {
   render() {
     return (
       <div>
-        //<button onClick={this.scrobble}>klik</button>
         <div
           style={{
             position: "absolute",
