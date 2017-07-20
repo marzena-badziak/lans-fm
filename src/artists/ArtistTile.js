@@ -8,7 +8,7 @@ import RaisedButton from "material-ui/RaisedButton";
 import ShowVideo from "./ShowVideo";
 import { withRouter } from "react-router";
 import FontAwesome from "react-fontawesome";
-import { lastfmApi, lastfmKey } from "../lib/lastfm-api";
+import { lastfmKey } from "../lib/lastfm-api";
 import md5 from "md5";
 
 var nowPlayingArtist;
@@ -168,7 +168,7 @@ class ArtistTile extends Component {
   };
   render() {
     return (
-      <StyledArtistTile onMouseLeave={this.hideAlbums}>
+      <StyledArtistTile>
         <StyledArtistName>
           {this.props.name.length > 30
             ? <h4
@@ -236,10 +236,13 @@ class ArtistTile extends Component {
   }
 }
 
+<<<<<<< HEAD
+=======
 // const StyledAlbumElement = styled.li`
 //   display: flex;
 //   justify-content: space-around;
 // `;
+>>>>>>> c575d9a5b85ea2febd3c7c09bd6f5a6e1df25590
 const StyledArtistTile = styled.div`
   overflow: hidden;
   position: relative;

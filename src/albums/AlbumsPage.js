@@ -7,16 +7,12 @@ import {
 } from "../artists/search-actions.js";
 import AlbumTile from "./AlbumTile";
 import styled from "styled-components";
-import qs from "qs";
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
 import { withRouter } from "react-router";
 import FlatButton from "material-ui/FlatButton";
 
 class AlbumsPage extends Component {
-  constructor(props) {
-    super(props);
-  }
   fetchAlbums = e => {
     this.props.dispatch(
       getAlbums({
@@ -36,7 +32,7 @@ class AlbumsPage extends Component {
     this.fetchArtist();
   }
   displayAvaliableAlbums(album, i) {
-    if (!(album.name == "(null)")) {
+    if (!(album.name === "(null)")) {
       return (
         <AlbumTile
           key={i}
@@ -63,7 +59,7 @@ class AlbumsPage extends Component {
     if (this.props.albums.albums.length !== 0) {
       return this.mapAlbums();
     } else {
-      if (this.props.albums.message == "Searching") {
+      if (this.props.albums.message === "Searching") {
         return this.displayPlaceHolder(<CircularProgress />);
       } else {
         return this.displayPlaceHolder(this.props.albums.message);
