@@ -13,7 +13,7 @@ const lastfmApi = (method, options) => {
   return request;
 };
 
-const lastfmScrobble = (scrobbleRequest) => {
+const lastfmRequestURLMaker = (scrobbleRequest) => {
   let requestURL = `http://ws.audioscrobbler.com/2.0/?`;
   let requestOptions = ""
   Object.entries(scrobbleRequest).forEach(([key, value]) => {
@@ -27,4 +27,4 @@ const lastfmScrobble = (scrobbleRequest) => {
   return request;
 };
 
-export { lastfmApi, lastfmKey, lastfmScrobble };
+export { lastfmApi, lastfmKey, lastfmRequestURLMaker };

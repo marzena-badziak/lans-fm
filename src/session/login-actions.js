@@ -16,15 +16,9 @@ export const loginAction = token => {
   };
 
   return dispatch => {
-    dispatch({
-      type: "LOGIN_ATTEMPT"
-    });
-    console.log(`${lastfmApi("auth.getSession", loginOptions)}`);
-    console.log(token);
     axios
       .get(`${lastfmApi("auth.getSession", loginOptions)}`)
       .then(function(response) {
-        console.log(response.data.session.key)
         dispatch({
           type: "LOGIN_SUCCESS",
           apiSig: loginOptions.api_sig,
@@ -32,7 +26,6 @@ export const loginAction = token => {
           username: response.data.session.name,
           token: loginOptions.token
         });
-        console.log(loginOptions.token);
       })
       .catch(function(error) {
         console.log(error);

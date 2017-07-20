@@ -11,7 +11,6 @@ export const searchArtist = artist => {
   };
 
   return dispatch => {
-    // console.log(artist);
     dispatch({
       type: "SEARCH_ATTEMPT",
       artistEntered: artist.artist
@@ -35,18 +34,6 @@ export const searchArtist = artist => {
       .catch(function(error) {
         console.log(error);
       });
-    /*   .then((response) => {
-            dispatch({
-                type: "LOGIN_SUCCESS",
-                data: {
-                    username: user.username,
-                    token: response.data.data.auth_token,
-                    user_id: response.data.data.user_id
-                }
-            });
-            hashHistory.push("artists-similar");
-
-        })*/
   };
 };
 export const getAlbums = data => {
@@ -61,7 +48,6 @@ export const getAlbums = data => {
     axios
       .get(`${lastfmApi("artist.gettopalbums", getAlbumOptions)}`)
       .then(function(response) {
-        console.log(response);
         if (response.data.topalbums) {
           dispatch({
             type: "SEARCH_ALBUMS",
@@ -90,6 +76,7 @@ export const getAlbumInfo = data => {
     axios
       .get(`${lastfmApi("album.getInfo", getAlbumOptions)}`)
       .then(function(response) {
+        console.log(response);
         dispatch({
           type: "GET_ALBUM_INFO",
           payload: response.data.album
@@ -101,7 +88,7 @@ export const getAlbumInfo = data => {
   };
 };
 export const getArtistInfo = data => {
-  console.log(data);
+
   const getArtistOptions = {
     artist: data.artist
   };
