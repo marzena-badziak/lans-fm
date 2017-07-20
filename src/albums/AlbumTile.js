@@ -13,7 +13,7 @@ import axios from "axios";
 import lastfmApi from "../lib/lastfm-api";
 import propTypes from "prop-types";
 import { withRouter } from "react-router";
-
+import FontAwesome from "react-fontawesome";
 /*  scrobbleAlbum = () => {
     let scrobbleRequest = Qs.stringify(params, {arrayFormat: 'brackets'})
 
@@ -57,6 +57,14 @@ class AlbumTile extends Component {
             label="Scrobble"
             backgroundColor="plum"
             hoverColor="#ccd4d4"
+            icon={
+              <FontAwesome
+                className="fa fa-lastfm"
+                name="options"
+                size="lg"
+                aria-hidden="true"
+              />
+            }
           />
           <FlatButton
             label="Show Album"
