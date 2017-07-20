@@ -31,12 +31,10 @@ class AlbumPage extends Component {
   }
 
   scrobble = e => {
-    this.props.dispatch(
       scrobbleAlbum({
         session: this.props.session,
         album: this.props.album
       })
-    );
   };
 
   showTracks() {

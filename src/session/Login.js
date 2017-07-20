@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 // import { Router, Route, IndexRoute, hashHistory } from "react-router";
-// import { withRouter } from "react-router";
+import { withRouter } from "react-router";
 import { loginAction } from "./login-actions";
 
 class Login extends Component {
@@ -32,4 +32,4 @@ class Login extends Component {
   }
 }
 
-export default connect()(Login);
+export default connect()(withRouter(Login));
