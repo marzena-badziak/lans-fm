@@ -4,8 +4,17 @@ import { connect } from "react-redux";
 import { lastfmKey } from "../lib/lastfm-api";
 
 class LoginInfo extends Component {
+
+  logOut = () => {
+    console.log("Jestem tu")
+    //this.props.dispatch({
+    //  type: "USER_LOGOUT"
+    //});
+  }
+
   loginInfo = () => {
-    if (this.props.session.sessionKey === "") {
+    console.log(this.props.session);
+    if (this.props.session.sessionKey === null) {
       return (
         <form action="http://www.last.fm/api/auth ">
           <input
@@ -20,9 +29,9 @@ class LoginInfo extends Component {
           />
           <FlatButton type="submit" label="Login" />
         </form>
-      );
+     );
     } else {
-      return <FlatButton onClick label="Logout" />;
+      return <FlatButton onClick={() => this.logOut}  label="Logout" />;
     }
   };
 

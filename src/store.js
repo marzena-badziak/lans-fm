@@ -130,7 +130,11 @@ const session = (
         message: "Blad"
       };
     case "USER_LOGOUT":
-      return (state = undefined);
+      return {
+         ...state,
+         sessionKey: null
+       };
+
 
     default:
       return state;

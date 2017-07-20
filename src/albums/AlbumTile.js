@@ -12,8 +12,10 @@ import FlatButton from "material-ui/FlatButton";
 import axios from "axios";
 import lastfmApi from "../lib/lastfm-api";
 import propTypes from "prop-types";
+import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { fetchSongListAndScrobbleAlbum } from "./scrobble-albums";
+import { fetchSongListAndScrobbleAlbum } from "./scrobble-album";
+import FontAwesome from "react-fontawesome";
 
 class AlbumTile extends Component {
   setImage = () => {
@@ -31,16 +33,17 @@ class AlbumTile extends Component {
 
   scrobbleAlbum = e => {
     this.props.dispatch(
-      scrobbleAlbum({
-        artist: this.props.session,
-        album: this.props.album
+      fetchSongListAndScrobbleAlbum({
+        artist: this.props.artist,
+        album: this.props.title,
+        session: this.props.session
       })
     );
   };
 
   render() {
     return (
-      <StyledAlbumCard onClick={() => this.openAlbum()}>
+      <StyledAlbumCard>
         <AlbumImage
           overlay={
             <CardTitle title={this.props.title} subtitle={this.props.artist} />
@@ -52,7 +55,17 @@ class AlbumTile extends Component {
           <FlatButton
             label="Scrobble"
             backgroundColor="plum"
-            onClick ={() => this.scrobbleAlbum}/>
+            onClick ={() => this.scrobbleAlbum()}
+            hoverColor="#ccd4d4"
+            icon={
+              <FontAwesome
+                className="fa fa-lastfm"
+                name="options"
+                size="lg"
+                aria-hidden="true"
+              />
+            }
+          />
           <FlatButton
             label="Show Album"
             backgroundColor="hotpink"
@@ -83,4 +96,10 @@ AlbumTile.propTypes = {
   image: propTypes.string,
   artist: propTypes.string
 };
-export default withRouter(AlbumTile);
+
+const mapStateToProps = state => {
+  return {
+    session: state.session
+  };
+};
+export default connect(mapStateToProps)(withRouter(AlbumTile));
