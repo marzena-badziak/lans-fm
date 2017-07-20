@@ -11,6 +11,7 @@ import styled from "styled-components";
 import Divider from "material-ui/Divider";
 import moment from "moment";
 import { withRouter } from "react-router";
+import { scrobbleAlbum } from "./scrobble-album"
 
 class AlbumPage extends Component {
   constructor(props) {
@@ -28,6 +29,16 @@ class AlbumPage extends Component {
   componentDidMount() {
     this.fetchAlbum();
   }
+
+  scrobble = e => {
+    this.props.dispatch(
+      scrobbleAlbum({
+        session: this.props.session,
+        album: this.props.album
+      })
+    );
+  };
+
   showTracks() {
     if (this.props.album.message === "GOT_ALBUMS") {
       console.log(this.props.album);
@@ -48,9 +59,11 @@ class AlbumPage extends Component {
     console.log("back to artist page");
     this.props.router.push(`${this.props.params.artistName}/albums`);
   };
+
   render() {
     return (
       <div>
+        //<button onClick={this.scrobble}>klik</button>
         <div
           style={{
             position: "absolute",
@@ -245,7 +258,8 @@ const StyledDropDownItem = styled.li`
 `;
 const mapStateToProps = state => {
   return {
-    album: state.album
+    album: state.album,
+    session: state.session
   };
 };
 export default connect(mapStateToProps)(withRouter(AlbumPage));

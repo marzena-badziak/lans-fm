@@ -13,54 +13,18 @@ const lastfmApi = (method, options) => {
   return request;
 };
 
-/*
-const lastfmScrobble = scrobbleRequest => {
-  let request = `http://ws.audioscrobbler.com/2.0/?method=${method}`;
-  Object.entries(options).forEach(([key, value]) => {
-    request = `${request}&${key}=${value}`;
+const lastfmScrobble = (scrobbleRequest) => {
+  let requestURL = `http://ws.audioscrobbler.com/2.0/?`;
+  let requestOptions = ""
+  Object.entries(scrobbleRequest).forEach(([key, value]) => {
+    requestOptions += `&${key}=${value}`;
   });
-  request = `${request}&api_key=${lastfmKey.api_key}&format=json`;
+  const request = `${requestURL}${requestOptions}`;
+  console.log("requestURL: " + requestURL);
+  console.log("scrobbleRequest: " + scrobbleRequest);
+  console.log("requestOptions: " + requestOptions);
+  console.log(request);
   return request;
 };
 
-let scrobbleRequest = "";
-scrobbleRequest += `&track[${i}]=${track.name}&artist[${i}]=${track.artist
-  .name}&timestamp[${i}]=&mbid[${i}]=${track.mbid}`;
-  */
-
-
-// const lastfmScrobble = scrobbleRequest => {
-//   let request = `http://ws.audioscrobbler.com/2.0/?method=${method}`;
-//   Object.entries(options).forEach(([key, value]) => {
-//     request = `${request}&${key}=${value}`;
-//   });
-//   request = `${request}&api_key=${lastfmKey.api_key}&format=json`;
-//   return request;
-// };
-
-// let scrobbleRequest = "";
-// scrobbleRequest += `&track[${i}]=${track.name}&artist[${i}]=${track.artist
-//   .name}&timestamp[${i}]=&mbid[${i}]=${track.mbid}`;
-/*var apiClient = axios.create({
-  baseURL: "http://ws.audioscrobbler.com/2.0/",
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json"
-  }
-});
-
-const configureApi = store => {
-  apiClient.interceptors.request.use(
-    function(config) {
-      const state = store.getState();
-      return config;
-    },
-    function(error) {
-      // Do something with request error
-      return Promise.reject(error);
-    }
-  );
-};
-
-export { configureApi };*/
-export { lastfmApi, lastfmKey };
+export { lastfmApi, lastfmKey, lastfmScrobble };

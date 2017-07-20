@@ -1,6 +1,7 @@
 import { compose, createStore, combineReducers, applyMiddleware } from "redux";
 // import persistState from "redux-localstorage";
 import thunk from "redux-thunk";
+import persistState from "redux-localstorage"
 
 const search = (
   state = {
@@ -142,6 +143,10 @@ const rootReducer = combineReducers({
   artist: artist
 });
 
-const enhancer = compose(applyMiddleware(thunk));
+const enhancer = compose(
+  applyMiddleware(thunk),
+  persistState("session")
+);
+
 const store = createStore(rootReducer, {}, enhancer);
 export default store;
