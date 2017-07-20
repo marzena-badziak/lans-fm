@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAlbums, getArtistInfo } from "../artists/search-actions.js";
+import {
+  getAlbums,
+  getArtistInfo,
+  searchArtist
+} from "../artists/search-actions.js";
 import AlbumTile from "./AlbumTile";
 import styled from "styled-components";
 import qs from "qs";
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
 import { withRouter } from "react-router";
+import FlatButton from "material-ui/FlatButton";
 
 class AlbumsPage extends Component {
   constructor(props) {
@@ -71,6 +76,14 @@ class AlbumsPage extends Component {
     console.log("back to search");
     this.props.router.push("searchResults");
   };
+  fetchSimilarArtist = e => {
+    this.props.dispatch(
+      searchArtist({
+        artist: this.props.params.artistName
+      })
+    );
+    this.props.router.push("searchResults");
+  };
   render() {
     return (
       <div>
@@ -116,11 +129,18 @@ class AlbumsPage extends Component {
               }
               alt={`${this.props.artist.artist.name} foto`}
               size={200}
-              style={{ marginTop: "10px" }}
+              style={{ marginTop: "40px" }}
             />
-            <h2>
+            <h2 style={{ fontSize: "50px" }}>
               {this.props.artist.artist.name}
             </h2>
+            <FlatButton
+              label="Search Similar"
+              onClick={e => this.fetchSimilarArtist(e)}
+              style={{ margin: "15px" }}
+              backgroundColor="darkgrey"
+              hoverColor="grey"
+            />
           </div>
 
           <SearchResultsContainer>
@@ -135,7 +155,7 @@ const SearchResultsContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: flex-start;
   align-content: flex-start;
   float: none;
