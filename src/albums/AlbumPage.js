@@ -21,7 +21,7 @@ class AlbumPage extends Component {
   fetchAlbum = e => {
     this.props.dispatch(
       getAlbumInfo({
-        artist: this.props.params.artistName,
+        artist: this.props.params.artistChoosen,
         album: this.props.params.albumName
       })
     );
@@ -47,7 +47,7 @@ class AlbumPage extends Component {
           <ListElement
             i={i}
             track={track}
-            artist={this.props.params.artistName}
+            artist={this.props.params.artistChoosen}
           />
         );
       });
@@ -58,12 +58,14 @@ class AlbumPage extends Component {
   goBackToSearchResults = e => {
     e.preventDefault();
     console.log("back to search");
-    this.props.router.push("searchResults");
+    this.props.router.push(this.props.params.artistName);
   };
   goBackToArtistPage = e => {
     e.preventDefault();
     console.log("back to artist page");
-    this.props.router.push(`${this.props.params.artistName}/albums`);
+    this.props.router.push(
+      `${this.props.params.artistName}/${this.props.params.artistChoosen}`
+    );
   };
 
   render() {
@@ -96,7 +98,7 @@ class AlbumPage extends Component {
               }}
               onClick={this.goBackToSearchResults}
             >
-              {" "}/ search results{" "}
+              {" "}/ {this.props.params.artistName}{" "}
             </li>
             <li
               style={{
@@ -107,7 +109,7 @@ class AlbumPage extends Component {
               }}
               onClick={this.goBackToArtistPage}
             >
-              / {this.props.params.artistName}
+              / {this.props.params.artistChoosen}
             </li>
           </ul>
         </div>

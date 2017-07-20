@@ -20,14 +20,14 @@ class AlbumsPage extends Component {
   fetchAlbums = e => {
     this.props.dispatch(
       getAlbums({
-        data: this.props.params.artistName
+        data: this.props.params.artistChoosen
       })
     );
   };
   fetchArtist = e => {
     this.props.dispatch(
       getArtistInfo({
-        artist: this.props.params.artistName
+        artist: this.props.params.artistChoosen
       })
     );
   };
@@ -74,15 +74,15 @@ class AlbumsPage extends Component {
   goBackToSearchResults = e => {
     e.preventDefault();
     console.log("back to search");
-    this.props.router.push("searchResults");
+    this.props.router.push(this.props.params.artistName);
   };
   fetchSimilarArtist = e => {
     this.props.dispatch(
       searchArtist({
-        artist: this.props.params.artistName
+        artist: this.props.params.artistChoosen
       })
     );
-    this.props.router.push("searchResults");
+    this.props.router.push(this.props.params.artistChoosen);
   };
   render() {
     return (
@@ -114,7 +114,7 @@ class AlbumsPage extends Component {
               }}
               onClick={this.goBackToSearchResults}
             >
-              / search results
+              / {this.props.params.artistName}
             </li>
           </ul>
         </div>
