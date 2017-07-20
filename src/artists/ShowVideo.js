@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import propTypes from "prop-types";
-import axios from "axios";
 import styled from "styled-components";
 
 export class ShowVideo extends Component {

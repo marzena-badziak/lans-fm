@@ -16,7 +16,7 @@ import {
 import ShowVideo from "./ShowVideo";
 import { withRouter } from "react-router";
 import FontAwesome from "react-fontawesome";
-import { lastfmApi, lastfmKey } from "../lib/lastfm-api";
+import { lastfmKey } from "../lib/lastfm-api";
 import md5 from "md5";
 
 var nowPlayingArtist;
@@ -44,7 +44,9 @@ class ArtistTile extends Component {
   };
   getAlbums = e => {
     e.preventDefault();
-    this.props.router.push(`${this.props.name}/albums`);
+    this.props.router.push(
+      `${this.props.params.artistName}/${this.props.name}`
+    );
   };
 
   playVideo = () => {
@@ -167,6 +169,7 @@ class ArtistTile extends Component {
             style={{ position: "relative", cursor: "pointer" }}
           />
         </StyledArtistImage>
+
         <StyledYouTubeFontAwesome
           onClick={e => this.playVideo()}
           className="fa fa-youtube-play"
@@ -211,6 +214,7 @@ class ArtistTile extends Component {
   }
 }
 const StyledArtistTile = styled(Card)`
+
   overflow: hidden;
   position: relative;
   display: inline-block;

@@ -28,7 +28,7 @@ class SearchBar extends Component {
         artist: this.state.searchValue
       })
     );
-    this.props.router.push("searchResults");
+    this.props.router.push(this.state.searchValue);
   };
   render() {
     return (

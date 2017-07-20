@@ -18,6 +18,8 @@ class Navbar extends Component {
           />
         }
         iconElementRight={<LoginInfo />}
+        iconStyleLeft={{ marginTop: "0px" }}
+        iconStyleRight={{ marginTop: "0px" }}
         showMenuIconButton={true}
       />
     );
@@ -46,6 +48,7 @@ const StyledAppBar = styled(AppBar)`
   align-items: center;
   ${"" /* align-items: stretch; */}
   padding: 3px;
+
   /* Smartphones (portrait and landscape) ----------- */
   @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
     padding: 2px;

@@ -5,7 +5,6 @@ import { List, ListItem } from "material-ui/List";
 import Paper from "material-ui/Paper";
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
-import FlatButton from "material-ui/FlatButton";
 import FontAwesome from "react-fontawesome";
 import styled from "styled-components";
 import Divider from "material-ui/Divider";
@@ -14,14 +13,10 @@ import { withRouter } from "react-router";
 import { scrobbleAlbum } from "./scrobble-album";
 
 class AlbumPage extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   fetchAlbum = e => {
     this.props.dispatch(
       getAlbumInfo({
-        artist: this.props.params.artistName,
+        artist: this.props.params.artistChoosen,
         album: this.props.params.albumName
       })
     );
@@ -43,7 +38,13 @@ class AlbumPage extends Component {
     if (this.props.album.message === "GOT_ALBUMS") {
       console.log(this.props.album);
       return this.props.album.album.tracks.track.map((track, i) => {
-        return <ListElement i={i} track={track} />;
+        return (
+          <ListElement
+            i={i}
+            track={track}
+            artist={this.props.params.artistChoosen}
+          />
+        );
       });
     } else {
       return <CircularProgress />;
@@ -52,12 +53,14 @@ class AlbumPage extends Component {
   goBackToSearchResults = e => {
     e.preventDefault();
     console.log("back to search");
-    this.props.router.push("searchResults");
+    this.props.router.push(this.props.params.artistName);
   };
   goBackToArtistPage = e => {
     e.preventDefault();
     console.log("back to artist page");
-    this.props.router.push(`${this.props.params.artistName}/albums`);
+    this.props.router.push(
+      `${this.props.params.artistName}/${this.props.params.artistChoosen}`
+    );
   };
 
   render() {
@@ -90,7 +93,7 @@ class AlbumPage extends Component {
               }}
               onClick={this.goBackToSearchResults}
             >
-              {" "}/ search results{" "}
+              {" "}/ {this.props.params.artistName}{" "}
             </li>
             <li
               style={{
@@ -101,7 +104,7 @@ class AlbumPage extends Component {
               }}
               onClick={this.goBackToArtistPage}
             >
-              / {this.props.params.artistName}
+              / {this.props.params.artistChoosen}
             </li>
           </ul>
         </div>
@@ -146,10 +149,12 @@ class ListElement extends Component {
       open: "none"
     };
   }
-  changeDropdownState = () => {
-    if (this.state.open == "none") {
+  changeDropdownState = e => {
+    if (this.state.open === "none") {
       this.setState({
-        open: "block"
+        open: "block",
+        top: e.nativeEvent.pageY,
+        left: e.nativeEvent.pageX
       });
     } else {
       this.setState({
@@ -163,6 +168,7 @@ class ListElement extends Component {
       <div key={this.props.i}>
         <ListItem
           primaryText={`${this.props.i + 1}. ${this.props.track.name}`}
+          onClick={e => this.changeDropdownState(e)}
           rightIcon={
             <div
               style={{
@@ -185,7 +191,6 @@ class ListElement extends Component {
                   width: "25px",
                   height: "25px"
                 }}
-                onClick={() => this.changeDropdownState()}
               >
                 <FontAwesome
                   className="fa fa-ellipsis-v"
@@ -203,49 +208,79 @@ class ListElement extends Component {
           style={{
             display: `${this.state.open}`,
             position: "absolute",
-            left: "70%",
+            left: `${this.state.left}px`,
+            top: `${this.state.top}px`,
             zIndex: "10",
             boxShadow: "0px 0px 30px 3px rgba(0, 0, 0, 0.6)",
             padding: "0px"
           }}
         >
+          <DropDownHeader>
+            {this.props.artist} - {this.props.track.name}
+          </DropDownHeader>
+          <Divider />
           <StyledDropDownItem>
-            {" "}<FontAwesome
-              className="fa fa-lastfm"
-              name="options"
-              size="lg"
-              aria-hidden="true"
-            />
-            {"  "}
-            Scroblle
+            <a href="">
+              {" "}<FontAwesome
+                className="fa fa-lastfm"
+                name="options"
+                size="lg"
+                aria-hidden="true"
+              />
+              {"  "}
+              Scroblle
+            </a>
           </StyledDropDownItem>
           <Divider />
           <StyledDropDownItem>
-            {" "}<FontAwesome
-              className="fa fa-youtube"
-              name="options"
-              size="lg"
-              aria-hidden="true"
-            />
-            {"  "}
-            Youtube
+            <a
+              href={`https://www.youtube.com/results?search_query=${this.props
+                .track.name}`}
+              target="blank"
+            >
+              {" "}<FontAwesome
+                className="fa fa-youtube"
+                name="options"
+                size="lg"
+                aria-hidden="true"
+              />
+              {"  "}
+              Youtube
+            </a>
           </StyledDropDownItem>
           <Divider />
           <StyledDropDownItem>
-            {" "}<FontAwesome
-              className="fa fa-spotify"
-              name="options"
-              size="lg"
-              aria-hidden="true"
-            />
-            {"  "}
-            Spotify
+            <a
+              href={`https://open.spotify.com/search/results/${this.props.track
+                .name}`}
+              target="blank"
+            >
+              {" "}<FontAwesome
+                className="fa fa-spotify"
+                name="options"
+                size="lg"
+                aria-hidden="true"
+              />
+              {"  "}
+              Spotify
+            </a>
           </StyledDropDownItem>
         </List>
       </div>
     );
   }
 }
+const DropDownHeader = styled.li`
+  list-style-type: none;
+  padding: 15px;
+  background: #ffe0ee;
+  z-index: 10;
+  cursor: pointer;
+  &:hover {
+    background: #ffe0ee;
+    opacity: 1;
+  }
+`;
 const StyledDropDownItem = styled.li`
   list-style-type: none;
   padding: 15px;

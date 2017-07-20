@@ -1,18 +1,10 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardActions,
-  CardHeader,
-  CardMedia,
-  CardTitle,
-  CardText
-} from "material-ui/Card";
+import { Card, CardActions, CardMedia, CardTitle } from "material-ui/Card";
 import styled from "styled-components";
 import FlatButton from "material-ui/FlatButton";
-import axios from "axios";
-import lastfmApi from "../lib/lastfm-api";
 import propTypes from "prop-types";
 import { withRouter } from "react-router";
+import FontAwesome from "react-fontawesome";
 /*  scrobbleAlbum = () => {
     let scrobbleRequest = Qs.stringify(params, {arrayFormat: 'brackets'})
 
@@ -37,7 +29,8 @@ class AlbumTile extends Component {
   };
   openAlbum = () => {
     return this.props.router.push(
-      `${this.props.artist}/albums/${this.props.title}`
+      `${this.props.params.artistName}/${this.props.params.artistChoosen}/${this
+        .props.title}`
     );
   };
   render() {
@@ -51,11 +44,24 @@ class AlbumTile extends Component {
           <img src={this.setImage()} alt={`${this.props.title} cover`} />
         </AlbumImage>
         <CardActions>
-          <FlatButton label="Scrobble" backgroundColor="plum" />
+          <FlatButton
+            label="Scrobble"
+            backgroundColor="plum"
+            hoverColor="#ccd4d4"
+            icon={
+              <FontAwesome
+                className="fa fa-lastfm"
+                name="options"
+                size="lg"
+                aria-hidden="true"
+              />
+            }
+          />
           <FlatButton
             label="Show Album"
             backgroundColor="hotpink"
             onClick={() => this.openAlbum()}
+            hoverColor="#ccd4d4"
           />
         </CardActions>
       </StyledAlbumCard>
@@ -70,15 +76,13 @@ width: 260px;
 margin 0 auto;
 margin-top: 30px;
 
-
-
 `;
 const AlbumImage = styled(CardMedia)`
 
 transition: .2s all;
 
 &:hover{
-  -webkit-filter: brightness(50%)
+  -webkit-filter: brightness(80%)
 }
 `;
 
