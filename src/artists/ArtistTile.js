@@ -33,7 +33,9 @@ class ArtistTile extends Component {
   };
   getAlbums = e => {
     e.preventDefault();
-    this.props.router.push(`${this.props.name}/albums`);
+    this.props.router.push(
+      `${this.props.params.artistName}/${this.props.name}`
+    );
   };
   playVideo = () => {
     var searchRequest =
