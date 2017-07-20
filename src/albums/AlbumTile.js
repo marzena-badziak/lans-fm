@@ -13,19 +13,7 @@ import axios from "axios";
 import lastfmApi from "../lib/lastfm-api";
 import propTypes from "prop-types";
 import { withRouter } from "react-router";
-/*  scrobbleAlbum = () => {
-    let scrobbleRequest = Qs.stringify(params, {arrayFormat: 'brackets'})
-
-    });
-    axios
-      .get(`${lastfmApi("artist.getsimilar", '')}`)
-      .then(function(response) {
-        return 0;
-      })
-      .catch(function(error) {
-        console.log(error);
-      })
-    }*/
+import { fetchSongListAndScrobbleAlbum } from "./scrobble-albums";
 
 class AlbumTile extends Component {
   setImage = () => {
@@ -40,6 +28,16 @@ class AlbumTile extends Component {
       `${this.props.artist}/albums/${this.props.title}`
     );
   };
+
+  scrobbleAlbum = e => {
+    this.props.dispatch(
+      scrobbleAlbum({
+        artist: this.props.session,
+        album: this.props.album
+      })
+    );
+  };
+
   render() {
     return (
       <StyledAlbumCard onClick={() => this.openAlbum()}>
@@ -51,7 +49,10 @@ class AlbumTile extends Component {
           <img src={this.setImage()} alt={`${this.props.title} cover`} />
         </AlbumImage>
         <CardActions>
-          <FlatButton label="Scrobble" backgroundColor="plum" />
+          <FlatButton
+            label="Scrobble"
+            backgroundColor="plum"
+            onClick ={() => this.scrobbleAlbum}/>
           <FlatButton
             label="Show Album"
             backgroundColor="hotpink"

@@ -41,7 +41,6 @@ class AlbumPage extends Component {
 
   showTracks() {
     if (this.props.album.message === "GOT_ALBUMS") {
-      console.log(this.props.album);
       return this.props.album.album.tracks.track.map((track, i) => {
         return <ListElement i={i} track={track} />;
       });
@@ -51,12 +50,10 @@ class AlbumPage extends Component {
   }
   goBackToSearchResults = e => {
     e.preventDefault();
-    console.log("back to search");
     this.props.router.push("searchResults");
   };
   goBackToArtistPage = e => {
     e.preventDefault();
-    console.log("back to artist page");
     this.props.router.push(`${this.props.params.artistName}/albums`);
   };
 
@@ -77,7 +74,9 @@ class AlbumPage extends Component {
               display: "inline-block",
               listStyleType: "none",
               margin: "2px",
-              padding: "0"
+              padding: "0",
+              color: "#aa8899",
+              fontWeight: "bold"
             }}
           >
             <li
