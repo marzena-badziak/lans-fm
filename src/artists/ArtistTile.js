@@ -11,6 +11,9 @@ import FontAwesome from "react-fontawesome";
 import { lastfmKey } from "../lib/lastfm-api";
 import md5 from "md5";
 
+var nowPlayingArtist;
+var nowPlayingTitle;
+
 class ArtistTile extends Component {
   constructor(props) {
     super(props);
@@ -37,6 +40,7 @@ class ArtistTile extends Component {
       `${this.props.params.artistName}/${this.props.name}`
     );
   };
+
   playVideo = () => {
     var searchRequest =
       "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&q=" +
@@ -51,56 +55,42 @@ class ArtistTile extends Component {
     axios
       .get(searchRequest)
       .then(response => {
+        var vId = response.data.items[0].id.videoId;
         this.setState({
-          videoId: response.data.items[0].id.videoId,
+          videoId: vId,
           playVideo: true,
           videoFound: true
         });
-        let timestamp = Date.now();
-        console.log("timestamp: " + timestamp);
-        let ytTitle = response.data.items[0].snippet.title;
-        console.log(ytTitle);
 
-        const getArtistTitle = require("get-artist-title");
-
-        const [artist, title] = getArtistTitle(ytTitle, {
-          defaultArtist: response.data.items[0].snippet.channelTitle
-        });
-        console.log("artist: " + artist);
-        console.log("title: " + title);
-        console.log(lastfmKey);
-        console.log(this.props.session);
-        var sig = md5(
-          `api_key${lastfmKey.api_key}methodtrack.scrobble${this.props.session
-            .token}${lastfmKey.secret}`
-        );
         axios
-          // .post("http://ws.audioscrobbler.com/2.0/?format=json", {
-          //   headers: {
-          //     "Content-Type": "application/json",
-          //     Accept: "application/json"
-          //   },
-          //   data: {
-          //     "artist[0]": artist,
-          //     "track[0]": title,
-          //     "timestamp[0]": timestamp,
-          //     api_sig: this.props.session.apiSig,
-          //     sk: this.props.session.sessionKey,
-          //     api_key: lastfmKey.api_key,
-          //     method: "track.scrobble"
-          //   }
-          // })
-          .post(
-            `http://ws.audioscrobbler.com/2.0/?method=track.scrobble&artist=
-            ${artist}&track=${title}&timestamp=${timestamp}
-            &api_sig=${sig}&sk=${this.props.session
-              .sessionKey}&api_key=${lastfmKey.api_key}`
+          .get(
+            "https://www.googleapis.com/youtube/v3/videos?id=" +
+              vId +
+              "&part=contentDetails" +
+              "&key=AIzaSyBdXp1WnmYGXXuDFybXxK_94awGD5Qm-Zw"
           )
-          .then(response => {
-            console.log(response);
-          })
-          .catch(err => {
-            console.log(err);
+          .then(resp => {
+            console.log("content details");
+            console.log(resp.data.items[0].contentDetails.duration);
+
+            var duration = this.yTDurationToSeconds(
+              resp.data.items[0].contentDetails.duration
+            );
+            console.log(duration);
+
+            let timestamp = Math.floor(Date.now() / 1000);
+            console.log("timestamp: " + timestamp);
+            let ytTitle = response.data.items[0].snippet.title;
+            console.log(response.data.items[0]);
+
+            const getArtistTitle = require("get-artist-title");
+            const [artist, title] = getArtistTitle(ytTitle, {
+              defaultArtist: response.data.items[0].snippet.channelTitle
+            });
+
+            nowPlayingTitle = title;
+            nowPlayingArtist = artist;
+            this.scrobbleYouTubeVideo(artist, title, timestamp, duration);
           });
       })
       .catch(err => {
@@ -108,7 +98,74 @@ class ArtistTile extends Component {
         console.log("videoFound: " + this.state.videoFound);
       });
   };
+  yTDurationToSeconds = duration => {
+    var match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+    var hours = parseInt(match[1]) || 0;
+    var minutes = parseInt(match[2]) || 0;
+    var seconds = parseInt(match[3]) || 0;
+    return hours * 3600 + minutes * 60 + seconds;
+  };
+  scrobbleYouTubeVideo = (artist, title, timestamp, duration) => {
+    setTimeout(() => {
+      console.log(
+        "scrobble check " +
+          nowPlayingArtist +
+          " " +
+          nowPlayingTitle +
+          " " +
+          artist +
+          " " +
+          title
+      );
+      if (nowPlayingArtist != artist || nowPlayingTitle != title) {
+        console.log("track won't be scrobbled");
+        return;
+      }
+      console.log("track will be scrobbled!");
 
+      var sig = md5(
+        "api_key" +
+          lastfmKey.api_key +
+          "artist" +
+          artist +
+          "methodtrack.scrobblesk" +
+          this.props.session.sessionKey +
+          "timestamp" +
+          timestamp +
+          "track" +
+          title +
+          lastfmKey.secret
+      );
+      console.log(sig);
+
+      axios
+        .post(
+          "http://ws.audioscrobbler.com/2.0/?method=track.scrobble&artist=" +
+            artist +
+            "&track=" +
+            title +
+            "&timestamp=" +
+            timestamp +
+            "&api_sig=" +
+            sig +
+            "&sk=" +
+            this.props.session.sessionKey +
+            "&api_key=" +
+            lastfmKey.api_key
+        )
+        .then(response => {
+          console.log(response);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }, duration * 1000 / 3);
+  };
+  hideAlbums = e => {
+    this.setState({
+      dropDownDisplay: "none"
+    });
+  };
   render() {
     return (
       <StyledArtistTile>
@@ -140,7 +197,6 @@ class ArtistTile extends Component {
           width="260px"
           height="260px"
           style={{ position: "relative" }}
-          // onClick={}
         />
         <StyledYouTubeFontAwesome
           onClick={e => this.playVideo()}
@@ -180,6 +236,13 @@ class ArtistTile extends Component {
   }
 }
 
+<<<<<<< HEAD
+=======
+// const StyledAlbumElement = styled.li`
+//   display: flex;
+//   justify-content: space-around;
+// `;
+>>>>>>> c575d9a5b85ea2febd3c7c09bd6f5a6e1df25590
 const StyledArtistTile = styled.div`
   overflow: hidden;
   position: relative;
