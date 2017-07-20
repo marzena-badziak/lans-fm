@@ -220,9 +220,9 @@ class ListElement extends Component {
             padding: "0px"
           }}
         >
-          <StyledDropDownItem>
+          <DropDownHeader>
             {this.props.artist} - {this.props.track.name}
-          </StyledDropDownItem>
+          </DropDownHeader>
           <Divider />
           <StyledDropDownItem>
             <a href="">
@@ -275,6 +275,17 @@ class ListElement extends Component {
     );
   }
 }
+const DropDownHeader = styled.li`
+  list-style-type: none;
+  padding: 15px;
+  background: #ffe0ee;
+  z-index: 10;
+  cursor: pointer;
+  &:hover {
+    background: #ffe0ee;
+    opacity: 1;
+  }
+`;
 const StyledDropDownItem = styled.li`
   list-style-type: none;
   padding: 15px;
