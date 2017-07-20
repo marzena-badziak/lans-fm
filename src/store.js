@@ -104,7 +104,8 @@ const session = (
     apiSig: "",
     sessionKey: "",
     username: "",
-    message: ""
+    message: "",
+    token: ""
   },
   action
 ) => {
@@ -112,7 +113,7 @@ const session = (
     case "LOGIN_ATTEMPT":
       return {
         ...state,
-        message: "Trwa logowanie"
+        message: "Trying to log in"
       };
     case "LOGIN_SUCCESS":
       return {
@@ -120,7 +121,8 @@ const session = (
         apiSig: action.apiSig,
         sessionKey: action.sessionKey,
         username: action.username,
-        message: "Zalogowano jako"
+        token: action.token,
+        message: "Logged as: "
       };
     case "LOGIN_FAIL":
       return {

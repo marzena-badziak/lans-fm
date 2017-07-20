@@ -20,6 +20,7 @@ export const loginAction = token => {
       type: "LOGIN_ATTEMPT"
     });
     console.log(`${lastfmApi("auth.getSession", loginOptions)}`);
+    console.log(token);
     axios
       .get(`${lastfmApi("auth.getSession", loginOptions)}`)
       .then(function(response) {
@@ -28,8 +29,10 @@ export const loginAction = token => {
           type: "LOGIN_SUCCESS",
           apiSig: loginOptions.api_sig,
           sessionKey: response.data.session.key,
-          username: response.data.session.name
+          username: response.data.session.name,
+          token: loginOptions.token
         });
+        console.log(loginOptions.token);
       })
       .catch(function(error) {
         console.log(error);
