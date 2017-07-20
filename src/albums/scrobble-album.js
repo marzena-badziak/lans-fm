@@ -9,17 +9,25 @@ export const scrobbleAlbum = (data) => {
     sk: data.session.sessionKey,
     api_key: lastfmKey.api_key,
   };
+  let i = 0;
   let params
-//    _.forEach(data.album.album.tracks.track, function(track) {
+    _.forEach(data.album.album.tracks.track, function(track) {
+      let artistKey = "track[" + i + "]";
+      let titleKey = "title[" + i + "]";
+      let timestampKey = "timestamp[" + i + "]";
     params = {
-      artist: data.track.artist.name,
-      title: data.track.name,
-      timestamp: Math.floor((Date.now() / 1000)),
+      ...params,
+      [artistKey]: track.artist.name,
+      [titleKey]: track.name,
+      [timestampKey]: Math.floor((Date.now() / 1000)),
+    }
+    let apiSig = "";
+    params = {
+      ...params,
       api_key: lastfmKey.api_key,
       sk: data.session.sessionKey,
       method: "track.scrobble"
     }
-    let apiSig = "";
     Object.keys(params).sort().forEach(function(key) {
       if (key != "format") {
         var value = params[key];
@@ -30,6 +38,7 @@ export const scrobbleAlbum = (data) => {
     apiSig += lastfmKey.secret;
     apiSig = md5(apiSig);
     params = {...params, api_sig: apiSig};
+  })
 
 /*  _.forEachRight(data.album.album.tracks.track, function(track) {
     timestampOfScrobble -= track.duration;
