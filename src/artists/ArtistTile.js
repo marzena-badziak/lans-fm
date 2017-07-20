@@ -18,9 +18,7 @@ import { withRouter } from "react-router";
 import FontAwesome from "react-fontawesome";
 import { lastfmKey } from "../lib/lastfm-api";
 import md5 from "md5";
-
-var nowPlayingArtist;
-var nowPlayingTitle;
+import YouTubeFunctions from "../lib/youtube";
 
 class ArtistTile extends Component {
   constructor(props) {
@@ -49,105 +47,23 @@ class ArtistTile extends Component {
     );
   };
 
+  setYouTubeFlags = (videoId, playFlag, foundFlag) => {
+    this.setState({
+      videoId: videoId,
+      playVideo: playFlag
+    });
+  };
+
   playVideo = () => {
+    console.log(this.refs.youtube);
     var searchRequest =
       "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&q=" +
       this.props.name +
       "+VEVO" +
       "&type=video&key=AIzaSyBdXp1WnmYGXXuDFybXxK_94awGD5Qm-Zw";
-    this.getYoutubeVideoId(searchRequest);
+    this.refs.youtube.getYoutubeVideoId(searchRequest);
   };
 
-  getYoutubeVideoId = searchRequest => {
-    axios
-      .get(searchRequest)
-      .then(response => {
-        var vId = response.data.items[0].id.videoId;
-        this.setState({
-          videoId: vId,
-          playVideo: true,
-          videoFound: true
-        });
-
-        axios
-          .get(
-            "https://www.googleapis.com/youtube/v3/videos?id=" +
-              vId +
-              "&part=contentDetails" +
-              "&key=AIzaSyBdXp1WnmYGXXuDFybXxK_94awGD5Qm-Zw"
-          )
-          .then(resp => {
-            var duration = this.yTDurationToSeconds(
-              resp.data.items[0].contentDetails.duration
-            );
-
-            let timestamp = Math.floor(Date.now() / 1000);
-            let ytTitle = response.data.items[0].snippet.title;
-
-            const getArtistTitle = require("get-artist-title");
-            const [artist, title] = getArtistTitle(ytTitle, {
-              defaultArtist: response.data.items[0].snippet.channelTitle
-            });
-
-            nowPlayingTitle = title;
-            nowPlayingArtist = artist;
-            this.scrobbleYouTubeVideo(artist, title, timestamp, duration);
-          });
-      })
-      .catch(err => {
-        this.setState({ playVideo: true, videoFound: false });
-      });
-  };
-  yTDurationToSeconds = duration => {
-    var match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-    var hours = parseInt(match[1]) || 0;
-    var minutes = parseInt(match[2]) || 0;
-    var seconds = parseInt(match[3]) || 0;
-    return hours * 3600 + minutes * 60 + seconds;
-  };
-  scrobbleYouTubeVideo = (artist, title, timestamp, duration) => {
-    setTimeout(() => {
-      if (nowPlayingArtist != artist || nowPlayingTitle != title) {
-        console.log("track won't be scrobbled");
-        return;
-      }
-      var sig = md5(
-        "api_key" +
-          lastfmKey.api_key +
-          "artist" +
-          artist +
-          "methodtrack.scrobblesk" +
-          this.props.session.sessionKey +
-          "timestamp" +
-          timestamp +
-          "track" +
-          title +
-          lastfmKey.secret
-      );
-
-      axios
-        .post(
-          "http://ws.audioscrobbler.com/2.0/?method=track.scrobble&artist=" +
-            artist +
-            "&track=" +
-            title +
-            "&timestamp=" +
-            timestamp +
-            "&api_sig=" +
-            sig +
-            "&sk=" +
-            this.props.session.sessionKey +
-            "&api_key=" +
-            lastfmKey.api_key
-        )
-        .then(response => {
-          console.log(response);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }, duration * 1000 / 3);
-  };
   hideAlbums = e => {
     this.setState({
       dropDownDisplay: "none"
@@ -158,7 +74,7 @@ class ArtistTile extends Component {
       <StyledArtistTile
         img={this.props.img}
         name={this.props.name}
-        onClick={e => this.getAlbums(e)}
+        // onClick={e => this.getAlbums(e)}
       >
         <StyledArtistImage overlay={<CardTitle title={this.props.name} />}>
           <img
@@ -174,7 +90,7 @@ class ArtistTile extends Component {
           onClick={e => this.playVideo()}
           className="fa fa-youtube-play"
           name="play"
-          size="4x"
+          size="3x"
         />
         <div
           style={{
@@ -209,6 +125,11 @@ class ArtistTile extends Component {
               videoFound={this.state.videoFound}
             />
           : null}
+        <YouTubeFunctions
+          youTubeFlagsCallback={this.setYouTubeFlags}
+          lastFMSessionKey={this.props.session.sessionKey}
+          ref="youtube"
+        />
       </StyledArtistTile>
     );
   }
@@ -268,7 +189,7 @@ const StyledYouTubeFontAwesome = styled(FontAwesome)`
   color: #b31217;
   position: absolute;
   z-index: 5;
-  top: 60px;
+  top: 10px;
   left: 10px;
   cursor: pointer;
   &:hover {

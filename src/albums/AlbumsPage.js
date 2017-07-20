@@ -110,7 +110,7 @@ class AlbumsPage extends Component {
               }}
               onClick={this.goBackToSearchResults}
             >
-              / {this.props.params.artistName}
+              / Search results: {this.props.params.artistName}
             </li>
           </ul>
         </div>
