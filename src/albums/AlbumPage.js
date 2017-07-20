@@ -10,6 +10,8 @@ import FontAwesome from "react-fontawesome";
 import styled from "styled-components";
 import Divider from "material-ui/Divider";
 import moment from "moment";
+import { scrobbleAlbum } from "./scrobble-album";
+import _ from "lodash";
 class AlbumPage extends Component {
   constructor(props) {
     super(props);
@@ -37,8 +39,15 @@ class AlbumPage extends Component {
     }
   }
 
-  scrobbleAlbum = e => {
-    this.props.dispatch(getAlbumInfo(this.props.session, this.props.album));
+  scrobble = e => {
+    _.forEach(this.props.album.album.tracks.track, function(track) {
+      this.props.dispatch(
+        scrobbleAlbum({
+          track: track,
+          session: this.props.session
+        })
+      );
+    })
   };
 
   render() {
@@ -47,6 +56,8 @@ class AlbumPage extends Component {
         className="container"
         style={{ display: "flex", justifyContent: "center" }}
       >
+      <button onClick={this.scrobble}>KLIK</button>
+
         <Paper style={{ width: "70%" }}>
           {this.props.album.message === "GOT_ALBUMS"
             ? <div>
@@ -90,7 +101,6 @@ class ListElement extends Component {
   render() {
     return (
       <div key={this.props.i}>
-        <button onClick={this.scrobbleAlbum()}>KLIK</button>
         <ListItem
           primaryText={`${this.props.i + 1}. ${this.props.track.name}`}
           rightIcon={

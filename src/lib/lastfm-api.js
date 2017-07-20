@@ -13,13 +13,16 @@ const lastfmApi = (method, options) => {
   return request;
 };
 
-const lastfmScrobble = (scrobbleRequest, options) => {
-  let request = `http://ws.audioscrobbler.com/2.0/?method=track.scrobble`;
-  let requestOptions = "";
-  Object.entries(options).forEach(([key, value]) => {
+const lastfmScrobble = (scrobbleRequest) => {
+  let requestURL = `http://ws.audioscrobbler.com/2.0/?`;
+  let requestOptions = ""
+  Object.entries(scrobbleRequest).forEach(([key, value]) => {
     requestOptions += `&${key}=${value}`;
   });
-  request = `${request}${scrobbleRequest}${requestOptions}&api_key=${lastfmKey.api_key}&`;
+  const request = `${requestURL}${requestOptions}`;
+  console.log("requestURL: " + requestURL);
+  console.log("scrobbleRequest: " + scrobbleRequest);
+  console.log("requestOptions: " + requestOptions);
   console.log(request);
   return request;
 };

@@ -64,16 +64,17 @@ const StyledSearchBar = styled.div`
   height: ${props => props.height};
   font-size: 20px;
   width: ${props => props.width};
-  margin: 0 auto;
+  margin: 20px auto;
 `;
 const StyledSearchSpan = styled.div`
+  color: white;
   display: flex;
   height: inherit;
   align-items: center;
   padding: 0 15px;
   border-radius: 0px 10px 10px 0px;
   border: 1px solid #000000;
-  background-color: #dd8899;
+  background-color: #d147a3;
   cursor: pointer;
 `;
 const StyledSearchInput = styled.input`
