@@ -9,11 +9,12 @@ export const scrobbleAlbum = (data) => {
     sk: data.session.sessionKey,
     api_key: lastfmKey.api_key,
   };
+
   let params
-//    _.forEach(data.album.album.tracks.track, function(track) {
+    _.forEach(data.album.album.tracks.track, function(track) {
     params = {
-      artist: data.track.artist.name,
-      title: data.track.name,
+      artist: track.artist.name,
+      title: track.name,
       timestamp: Math.floor((Date.now() / 1000)),
       api_key: lastfmKey.api_key,
       sk: data.session.sessionKey,
@@ -30,6 +31,7 @@ export const scrobbleAlbum = (data) => {
     apiSig += lastfmKey.secret;
     apiSig = md5(apiSig);
     params = {...params, api_sig: apiSig};
+  })
 
 /*  _.forEachRight(data.album.album.tracks.track, function(track) {
     timestampOfScrobble -= track.duration;
