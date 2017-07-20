@@ -11,7 +11,7 @@ import styled from "styled-components";
 import Divider from "material-ui/Divider";
 import moment from "moment";
 import { withRouter } from "react-router";
-import { scrobbleAlbum } from "./scrobble-album"
+import { scrobbleAlbum } from "./scrobble-album";
 
 class AlbumPage extends Component {
   constructor(props) {
@@ -43,7 +43,13 @@ class AlbumPage extends Component {
     if (this.props.album.message === "GOT_ALBUMS") {
       console.log(this.props.album);
       return this.props.album.album.tracks.track.map((track, i) => {
-        return <ListElement i={i} track={track} />;
+        return (
+          <ListElement
+            i={i}
+            track={track}
+            artist={this.props.params.artistName}
+          />
+        );
       });
     } else {
       return <CircularProgress />;
@@ -146,10 +152,12 @@ class ListElement extends Component {
       open: "none"
     };
   }
-  changeDropdownState = () => {
+  changeDropdownState = e => {
     if (this.state.open == "none") {
       this.setState({
-        open: "block"
+        open: "block",
+        top: e.nativeEvent.pageY,
+        left: e.nativeEvent.pageX
       });
     } else {
       this.setState({
@@ -163,6 +171,7 @@ class ListElement extends Component {
       <div key={this.props.i}>
         <ListItem
           primaryText={`${this.props.i + 1}. ${this.props.track.name}`}
+          onClick={e => this.changeDropdownState(e)}
           rightIcon={
             <div
               style={{
@@ -185,7 +194,6 @@ class ListElement extends Component {
                   width: "25px",
                   height: "25px"
                 }}
-                onClick={() => this.changeDropdownState()}
               >
                 <FontAwesome
                   className="fa fa-ellipsis-v"
@@ -203,43 +211,62 @@ class ListElement extends Component {
           style={{
             display: `${this.state.open}`,
             position: "absolute",
-            left: "70%",
+            left: `${this.state.left}px`,
+            top: `${this.state.top}px`,
             zIndex: "10",
             boxShadow: "0px 0px 30px 3px rgba(0, 0, 0, 0.6)",
             padding: "0px"
           }}
         >
           <StyledDropDownItem>
-            {" "}<FontAwesome
-              className="fa fa-lastfm"
-              name="options"
-              size="lg"
-              aria-hidden="true"
-            />
-            {"  "}
-            Scroblle
+            {this.props.artist} - {this.props.track.name}
           </StyledDropDownItem>
           <Divider />
           <StyledDropDownItem>
-            {" "}<FontAwesome
-              className="fa fa-youtube"
-              name="options"
-              size="lg"
-              aria-hidden="true"
-            />
-            {"  "}
-            Youtube
+            <a href="">
+              {" "}<FontAwesome
+                className="fa fa-lastfm"
+                name="options"
+                size="lg"
+                aria-hidden="true"
+              />
+              {"  "}
+              Scroblle
+            </a>
           </StyledDropDownItem>
           <Divider />
           <StyledDropDownItem>
-            {" "}<FontAwesome
-              className="fa fa-spotify"
-              name="options"
-              size="lg"
-              aria-hidden="true"
-            />
-            {"  "}
-            Spotify
+            <a
+              href={`https://www.youtube.com/results?search_query=${this.props
+                .track.name}`}
+              target="blank"
+            >
+              {" "}<FontAwesome
+                className="fa fa-youtube"
+                name="options"
+                size="lg"
+                aria-hidden="true"
+              />
+              {"  "}
+              Youtube
+            </a>
+          </StyledDropDownItem>
+          <Divider />
+          <StyledDropDownItem>
+            <a
+              href={`https://open.spotify.com/search/results/${this.props.track
+                .name}`}
+              target="blank"
+            >
+              {" "}<FontAwesome
+                className="fa fa-spotify"
+                name="options"
+                size="lg"
+                aria-hidden="true"
+              />
+              {"  "}
+              Spotify
+            </a>
           </StyledDropDownItem>
         </List>
       </div>
