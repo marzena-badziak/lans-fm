@@ -54,9 +54,9 @@ const StyledCircularProgress = styled(CircularProgress)`
 
 const mapStateToProps = state => {
   return {
-    results: state.search.artistsSimilar,
-    artistEntered: state.search.artistEntered,
-    message: state.search.message
+    results: state.similarArtists.artistsSimilar,
+    artistEntered: state.similarArtists.artistEntered,
+    message: state.similarArtists.message
   };
 };
 ArtistsGrid.propTypes = {

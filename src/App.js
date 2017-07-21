@@ -15,8 +15,8 @@ class App extends Component {
           <Route path="/">
             <IndexRoute component={Home} />
             <Route component={Layout}>
-              <Route path=":artistName" component={ArtistsGrid} />
               <Route path="login" component={Login} />
+              <Route path=":artistName" component={ArtistsGrid} />
               <Route path=":artistName/:artistChoosen" component={AlbumsPage} />
               <Route
                 path=":artistName/:artistChoosen/:albumName"

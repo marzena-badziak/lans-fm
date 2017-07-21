@@ -1,11 +1,17 @@
 import React, { Component } from "react";
 import FlatButton from "material-ui/FlatButton";
 import { connect } from "react-redux";
-import { lastfmKey } from "../lib/lastfm-api";
-import styled from "styled-components";
 
 class LoginInfo extends Component {
+
+  logOut = () => {
+    this.props.dispatch({
+      type: "USER_LOGOUT"
+    });
+  }
+
   loginInfo = () => {
+    console.log(this.props.session);
     if (this.props.session.sessionKey === "") {
       return (
         <form action="http://www.last.fm/api/auth ">
@@ -29,17 +35,17 @@ class LoginInfo extends Component {
             }}
           />
         </form>
-      );
+     );
     } else {
       return (
         <FlatButton
-          onClick
           label="Logout"
           labelStyle={{
             color: "white",
             fontWeight: "700",
             marginRight: "8px"
           }}
+          onClick={() => this.logOut()}
         />
       );
     }

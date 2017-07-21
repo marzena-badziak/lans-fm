@@ -1,23 +1,24 @@
 // import React from "react";
 // import { connect } from "react-redux";
-import { lastfmApi } from "../lib/lastfm-api";
+import { lastfmRequestURLMaker, lastfmKey } from "../lib/lastfm-api";
 // import { hashHistory } from "react-router";
 import axios from "axios";
 
 export const searchArtist = artist => {
   const getsimilarOptions = {
     artist: artist.artist,
-    limit: "50"
+    limit: "50",
+    api_key: lastfmKey.api_key,
+    method: "artist.getsimilar"
   };
 
   return dispatch => {
-    // console.log(artist);
     dispatch({
-      type: "SEARCH_ATTEMPT",
-      artistEntered: artist.artist
+      type: "SEARCH_ARTIST_ATTEMPT",
+      artistEntered: artist.artist,
     });
     axios
-      .get(`${lastfmApi("artist.getsimilar", getsimilarOptions)}`)
+      .get(`${lastfmRequestURLMaker(getsimilarOptions)}`)
       .then(function(response) {
         if (typeof response.data.similarartists === "undefined") {
           dispatch({
@@ -25,7 +26,7 @@ export const searchArtist = artist => {
           });
         } else {
           dispatch({
-            type: "SEARCH_SUCCESS",
+            type: "SEARCH_ARTIST_SUCCESS",
             artistsSimilar: response.data.similarartists.artist
               .reverse()
               .slice(0, 30)
@@ -35,33 +36,22 @@ export const searchArtist = artist => {
       .catch(function(error) {
         console.log(error);
       });
-    /*   .then((response) => {
-            dispatch({
-                type: "LOGIN_SUCCESS",
-                data: {
-                    username: user.username,
-                    token: response.data.data.auth_token,
-                    user_id: response.data.data.user_id
-                }
-            });
-            hashHistory.push("artists-similar");
-
-        })*/
   };
 };
 export const getAlbums = data => {
   const getAlbumOptions = {
     artist: data.data,
-    limit: "10"
+    limit: "10",
+    method: "artist.gettopalbums",
+    api_key: lastfmKey.api_key
   };
   return dispatch => {
     dispatch({
       type: "SEARCH_ALBUMS_ATTEMPT"
     });
     axios
-      .get(`${lastfmApi("artist.gettopalbums", getAlbumOptions)}`)
+      .get(`${lastfmRequestURLMaker(getAlbumOptions)}`)
       .then(function(response) {
-        console.log(response);
         if (response.data.topalbums) {
           dispatch({
             type: "SEARCH_ALBUMS",
@@ -81,15 +71,18 @@ export const getAlbums = data => {
 export const getAlbumInfo = data => {
   const getAlbumOptions = {
     artist: data.artist,
-    album: data.album
+    album: data.album,
+    api_key: lastfmKey.api_key,
+    method: "album.getInfo"
   };
   return dispatch => {
     dispatch({
       type: "GET_INFO_ATTEMPT"
     });
     axios
-      .get(`${lastfmApi("album.getInfo", getAlbumOptions)}`)
+      .get(`${lastfmRequestURLMaker(getAlbumOptions)}`)
       .then(function(response) {
+        console.log(response);
         dispatch({
           type: "GET_ALBUM_INFO",
           payload: response.data.album
@@ -101,9 +94,11 @@ export const getAlbumInfo = data => {
   };
 };
 export const getArtistInfo = data => {
-  console.log(data);
+
   const getArtistOptions = {
-    artist: data.artist
+    artist: data.artist,
+    api_key: lastfmKey.api_key,
+    method: "artist.getInfo"
   };
   console.log(getArtistOptions);
   return dispatch => {
@@ -111,7 +106,7 @@ export const getArtistInfo = data => {
       type: "GET_ARTIST_INFO_ATTEMPT"
     });
     axios
-      .get(`${lastfmApi("artist.getInfo", getArtistOptions)}`)
+      .get(`${lastfmRequestURLMaker(getArtistOptions)}`)
       .then(function(response) {
         dispatch({
           type: "GET_ARTIST_INFO",

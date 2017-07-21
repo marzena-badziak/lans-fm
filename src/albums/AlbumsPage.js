@@ -182,7 +182,7 @@ const SearchResultsContainer = styled.div`
 `;
 const mapStateToProps = state => {
   return {
-    results: state.search.artistsSimilar,
+    results: state.similarArtists.artistsSimilar,
     albums: state.albums,
     artist: state.artist
   };
