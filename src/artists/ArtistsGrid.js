@@ -14,7 +14,6 @@ class ArtistsGrid extends Component {
           name={artist.name}
           key={artist.name}
           img={artist.image[2]["#text"]}
-          match={artist.match}
         />
       );
     });

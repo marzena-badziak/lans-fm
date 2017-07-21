@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-<<<<<<< HEAD
 import { Router, Route, IndexRoute, hashHistory } from "react-router";
-=======
-// import { Router, Route, IndexRoute, hashHistory } from "react-router";
->>>>>>> scrobbling
 import { withRouter } from "react-router";
 import { loginAction } from "./login-actions";
 

@@ -1,26 +1,13 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardActions,
-  CardHeader,
-  CardMedia,
-  CardTitle,
-  CardText
-} from "material-ui/Card";
+import { Card, CardActions, CardMedia, CardTitle } from "material-ui/Card";
 import styled from "styled-components";
 import FlatButton from "material-ui/FlatButton";
-import axios from "axios";
-import lastfmApi from "../lib/lastfm-api";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-<<<<<<< HEAD
 import FontAwesome from "react-fontawesome";
 import { fetchSongListAndScrobbleAlbum } from "./scrobble-album";
-=======
-import { fetchSongListAndScrobbleAlbum } from "./scrobble-album";
-import FontAwesome from "react-fontawesome";
->>>>>>> scrobbling
+
 
 class AlbumTile extends Component {
   setImage = () => {
@@ -61,11 +48,7 @@ class AlbumTile extends Component {
           <FlatButton
             label="Scrobble"
             backgroundColor="plum"
-<<<<<<< HEAD
-            onClick ={() => this.scrobbleAlbum()}/>
-=======
             onClick ={() => this.scrobbleAlbum()}
->>>>>>> scrobbling
             hoverColor="#ccd4d4"
             icon={
               <FontAwesome
@@ -88,8 +71,13 @@ class AlbumTile extends Component {
   }
 }
 const StyledAlbumCard = styled(Card)`
-width: 300px;
+${"" /* overflow: hidden;
+position: relative;
+display: inline-block; */}
+width: 260px;
+margin 0 auto;
 margin-top: 30px;
+
 `;
 const AlbumImage = styled(CardMedia)`
 

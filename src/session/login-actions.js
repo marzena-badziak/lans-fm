@@ -1,13 +1,9 @@
-import React from "react";
-import { connect } from "react-redux";
 import { lastfmApi, lastfmKey } from "../lib/lastfm-api";
-import { hashHistory } from "react-router";
+
 import axios from "axios";
 import md5 from "md5";
 
 export const loginAction = token => {
-
-
   const loginOptions = {
     token: `${token}`,
     api_sig: md5(

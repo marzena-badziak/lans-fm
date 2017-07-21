@@ -7,16 +7,12 @@ import {
 } from "../artists/search-actions.js";
 import AlbumTile from "./AlbumTile";
 import styled from "styled-components";
-import qs from "qs";
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
 import { withRouter } from "react-router";
 import FlatButton from "material-ui/FlatButton";
 
 class AlbumsPage extends Component {
-  constructor(props) {
-    super(props);
-  }
   fetchAlbums = e => {
     this.props.dispatch(
       getAlbums({
@@ -36,7 +32,7 @@ class AlbumsPage extends Component {
     this.fetchArtist();
   }
   displayAvaliableAlbums(album, i) {
-    if (!(album.name == "(null)")) {
+    if (!(album.name === "(null)")) {
       return (
         <AlbumTile
           key={i}
@@ -63,7 +59,7 @@ class AlbumsPage extends Component {
     if (this.props.albums.albums.length !== 0) {
       return this.mapAlbums();
     } else {
-      if (this.props.albums.message == "Searching") {
+      if (this.props.albums.message === "Searching") {
         return this.displayPlaceHolder(<CircularProgress />);
       } else {
         return this.displayPlaceHolder(this.props.albums.message);
@@ -114,13 +110,24 @@ class AlbumsPage extends Component {
               }}
               onClick={this.goBackToSearchResults}
             >
-              / {this.props.params.artistName}
+              / Search results: {this.props.params.artistName}
             </li>
           </ul>
         </div>
 
         <div className="container">
-          <div style={{ display: "flex", alignItems: "flex-end" }}>
+          <div
+            style={{
+              display: "flex",
+              // flexDirection: "row",
+              // flexWrap: "wrap",
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
+              alignContent: "flex-start",
+              margin: "10px",
+              marginTop: "30px"
+            }}
+          >
             <Avatar
               src={
                 this.props.artist.artist.image
@@ -142,8 +149,19 @@ class AlbumsPage extends Component {
               hoverColor="grey"
             />
           </div>
+          <h3 style={{ display: "block", margin: "0" }}>Albums:</h3>
 
-          <SearchResultsContainer>
+          <SearchResultsContainer
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              alignItems: "flex-start",
+              alignContent: "flex-start",
+              margin: "0 auto"
+            }}
+          >
             {this.renderTiles()}
           </SearchResultsContainer>
         </div>

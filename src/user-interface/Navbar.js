@@ -9,14 +9,12 @@ class Navbar extends Component {
   render() {
     return (
       <StyledAppBar
-        style={{ backgroundColor: "#8585ad" }}
+        style={{ background: "none" }}
         iconElementLeft={<StyledLogo href="#">LansFm</StyledLogo>}
         title={
           <StyledSearchBar
             boxShadow=" 0px 0px 0px 0px rgba(0, 0, 0, 0)"
-            // width="50%"
-            height="50px"
-            style={{ marginTop: "7px" }}
+            height="35px"
           />
         }
         iconElementRight={<LoginInfo />}
@@ -29,26 +27,28 @@ class Navbar extends Component {
 }
 
 const StyledSearchBar = styled(SearchBar)`
-  width: 50vw;
+  width: 30vw;
   font-size: 16px;
+  margin-top: 14px;
   /* Smartphones (portrait and landscape) ----------- */
   @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
     width: 45vw;
     font-size: 10px;
-    margin: 3px;
+    margin-top: 15px 0;
   }
   /* Smartphones (portrait) ----------- */
   @media only screen and (max-width : 320px) {
-    width: 45vw;
+    width: 43vw;
     font-size: 10px;
-    margin: 3px;
+    margin: 15px 0;
   }
 `;
 const StyledAppBar = styled(AppBar)`
-  background-color: #bb77AA;
   display: flex;
   align-items: center;
-  padding: 2px;
+  ${"" /* align-items: stretch; */}
+  padding: 3px;
+
   /* Smartphones (portrait and landscape) ----------- */
   @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
     padding: 2px;
@@ -79,18 +79,22 @@ const StyledLogo = styled.a`
   font-family: Righteous;
   color: white;
   font-size: x-large;
-  &:hover {
+  padding: 0;
+  margin: -3px 0 15px 30px;
+  ${"" /* margin-left: 30px; */} &:hover {
     color: #e7f7ff;
     text-decoration: none;
   }
   /* Smartphones (portrait and landscape) ----------- */
   @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-    font-size: medium;
+    font-size: large;
+    margin-left: 10px;
   }
 
   /* Smartphones (portrait) ----------- */
   @media only screen and (max-width: 320px) {
     font-size: medium;
+    margin-left: 3px;
   }
 `;
 const mapStateToProps = state => {

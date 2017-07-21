@@ -23,12 +23,15 @@ class SearchBar extends Component {
 
   fetchArtist = e => {
     e.preventDefault();
+    this.props.dispatch({
+
+    })
     this.props.dispatch(
       searchArtist({
         artist: this.state.searchValue
       })
     );
-    this.props.router.push(this.state.searchValue);
+    this.props.router.push("searchResults");
   };
   render() {
     return (

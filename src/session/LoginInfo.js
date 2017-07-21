@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import FlatButton from "material-ui/FlatButton";
 import { connect } from "react-redux";
 import { lastfmKey } from "../lib/lastfm-api";
+import styled from "styled-components";
 
 class LoginInfo extends Component {
 
@@ -27,11 +28,29 @@ class LoginInfo extends Component {
             name="cb"
             value="http://localhost:3000/#/login"
           />
-          <FlatButton type="submit" label="Login" style={{ color: "white" }} />
+          <FlatButton
+            type="submit"
+            label="Login"
+            labelStyle={{
+              color: "white",
+              fontWeight: "700",
+              marginRight: "8px"
+            }}
+          />
         </form>
      );
     } else {
-      return <FlatButton onClick={() => this.logOut}  label="Logout" />;
+      return (
+        <FlatButton
+          onClick={() => this.logOut}
+          label="Logout"
+          labelStyle={{
+            color: "white",
+            fontWeight: "700",
+            marginRight: "8px"
+          }}
+        />
+      );
     }
   };
 
