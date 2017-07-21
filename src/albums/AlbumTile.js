@@ -14,8 +14,13 @@ import lastfmApi from "../lib/lastfm-api";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+<<<<<<< HEAD
 import FontAwesome from "react-fontawesome";
 import { fetchSongListAndScrobbleAlbum } from "./scrobble-album";
+=======
+import { fetchSongListAndScrobbleAlbum } from "./scrobble-album";
+import FontAwesome from "react-fontawesome";
+>>>>>>> scrobbling
 
 class AlbumTile extends Component {
   setImage = () => {
@@ -56,7 +61,11 @@ class AlbumTile extends Component {
           <FlatButton
             label="Scrobble"
             backgroundColor="plum"
+<<<<<<< HEAD
             onClick ={() => this.scrobbleAlbum()}/>
+=======
+            onClick ={() => this.scrobbleAlbum()}
+>>>>>>> scrobbling
             hoverColor="#ccd4d4"
             icon={
               <FontAwesome

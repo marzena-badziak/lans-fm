@@ -22,10 +22,14 @@ export const fetchSongListAndScrobbleAlbum = (data) => {
       }
     })
       .then(resp => {
-        scrobbleAlbum2({
-          session: data.session,
-          album: resp.data
-        })
+        if(resp.data.album.album.tracks.track.length === 0) {
+          alert("No tracks for this album in last.fm database!")
+        } else {
+          scrobbleAlbum2({
+            session: data.session,
+            album: resp.data
+          })
+        }
       })
       .catch(function(error) {
         console.log(error);
@@ -87,18 +91,6 @@ export const scrobbleAlbum = (data) => {
       });
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 const scrobbleAlbum2 = (data) => {
   let scrobbleRequest = "";

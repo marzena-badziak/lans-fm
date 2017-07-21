@@ -13,7 +13,8 @@ class LoginInfo extends Component {
   }
 
   loginInfo = () => {
-    if (this.props.session.sessionKey === "") {
+    console.log(this.props.session);
+    if (this.props.session.sessionKey === null) {
       return (
         <form action="http://www.last.fm/api/auth ">
           <input
@@ -28,7 +29,7 @@ class LoginInfo extends Component {
           />
           <FlatButton type="submit" label="Login" style={{ color: "white" }} />
         </form>
-      );
+     );
     } else {
       return <FlatButton onClick={() => this.logOut}  label="Logout" />;
     }

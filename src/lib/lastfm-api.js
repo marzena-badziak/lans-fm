@@ -20,10 +20,6 @@ const lastfmRequestURLMaker = (scrobbleRequest) => {
     requestOptions += `&${key}=${value}`;
   });
   const request = `${requestURL}${requestOptions}`;
-  console.log("requestURL: " + requestURL);
-  console.log("scrobbleRequest: " + scrobbleRequest);
-  console.log("requestOptions: " + requestOptions);
-  console.log(request);
   return request;
 };
 

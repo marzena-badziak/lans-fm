@@ -19,6 +19,7 @@ export const loginAction = token => {
     axios
       .get(`${lastfmApi("auth.getSession", loginOptions)}`)
       .then(function(response) {
+        console.log(response);
         dispatch({
           type: "LOGIN_SUCCESS",
           apiSig: loginOptions.api_sig,
@@ -30,17 +31,5 @@ export const loginAction = token => {
       .catch(function(error) {
         console.log(error);
       });
-    /*   .then((response) => {
-            dispatch({
-                type: "LOGIN_SUCCESS",
-                data: {
-                    username: user.username,
-                    token: response.data.data.auth_token,
-                    user_id: response.data.data.user_id
-                }
-            });
-            hashHistory.push("artists-similar");
-
-        })*/
   };
 };
