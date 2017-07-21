@@ -11,8 +11,40 @@ import Divider from "material-ui/Divider";
 import moment from "moment";
 import { withRouter } from "react-router";
 import { scrobbleAlbum } from "./scrobble-album";
-
+import Track from "./Track";
 class AlbumPage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      open: {},
+      left: {},
+      top: {}
+    };
+  }
+
+  openMenu = (i, left, top) => {
+    if (this.state.open[`${i}`] == "block") {
+      this.setState({
+        open: {}
+      });
+    } else {
+      this.setState({
+        open: {}
+      });
+      this.setState({
+        open: { [`${i}`]: "block" },
+        left: { [`${i}`]: left },
+        top: { [`${i}`]: top }
+      });
+    }
+  };
+
+  closeMenu = i => {
+    this.setState({
+      open: { [`${i}`]: "none" }
+    });
+  };
   fetchAlbum = e => {
     this.props.dispatch(
       getAlbumInfo({
@@ -36,16 +68,24 @@ class AlbumPage extends Component {
 
   showTracks() {
     if (this.props.album.message === "GOT_ALBUMS") {
-      console.log(this.props.album);
-      return this.props.album.album.tracks.track.map((track, i) => {
-        return (
-          <ListElement
-            i={i}
-            track={track}
-            artist={this.props.params.artistChoosen}
-          />
-        );
-      });
+      if (this.props.album.album.tracks.track.length !== 0) {
+        return this.props.album.album.tracks.track.map((track, i) => {
+          return (
+            <Track
+              i={i}
+              track={track}
+              artist={this.props.params.artistChoosen}
+              open={this.state.open[`${i}`] || "none"}
+              left={this.state.left[`${i}`] || 0}
+              top={this.state.top[`${i}`] || 0}
+              openMenu={this.openMenu}
+              closeMenu={this.closeMenu}
+            />
+          );
+        });
+      } else {
+        return <div>Sorry tracks are not available for this album</div>;
+      }
     } else {
       return <CircularProgress />;
     }
@@ -141,157 +181,6 @@ class AlbumPage extends Component {
   }
 }
 
-class ListElement extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      open: "none"
-    };
-  }
-  changeDropdownState = e => {
-    if (this.state.open === "none") {
-      this.setState({
-        open: "block",
-        top: e.nativeEvent.pageY,
-        left: e.nativeEvent.pageX
-      });
-    } else {
-      this.setState({
-        open: "none"
-      });
-    }
-  };
-
-  render() {
-    return (
-      <div key={this.props.i}>
-        <ListItem
-          primaryText={`${this.props.i + 1}. ${this.props.track.name}`}
-          onClick={e => this.changeDropdownState(e)}
-          rightIcon={
-            <div
-              style={{
-                width: "100px",
-                display: "flex",
-                justifyContent: "space-around",
-                alignItems: "center"
-              }}
-            >
-              <span>
-                {moment()
-                  .startOf("day")
-                  .add(moment.duration({ s: this.props.track.duration }))
-                  .format("mm:ss")}
-              </span>
-              <span
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  width: "25px",
-                  height: "25px"
-                }}
-              >
-                <FontAwesome
-                  className="fa fa-ellipsis-v"
-                  name="options"
-                  size="lg"
-                  aria-hidden="true"
-                  style={{ paddingLeft: "12px" }}
-                />
-              </span>
-            </div>
-          }
-          style={{ textAlign: "left" }}
-        />
-        <List
-          style={{
-            display: `${this.state.open}`,
-            position: "absolute",
-            left: `${this.state.left}px`,
-            top: `${this.state.top}px`,
-            zIndex: "10",
-            boxShadow: "0px 0px 30px 3px rgba(0, 0, 0, 0.6)",
-            padding: "0px"
-          }}
-        >
-          <DropDownHeader>
-            {this.props.artist} - {this.props.track.name}
-          </DropDownHeader>
-          <Divider />
-          <StyledDropDownItem>
-            <a href="">
-              {" "}<FontAwesome
-                className="fa fa-lastfm"
-                name="options"
-                size="lg"
-                aria-hidden="true"
-              />
-              {"  "}
-              Scroblle
-            </a>
-          </StyledDropDownItem>
-          <Divider />
-          <StyledDropDownItem>
-            <a
-              href={`https://www.youtube.com/results?search_query=${this.props
-                .track.name}`}
-              target="blank"
-            >
-              {" "}<FontAwesome
-                className="fa fa-youtube"
-                name="options"
-                size="lg"
-                aria-hidden="true"
-              />
-              {"  "}
-              Youtube
-            </a>
-          </StyledDropDownItem>
-          <Divider />
-          <StyledDropDownItem>
-            <a
-              href={`https://open.spotify.com/search/results/${this.props.track
-                .name}`}
-              target="blank"
-            >
-              {" "}<FontAwesome
-                className="fa fa-spotify"
-                name="options"
-                size="lg"
-                aria-hidden="true"
-              />
-              {"  "}
-              Spotify
-            </a>
-          </StyledDropDownItem>
-        </List>
-      </div>
-    );
-  }
-}
-const DropDownHeader = styled.li`
-  list-style-type: none;
-  padding: 15px;
-  background: #ffe0ee;
-  z-index: 10;
-  cursor: pointer;
-  &:hover {
-    background: #ffe0ee;
-    opacity: 1;
-  }
-`;
-const StyledDropDownItem = styled.li`
-  list-style-type: none;
-  padding: 15px;
-  background: #ffe0ee;
-  z-index: 10;
-  cursor: pointer;
-  &:hover {
-    background: #dd8899;
-    opacity: 1;
-  }
-`;
 const mapStateToProps = state => {
   return {
     album: state.album,
