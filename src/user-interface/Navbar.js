@@ -4,7 +4,9 @@ import styled from "styled-components";
 import AppBar from "material-ui/AppBar";
 import { connect } from "react-redux";
 import LoginInfo from "../session/LoginInfo";
+import injectTapEventPlugin from "react-tap-event-plugin";
 
+injectTapEventPlugin();
 class Navbar extends Component {
   render() {
     return (
@@ -17,7 +19,9 @@ class Navbar extends Component {
             height="35px"
           />
         }
-        iconElementRight={<LoginInfo />}
+        iconElementRight={
+          <LoginInfo currentPageParams={this.props.urlParams} />
+        }
         iconStyleLeft={{ marginTop: "0px" }}
         iconStyleRight={{ marginTop: "0px" }}
         showMenuIconButton={true}
@@ -59,20 +63,6 @@ const StyledAppBar = styled(AppBar)`
     padding: 2px;
   }
 
-`;
-
-const StyledForm = styled.form`
-  /* Smartphones (portrait and landscape) ----------- */
-  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-    margin: 0;
-    padding: 0;
-  }
-
-  /* Smartphones (portrait) ----------- */
-  @media only screen and (max-width: 320px) {
-    margin: 0;
-    padding: 0;
-  }
 `;
 
 const StyledLogo = styled.a`

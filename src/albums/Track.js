@@ -3,21 +3,37 @@ import FontAwesome from "react-fontawesome";
 import styled from "styled-components";
 import Divider from "material-ui/Divider";
 import moment from "moment";
+import { connect } from "react-redux";
 import { List, ListItem } from "material-ui/List";
+import {scrobbleSingleTrack} from "./scrobble-album.js";
 class Track extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      open: "none"
+      open: "none",
+      scrobble: 0
     };
   }
+
   changeDropdownState = e => {
     this.props.openMenu(this.props.i, e.nativeEvent.pageX, e.nativeEvent.pageY);
   };
+
+  scrobbleTrack = e => {
+      scrobbleSingleTrack({
+        session: this.props.session,
+        track: this.props.track
+      })
+  };
+
+
   render() {
     return (
       <div key={this.props.i}>
+      <div className="alert alert-success alert-dismissible" role="alert">
+        Scrobbled<button type="button" className="close" dataDismiss="alert" ariaLabel="Close"><span ariaHidden="true">&times;</span></button>
+      </div>
         <ListItem
           primaryText={`${this.props.i + 1}. ${this.props.track.name}`}
           onClick={e => this.changeDropdownState(e)}
@@ -71,8 +87,7 @@ class Track extends Component {
             {this.props.artist} - {this.props.track.name}
           </DropDownHeader>
           <Divider />
-          <StyledDropDownItem>
-            <a href="">
+          <StyledDropDownItem onClick={() => this.scrobbleTrack()}>
               {" "}<FontAwesome
                 className="fa fa-lastfm"
                 name="options"
@@ -80,8 +95,7 @@ class Track extends Component {
                 aria-hidden="true"
               />
               {"  "}
-              Scroblle
-            </a>
+              Scrobble
           </StyledDropDownItem>
           <Divider />
           <StyledDropDownItem>
@@ -144,4 +158,9 @@ const StyledDropDownItem = styled.li`
     opacity: 1;
   }
 `;
-export default Track;
+const mapStateToProps = state => {
+  return {
+    session: state.session
+  };
+};
+export default connect(mapStateToProps)(Track);

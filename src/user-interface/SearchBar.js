@@ -5,7 +5,6 @@ import propTypes from "prop-types";
 import { withRouter } from "react-router";
 import styled from "styled-components";
 import FontAwesome from "react-fontawesome";
-import MediaQuery from "react-responsive";
 
 class SearchBar extends Component {
   constructor(props) {
@@ -42,11 +41,11 @@ class SearchBar extends Component {
             placeholder="Your favourite artist"
           />{" "}
           <StyledSearchSpan onClick={e => this.fetchArtist(e)}>
-              <FontAwesome
-                className="fa fa-search"
-                name="search"
-                style={{ textShadow: "0 1px 0 rgba(0, 0, 0, 0.1)" }}
-              />
+            <FontAwesome
+              className="fa fa-search"
+              name="search"
+              style={{ textShadow: "0 1px 0 rgba(0, 0, 0, 0.1)" }}
+            />
           </StyledSearchSpan>
         </StyledSearchBar>
       </form>
