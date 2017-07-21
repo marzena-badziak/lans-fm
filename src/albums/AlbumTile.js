@@ -48,14 +48,6 @@ class AlbumTile extends Component {
             label="Scrobble"
             backgroundColor="plum"
             hoverColor="#ccd4d4"
-            icon={
-              <FontAwesome
-                className="fa fa-lastfm"
-                name="options"
-                size="lg"
-                aria-hidden="true"
-              />
-            }
           />
           <FlatButton
             label="Show Album"
