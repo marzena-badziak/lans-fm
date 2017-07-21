@@ -3,15 +3,14 @@ import FlatButton from "material-ui/FlatButton";
 import { connect } from "react-redux";
 
 class LoginInfo extends Component {
-
   logOut = () => {
     this.props.dispatch({
       type: "USER_LOGOUT"
     });
-  }
+  };
 
   loginInfo = () => {
-    console.log(this.props.session);
+    console.log(this.props.currentPageParams);
     if (this.props.session.sessionKey === "") {
       return (
         <form action="http://www.last.fm/api/auth ">
@@ -23,7 +22,8 @@ class LoginInfo extends Component {
           <input
             type="hidden"
             name="cb"
-            value="http://localhost:3000/#/login"
+            value={`http://localhost:3000/?currentUrl=${this.props
+              .currentPageParams}/#/login`}
           />
           <FlatButton
             type="submit"
@@ -35,7 +35,7 @@ class LoginInfo extends Component {
             }}
           />
         </form>
-     );
+      );
     } else {
       return (
         <FlatButton

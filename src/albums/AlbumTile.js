@@ -8,7 +8,6 @@ import { withRouter } from "react-router";
 import FontAwesome from "react-fontawesome";
 import { fetchSongListAndScrobbleAlbum } from "./scrobble-album";
 
-
 class AlbumTile extends Component {
   setImage = () => {
     if (this.props.image) {
@@ -38,6 +37,7 @@ class AlbumTile extends Component {
     return (
       <StyledAlbumCard>
         <AlbumImage
+          onClick={() => this.openAlbum()}
           overlay={
             <CardTitle title={this.props.title} subtitle={this.props.artist} />
           }
@@ -48,7 +48,7 @@ class AlbumTile extends Component {
           <FlatButton
             label="Scrobble"
             backgroundColor="plum"
-            onClick ={() => this.scrobbleAlbum()}
+            onClick={() => this.scrobbleAlbum()}
             hoverColor="#ccd4d4"
           />
           <FlatButton
