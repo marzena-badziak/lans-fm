@@ -11,7 +11,6 @@ class LoginInfo extends Component {
   }
 
   loginInfo = () => {
-    console.log(this.props.session);
     if (this.props.session.sessionKey === "") {
       return (
         <form action="http://www.last.fm/api/auth ">

@@ -10,7 +10,6 @@ import styled from "styled-components";
 import Divider from "material-ui/Divider";
 import moment from "moment";
 import { withRouter } from "react-router";
-import { scrobbleAlbum } from "./scrobble-album";
 
 class AlbumPage extends Component {
   fetchAlbum = e => {
@@ -24,15 +23,6 @@ class AlbumPage extends Component {
   componentDidMount() {
     this.fetchAlbum();
   }
-
-  scrobble = e => {
-    this.props.dispatch(
-      scrobbleAlbum({
-        session: this.props.session,
-        album: this.props.album
-      })
-    );
-  };
 
   showTracks() {
     if (this.props.album.message === "GOT_ALBUMS") {

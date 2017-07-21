@@ -26,7 +26,7 @@ export const fetchSongListAndScrobbleAlbum = (data) => {
         if(resp.data.album.tracks.track.length === 0) {
           alert("No tracks for this album in last.fm database!")
         } else {
-          scrobbleAlbum2({
+          scrobbleAlbum({
             session: data.session,
             album: resp.data
           })
@@ -38,19 +38,13 @@ export const fetchSongListAndScrobbleAlbum = (data) => {
   }
 }
 
-export const scrobbleAlbum = (data) => {
-  let scrobbleRequest = "";
-  let scrobbleOptions = {
-    sk: data.session.sessionKey,
-    api_key: lastfmKey.api_key,
-  };
+const generateTracksParamsList = (tracks, sk) => {
   let i = 0;
   let scrobbleParams;
-  console.log(data.album.album.tracks.track);
-    _.forEach(data.album.album.tracks.track, function(track) {
-      let artistKey = "artist[" + i + "]";
-      let titleKey = "title[" + i + "]";
-      let timestampKey = "timestamp[" + i + "]";
+  _.forEach(tracks, function(track) {
+    let artistKey = "artist[" + i + "]";
+    let titleKey = "title[" + i + "]";
+    let timestampKey = "timestamp[" + i + "]";
     scrobbleParams = {
       ...scrobbleParams,
       [artistKey]: track.artist.name,
@@ -59,89 +53,42 @@ export const scrobbleAlbum = (data) => {
     }
     i++;
   })
-    let apiSig = "";
-    scrobbleParams = {
-      ...scrobbleParams,
-      api_key: lastfmKey.api_key,
-      sk: data.session.sessionKey,
-      method: "track.scrobble"
-    }
-
-    Object.keys(scrobbleParams).sort().forEach(function(key) {
-        var value = scrobbleParams[key];
-        apiSig += key + value;
-    });
-
-    apiSig += lastfmKey.secret;
-    apiSig = md5(apiSig);
-    scrobbleParams = {...scrobbleParams, api_sig: apiSig};
-  return dispatch => {
-    axios({
-        method: "POST",
-        url: `${lastfmRequestURLMaker(scrobbleParams)}`,
-        headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json"
-            }
-    })
-      .then(function(response) {
-        alert("Scrobbled");
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-    }
+  scrobbleParams = {
+    ...scrobbleParams,
+    api_key: lastfmKey.api_key,
+    sk: sk,
+    method: "track.scrobble"
+  }
+  return scrobbleParams;
 }
 
-const scrobbleAlbum2 = (data) => {
-  let scrobbleRequest = "";
-  let scrobbleOptions = {
-    sk: data.session.sessionKey,
-    api_key: lastfmKey.api_key,
-  };
-  let i = 0;
-  let scrobbleParams;
-  console.log(data.album.album.tracks.track);
-    _.forEach(data.album.album.tracks.track, function(track) {
-      let artistKey = "artist[" + i + "]";
-      let titleKey = "title[" + i + "]";
-      let timestampKey = "timestamp[" + i + "]";
-    scrobbleParams = {
-      ...scrobbleParams,
-      [artistKey]: track.artist.name,
-      [titleKey]: track.name,
-      [timestampKey]: Math.floor((Date.now() / 1000) - track.duration),
+const generateApiSig = (params) => {
+  let apiSig = "";
+  Object.keys(params).sort().forEach(function(key) {
+      var value = params[key];
+      apiSig += key + value;
+  });
+  apiSig += lastfmKey.secret;
+  apiSig = md5(apiSig);
+  return apiSig;
+}
+
+const scrobbleAlbum = (data) => {
+  let scrobbleParams = generateTracksParamsList(data.album.album.tracks.track, data.session.sessionKey);
+  let apiSig = generateApiSig(scrobbleParams);
+  scrobbleParams = {...scrobbleParams, api_sig: apiSig};
+  axios({
+    method: "POST",
+    url: `${lastfmRequestURLMaker(scrobbleParams)}`,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
     }
-    i++;
   })
-    let apiSig = "";
-    scrobbleParams = {
-      ...scrobbleParams,
-      api_key: lastfmKey.api_key,
-      sk: data.session.sessionKey,
-      method: "track.scrobble"
-    }
-
-    Object.keys(scrobbleParams).sort().forEach(function(key) {
-        var value = scrobbleParams[key];
-        apiSig += key + value;
-    });
-
-    apiSig += lastfmKey.secret;
-    apiSig = md5(apiSig);
-    scrobbleParams = {...scrobbleParams, api_sig: apiSig};
-    axios({
-        method: "POST",
-        url: `${lastfmRequestURLMaker(scrobbleParams)}`,
-        headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json"
-            }
-    })
-      .then(function(response) {
-        alert("Scrobbled");
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+  .then(function(response) {
+    alert("Scrobbled");
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
 }

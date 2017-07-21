@@ -26,7 +26,6 @@ class Login extends Component {
   };
 
   render() {
-    console.log("TEST")
     this.login();
     this.props.router.push("searchResults");
     return <div></div>;
