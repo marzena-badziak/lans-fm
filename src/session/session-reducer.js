@@ -4,7 +4,10 @@ const session = (
     sessionKey: "",
     username: "",
     message: "",
-    token: ""
+    token: "",
+    spotifyAccessToken: "",
+    spotifyExpiresIn: "",
+    spotifyRefreshToken: ""
   },
   action
 ) => {
@@ -30,10 +33,22 @@ const session = (
       };
     case "USER_LOGOUT":
       return {
-         ...state,
-         sessionKey: "",
-         massage: "Logged out"
-       };
+        ...state,
+        sessionKey: "",
+        massage: "Logged out"
+      };
+    case "SPOTIFY_LOGIN_ATTEMPT":
+      return {
+        ...state,
+        message: "Trying to log in to Spotify"
+      };
+    case "SPOTIFY_LOGIN":
+      return {
+        ...state,
+        spotifyAccessToken: action.spotifyAccessToken,
+        spotifyExpiresIn: action.spotifyExpiresIn,
+        spotifyRefreshToken: action.spotifyRefreshToken
+      };
     default:
       return state;
   }

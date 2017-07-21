@@ -8,12 +8,13 @@ export const loginAction = token => {
     api_sig: md5(
       `api_key${lastfmKey.api_key}methodauth.getSessiontoken${token}${lastfmKey.secret}`
     ),
+    api_key: lastfmKey.api_key,
     method: "auth.getSession"
   };
 
   return dispatch => {
     dispatch({
-      type: "LOGIN_ATTEMPT",
+      type: "LOGIN_ATTEMPT"
     });
     axios
       .get(`${lastfmRequestURLMaker(loginOptions)}`)

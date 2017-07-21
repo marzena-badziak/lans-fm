@@ -5,22 +5,60 @@ import { List, ListItem } from "material-ui/List";
 import Paper from "material-ui/Paper";
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
+import FlatButton from "material-ui/FlatButton";
 import FontAwesome from "react-fontawesome";
 import styled from "styled-components";
 import Divider from "material-ui/Divider";
 import moment from "moment";
 import { withRouter } from "react-router";
 import { scrobbleAlbum } from "./scrobble-album";
+import { SpotifyIframe } from "./SpotifyIframe";
+import axios from "axios";
+
 import Track from "./Track";
 class AlbumPage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      spotifyAlbumUrl: "",
+      spotifyAlbumFetched: false,
+
       open: {},
       left: {},
       top: {}
     };
+    var headers = {
+      headers: {
+        Accept: "application/json",
+        Authorization: "Bearer " + this.props.session.spotifyAccessToken
+      }
+    };
+    console.log(this.props.params.albumName);
+    axios
+      .get(
+        "https://api.spotify.com/v1/search?q=album:" +
+          this.props.params.albumName +
+          " artist:" +
+          this.props.params.artistChoosen +
+          "&type=album",
+        headers
+      )
+      .then(response => {
+        console.log(response);
+        console.log(response.data.albums.items[0].uri);
+        var url =
+          "https://open.spotify.com/embed?uri=" +
+          response.data.albums.items[0].uri;
+        this.setState({ spotifyAlbumUrl: url }, () =>
+          this.setState({ spotifyAlbumFetched: true })
+        );
+        console.log(this.state.spotifyAlbumUrl);
+        console.log("flag: " + this.state.spotifyAlbumFetched);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   openMenu = (i, left, top) => {
@@ -45,6 +83,7 @@ class AlbumPage extends Component {
       open: { [`${i}`]: "none" }
     });
   };
+
   fetchAlbum = e => {
     this.props.dispatch(
       getAlbumInfo({
@@ -158,17 +197,41 @@ class AlbumPage extends Component {
           }}
         >
           <Paper
-            style={{ width: "70%", marginTop: "40px", paddingTop: "10px" }}
+            style={{ width: "80vw", marginTop: "40px", paddingTop: "10px" }}
           >
             {this.props.album.message === "GOT_ALBUMS"
-              ? <div>
-                  <Avatar
-                    src={this.props.album.album.image[2]["#text"]}
-                    size={150}
-                  />
-                  <h2 style={{ display: "block", textAlign: "center" }}>
-                    {this.props.params.albumName}
-                  </h2>
+              ? <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    justifyContent: "space-between"
+                  }}
+                >
+                  <div>
+                    <Avatar
+                      src={this.props.album.album.image[2]["#text"]}
+                      size={150}
+                    />
+                    <h2 style={{ display: "block", textAlign: "center" }}>
+                      {this.props.params.albumName}
+                    </h2>
+                    <FlatButton
+                      label="Login to Spotify"
+                      onClick={e => this.setSpotifyId(e)}
+                      style={{ margin: "15px" }}
+                      backgroundColor="darkgrey"
+                      hoverColor="grey"
+                      href="https://accounts.spotify.com/authorize?client_id=7cd65f9a6005482cb3830530b1e52b16&response_type=token&redirect_uri=http://localhost:3000/loginSpotify/"
+                    />
+                  </div>
+                  <div>
+                    {this.state.spotifyAlbumFetched
+                      ? <SpotifyIframe
+                          spotifyAlbumUrl={this.state.spotifyAlbumUrl}
+                        />
+                      : null}
+                  </div>
                 </div>
               : false}
             <List>
