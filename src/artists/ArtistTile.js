@@ -3,21 +3,11 @@ import styled from "styled-components";
 import propTypes from "prop-types";
 import { searchArtist } from "./search-actions";
 import { connect } from "react-redux";
-import axios from "axios";
 import RaisedButton from "material-ui/RaisedButton";
-import {
-  Card,
-  CardActions,
-  CardHeader,
-  CardMedia,
-  CardTitle,
-  CardText
-} from "material-ui/Card";
+import { Card, CardMedia, CardTitle } from "material-ui/Card";
 import ShowVideo from "./ShowVideo";
 import { withRouter } from "react-router";
 import FontAwesome from "react-fontawesome";
-import { lastfmKey } from "../lib/lastfm-api";
-import md5 from "md5";
 import YouTubeFunctions from "../lib/youtube";
 
 class ArtistTile extends Component {
@@ -66,7 +56,6 @@ class ArtistTile extends Component {
   render() {
     return (
       <StyledArtistTile
-        img={this.props.img}
         name={this.props.name}
         // onClick={e => this.getAlbums(e)}
       >
