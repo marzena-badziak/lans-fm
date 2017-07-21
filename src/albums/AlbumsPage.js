@@ -132,7 +132,7 @@ class AlbumsPage extends Component {
               src={
                 this.props.artist.artist.image
                   ? this.props.artist.artist.image[2]["#text"]
-                  : false
+                  : ""
               }
               alt={`${this.props.artist.artist.name} foto`}
               size={200}

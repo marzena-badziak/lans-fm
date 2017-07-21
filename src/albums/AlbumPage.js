@@ -1,16 +1,11 @@
 import React, { Component } from "react";
 import { getAlbumInfo } from "../artists/search-actions.js";
 import { connect } from "react-redux";
-import { List, ListItem } from "material-ui/List";
+import { List } from "material-ui/List";
 import Paper from "material-ui/Paper";
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
-import FontAwesome from "react-fontawesome";
-import styled from "styled-components";
-import Divider from "material-ui/Divider";
-import moment from "moment";
 import { withRouter } from "react-router";
-import { scrobbleAlbum } from "./scrobble-album";
 import Track from "./Track";
 class AlbumPage extends Component {
   constructor(props) {
@@ -24,7 +19,7 @@ class AlbumPage extends Component {
   }
 
   openMenu = (i, left, top) => {
-    if (this.state.open[`${i}`] == "block") {
+    if (this.state.open[`${i}`] === "block") {
       this.setState({
         open: {}
       });
@@ -57,7 +52,6 @@ class AlbumPage extends Component {
     this.fetchAlbum();
   }
 
-
   showTracks() {
     if (this.props.album.message === "GOT_ALBUMS") {
       if (this.props.album.album.tracks.track.length !== 0) {
@@ -89,7 +83,6 @@ class AlbumPage extends Component {
   };
   goBackToArtistPage = e => {
     e.preventDefault();
-    console.log("back to artist page");
     this.props.router.push(
       `${this.props.params.artistName}/${this.props.params.artistChoosen}`
     );

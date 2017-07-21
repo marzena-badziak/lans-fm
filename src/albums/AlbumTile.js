@@ -5,7 +5,6 @@ import FlatButton from "material-ui/FlatButton";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import FontAwesome from "react-fontawesome";
 import { fetchSongListAndScrobbleAlbum } from "./scrobble-album";
 
 class AlbumTile extends Component {
