@@ -122,7 +122,7 @@ class AlbumsPage extends Component {
               // flexDirection: "row",
               // flexWrap: "wrap",
               justifyContent: "flex-start",
-              alignItems: "flex-start",
+              alignItems: "flex-end",
               alignContent: "flex-start",
               margin: "10px",
               marginTop: "30px"
