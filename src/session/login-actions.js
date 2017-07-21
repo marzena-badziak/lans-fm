@@ -1,5 +1,4 @@
-import { lastfmApi, lastfmKey } from "../lib/lastfm-api";
-
+import { lastfmRequestURLMaker, lastfmKey } from "../lib/lastfm-api";
 import axios from "axios";
 import md5 from "md5";
 
@@ -8,12 +7,16 @@ export const loginAction = token => {
     token: `${token}`,
     api_sig: md5(
       `api_key${lastfmKey.api_key}methodauth.getSessiontoken${token}${lastfmKey.secret}`
-    )
+    ),
+    method: "auth.getSession"
   };
 
   return dispatch => {
+    dispatch({
+      type: "LOGIN_ATTEMPT",
+    });
     axios
-      .get(`${lastfmApi("auth.getSession", loginOptions)}`)
+      .get(`${lastfmRequestURLMaker(loginOptions)}`)
       .then(function(response) {
         console.log(response);
         dispatch({

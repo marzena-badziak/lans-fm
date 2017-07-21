@@ -18,14 +18,18 @@ class Login extends Component {
   };
 
   login = () => {
-    this.props.dispatch(loginAction(this.getQueryVariable("token")));
+    this.props.dispatch(
+      loginAction(
+        this.getQueryVariable("token")
+      )
+    );
   };
 
   render() {
-    console.log(this.getQueryVariable("token"))
+    console.log("TEST")
     this.login();
     this.props.router.push("searchResults");
-    return <div />;
+    return <div></div>;
   }
 }
 

@@ -22,7 +22,8 @@ export const fetchSongListAndScrobbleAlbum = (data) => {
       }
     })
       .then(resp => {
-        if(resp.data.album.album.tracks.track.length === 0) {
+        console.log(resp.data)
+        if(resp.data.album.tracks.track.length === 0) {
           alert("No tracks for this album in last.fm database!")
         } else {
           scrobbleAlbum2({

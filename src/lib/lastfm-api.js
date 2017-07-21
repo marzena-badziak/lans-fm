@@ -4,23 +4,14 @@ const lastfmKey = {
 };
 //    `http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=${artist.artist}&api_key=${lastfmKey.api_key}&limit=15&format=json`
 
-const lastfmApi = (method, options) => {
-  let request = `http://ws.audioscrobbler.com/2.0/?method=${method}`;
-  Object.entries(options).forEach(([key, value]) => {
-    request = `${request}&${key}=${value}`;
-  });
-  request = `${request}&api_key=${lastfmKey.api_key}&format=json`;
-  return request;
-};
-
-const lastfmRequestURLMaker = (scrobbleRequest) => {
+const lastfmRequestURLMaker = (requestParams) => {
   let requestURL = `http://ws.audioscrobbler.com/2.0/?`;
-  let requestOptions = ""
-  Object.entries(scrobbleRequest).forEach(([key, value]) => {
-    requestOptions += `&${key}=${value}`;
+  let requestParamsURL = ""
+  Object.entries(requestParams).forEach(([key, value]) => {
+    requestParamsURL += `&${key}=${value}`;
   });
-  const request = `${requestURL}${requestOptions}`;
+  const request = `${requestURL}${requestParamsURL}&format=json`;
   return request;
 };
 
-export { lastfmApi, lastfmKey, lastfmRequestURLMaker };
+export { lastfmRequestURLMaker, lastfmKey};
