@@ -1,12 +1,54 @@
 import React, { Component } from "react";
 import { getAlbumInfo } from "../artists/search-actions.js";
 import { connect } from "react-redux";
-
+import { List, ListItem } from "material-ui/List";
+import Paper from "material-ui/Paper";
+import Avatar from "material-ui/Avatar";
+import CircularProgress from "material-ui/CircularProgress";
+import FontAwesome from "react-fontawesome";
+import styled from "styled-components";
+import Divider from "material-ui/Divider";
+import moment from "moment";
+import { withRouter } from "react-router";
+import { scrobbleAlbum } from "./scrobble-album";
+import Track from "./Track";
 class AlbumPage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      open: {},
+      left: {},
+      top: {}
+    };
+  }
+
+  openMenu = (i, left, top) => {
+    if (this.state.open[`${i}`] == "block") {
+      this.setState({
+        open: {}
+      });
+    } else {
+      this.setState({
+        open: {}
+      });
+      this.setState({
+        open: { [`${i}`]: "block" },
+        left: { [`${i}`]: left },
+        top: { [`${i}`]: top }
+      });
+    }
+  };
+
+  closeMenu = i => {
+    this.setState({
+      open: { [`${i}`]: "none" }
+    });
+  };
   fetchAlbum = e => {
     this.props.dispatch(
       getAlbumInfo({
-        artist: this.props.params.AritstName,
+        artist: this.props.params.artistChoosen,
         album: this.props.params.albumName
       })
     );
@@ -14,21 +56,127 @@ class AlbumPage extends Component {
   componentDidMount() {
     this.fetchAlbum();
   }
+
+
+  showTracks() {
+    if (this.props.album.message === "GOT_ALBUMS") {
+      if (this.props.album.album.tracks.track.length !== 0) {
+        return this.props.album.album.tracks.track.map((track, i) => {
+          return (
+            <Track
+              i={i}
+              track={track}
+              artist={this.props.params.artistChoosen}
+              open={this.state.open[`${i}`] || "none"}
+              left={this.state.left[`${i}`] || 0}
+              top={this.state.top[`${i}`] || 0}
+              openMenu={this.openMenu}
+              closeMenu={this.closeMenu}
+            />
+          );
+        });
+      } else {
+        return <div>Sorry tracks are not available for this album</div>;
+      }
+    } else {
+      return <CircularProgress />;
+    }
+  }
+  goBackToSearchResults = e => {
+    e.preventDefault();
+    console.log("back to search");
+    this.props.router.push(this.props.params.artistName);
+  };
+  goBackToArtistPage = e => {
+    e.preventDefault();
+    console.log("back to artist page");
+    this.props.router.push(
+      `${this.props.params.artistName}/${this.props.params.artistChoosen}`
+    );
+  };
+
   render() {
     return (
       <div>
-        {console.log(this.props.params)}
-        {this.props.params.AritstName}
-        {this.props.params.albumName}
-        {console.log(this.props.album)}
+        <div
+          style={{
+            position: "absolute",
+            left: "0",
+            display: "block",
+            margin: "10px"
+          }}
+        >
+          <ul
+            style={{
+              display: "inline-block",
+              listStyleType: "none",
+              margin: "2px",
+              padding: "0",
+              color: "#aa8899",
+              fontWeight: "bold"
+            }}
+          >
+            <li
+              style={{
+                display: "inline",
+                margin: "0 auto",
+                marginTop: "10px",
+                cursor: "pointer"
+              }}
+              onClick={this.goBackToSearchResults}
+            >
+              {" "}/ Search results: {this.props.params.artistName}{" "}
+            </li>
+            <li
+              style={{
+                display: "inline",
+                margin: "0 auto",
+                marginTop: "10px",
+                cursor: "pointer"
+              }}
+              onClick={this.goBackToArtistPage}
+            >
+              / {this.props.params.artistChoosen}
+            </li>
+          </ul>
+        </div>
+        <div
+          className="container"
+          style={{
+            display: "flex",
+            // flexDirection: "column",
+            justifyContent: "center"
+            // flexWrap: "nowrap"
+          }}
+        >
+          <Paper
+            style={{ width: "70%", marginTop: "40px", paddingTop: "10px" }}
+          >
+            {this.props.album.message === "GOT_ALBUMS"
+              ? <div>
+                  <Avatar
+                    src={this.props.album.album.image[2]["#text"]}
+                    size={150}
+                  />
+                  <h2 style={{ display: "block", textAlign: "center" }}>
+                    {this.props.params.albumName}
+                  </h2>
+                </div>
+              : false}
+            <List>
+              {this.showTracks()}
+            </List>
+          </Paper>
+        </div>
       </div>
     );
   }
 }
+
 const mapStateToProps = state => {
-  console.log(state);
   return {
-    album: state.album
+    album: state.album,
+    session: state.session
   };
 };
-export default connect(mapStateToProps)(AlbumPage);
+export default connect(mapStateToProps)(withRouter(AlbumPage));

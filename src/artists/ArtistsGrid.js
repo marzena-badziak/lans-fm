@@ -8,14 +8,12 @@ import CircularProgress from "material-ui/CircularProgress";
 class ArtistsGrid extends Component {
   render() {
     var grid = [];
-    // console.log(this.props.results);
     this.props.results.forEach(artist => {
       grid.push(
         <ArtistTile
           name={artist.name}
           key={artist.name}
           img={artist.image[2]["#text"]}
-          match={artist.match}
         />
       );
     });
@@ -23,13 +21,10 @@ class ArtistsGrid extends Component {
       <div>
         <h2 style={{ paddingBottom: "20px" }}>
           {this.props.message} {this.props.artistEntered}
-          {this.props.message === "Trwa wyszukiwanie"
-            ? <CircularProgress
-                color="#AA8899"
-                style={{ display: "block", margin: "80px auto" }}
-              />
-            : false}
         </h2>
+        {this.props.message === "Searching: "
+          ? <StyledCircularProgress color="#aa8899" />
+          : false}
         <SearchResultsContainer className="row">
           <dbody>
             {grid}
@@ -51,12 +46,17 @@ const SearchResultsContainer = styled.div`
   margin: 0 auto;
   padding: 20px 0;
 `;
+const StyledCircularProgress = styled(CircularProgress)`
+  display: block;
+  margin: 0 auto;
+  margin-top: 60px;
+`;
 
 const mapStateToProps = state => {
   return {
-    results: state.search.artistsSimilar,
-    artistEntered: state.search.artistEntered,
-    message: state.search.message
+    results: state.similarArtists.artistsSimilar,
+    artistEntered: state.similarArtists.artistEntered,
+    message: state.similarArtists.message
   };
 };
 ArtistsGrid.propTypes = {

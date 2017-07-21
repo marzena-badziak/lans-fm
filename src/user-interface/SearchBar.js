@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import propTypes from "prop-types";
 import { withRouter } from "react-router";
 import styled from "styled-components";
+import FontAwesome from "react-fontawesome";
+import MediaQuery from "react-responsive";
 
 class SearchBar extends Component {
   constructor(props) {
@@ -26,7 +28,7 @@ class SearchBar extends Component {
         artist: this.state.searchValue
       })
     );
-    this.props.router.push("searchResults");
+    this.props.router.push(this.state.searchValue);
   };
   render() {
     return (
@@ -37,11 +39,14 @@ class SearchBar extends Component {
             id="search-bar"
             type="text"
             value={this.state.searchValue}
-            placeholder="Type artist name to find similar artists"
-            //  className="form-control"
-          />
+            placeholder="Your favourite artist"
+          />{" "}
           <StyledSearchSpan onClick={e => this.fetchArtist(e)}>
-            Search
+              <FontAwesome
+                className="fa fa-search"
+                name="search"
+                style={{ textShadow: "0 1px 0 rgba(0, 0, 0, 0.1)" }}
+              />
           </StyledSearchSpan>
         </StyledSearchBar>
       </form>
@@ -59,26 +64,40 @@ const StyledSearchBar = styled.div`
   margin: 0 auto;
 `;
 const StyledSearchSpan = styled.div`
-padding 15px;
+  color: white;
   display: flex;
-  background-color: white;
   height: inherit;
   align-items: center;
+  padding: 0 15px;
   border-radius: 0px 10px 10px 0px;
-  -moz-border-radius: 0px 10px 10px 0px;
-  -webkit-border-radius: 0px 10px 10px 0px;
   border: 1px solid #000000;
-  background-color: #DD8899;;
+  background-color: #dd8899;
+  cursor: pointer;
 `;
 const StyledSearchInput = styled.input`
-color:black;
-padding 15px;
+  color: black;
   width: 100%;
   height: inherit;
+  padding: 0 15px;
   border-radius: 10px 0px 0px 10px;
-  -moz-border-radius: 10px 0px 0px 01px;
-  -webkit-border-radius: 10px 0px 0px 10px;
   border: 1px solid #000000;
+  ::-webkit-input-placeholder {
+    text-align: center;
+  }
+
+  :-moz-placeholder {
+    /* Firefox 18- */
+    text-align: center;
+  }
+
+  ::-moz-placeholder {
+    /* Firefox 19+ */
+    text-align: center;
+  }
+
+  :-ms-input-placeholder {
+    text-align: center;
+  }
 `;
 SearchBar.propTypes = {
   width: propTypes.string

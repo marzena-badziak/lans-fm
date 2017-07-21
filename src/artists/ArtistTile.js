@@ -5,15 +5,26 @@ import { searchArtist } from "./search-actions";
 import { connect } from "react-redux";
 import axios from "axios";
 import RaisedButton from "material-ui/RaisedButton";
+import {
+  Card,
+  CardActions,
+  CardHeader,
+  CardMedia,
+  CardTitle,
+  CardText
+} from "material-ui/Card";
 import ShowVideo from "./ShowVideo";
 import { withRouter } from "react-router";
+import FontAwesome from "react-fontawesome";
+import { lastfmKey } from "../lib/lastfm-api";
+import md5 from "md5";
+import YouTubeFunctions from "../lib/youtube";
 
 class ArtistTile extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      dropDownDisplay: "none",
       playVideo: false,
       videoId: "",
       videoFound: true
@@ -30,106 +41,78 @@ class ArtistTile extends Component {
   };
   getAlbums = e => {
     e.preventDefault();
-    this.props.router.push(`${this.props.name}/albums`);
+    this.props.router.push(
+      `${this.props.params.artistName}/${this.props.name}`
+    );
   };
+
+  setYouTubeFlags = (videoId, playFlag, foundFlag) => {
+    this.setState({
+      videoId: videoId,
+      playVideo: playFlag
+    });
+  };
+
   playVideo = () => {
+    console.log(this.refs.youtube);
     var searchRequest =
       "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&q=" +
       this.props.name +
       "+VEVO" +
       "&type=video&key=AIzaSyBdXp1WnmYGXXuDFybXxK_94awGD5Qm-Zw";
-    console.log(searchRequest);
-    this.getYoutubeVideoId(searchRequest);
+    this.refs.youtube.getYoutubeVideoId(searchRequest);
   };
 
-  getYoutubeVideoId = searchRequest => {
-    axios
-      .get(searchRequest)
-      .then(response => {
-        this.setState({
-          videoId: response.data.items[0].id.videoId,
-          playVideo: true,
-          videoFound: true
-        });
-
-        let ytTitle = response.data.items[0].snippet.title;
-        console.log(ytTitle);
-
-        const getArtistTitle = require("get-artist-title");
-
-        const [artist, title] = getArtistTitle(ytTitle, {
-          defaultArtist: response.data.items[0].snippet.channelTitle
-        });
-        console.log("artist: " + artist);
-        console.log("title: " + title);
-      })
-      .catch(err => {
-        this.setState({ playVideo: true, videoFound: false });
-        console.log("videoFound: " + this.state.videoFound);
-      });
-  };
-
-  hideAlbums = e => {
-    this.setState({
-      dropDownDisplay: "none"
-    });
-  };
   render() {
     return (
       <StyledArtistTile
-        className="col-xs-4 col-md-3"
-        onMouseLeave={this.hideAlbums}
+        img={this.props.img}
+        name={this.props.name}
+        // onClick={e => this.getAlbums(e)}
       >
-        {this.props.name.length > 22
-          ? <h4
-              style={{
-                marginTop: "5px",
-                marginBottom: "13px",
-                paddingTop: "0",
-                fontWeight: "bold"
-              }}
-            >
-              {this.props.name}
-            </h4>
-          : <h3
-              style={{ marginTop: "0px", paddingTop: "0", fontWeight: "bold" }}
-            >
-              {this.props.name}
-            </h3>}
-        <p style={{ fontSize: "8px", padding: "0" }}>
-          Match strength:{" "}
-          <strong style={{ color: "#003366" }}>
-            {parseFloat(this.props.match).toFixed(2)}
-          </strong>
-        </p>
+        <StyledArtistImage
+          onClick={e => this.getAlbums(e)}
+          overlay={<CardTitle title={this.props.name} />}
+        >
+          <img
+            src={this.props.img}
+            alt={this.props.alt}
+            width="260px"
+            height="260px"
+            style={{ position: "relative", cursor: "pointer" }}
+          />
+        </StyledArtistImage>
 
-        <img
-          src={this.props.img}
-          alt={this.props.name}
-          width="260px"
-          height="260px"
-          // onClick={}
+        <StyledYouTubeFontAwesome
+          onClick={e => this.playVideo()}
+          className="fa fa-youtube-play"
+          name="play"
+          size="3x"
         />
-        <div style={{ textAlign: "center" }}>
-          <RaisedButton
-            style={{ margin: "5px" }}
-            backgroundColor="#AA8899"
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "nowrap",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            padding: "3px",
+            position: "relative",
+            textAlign: "center"
+          }}
+        >
+          <StyledRaisedButton
+            backgroundColor="plum"
             label="Search similar"
             labelColor="#ffffff"
             value={this.props.name}
             onClick={e => this.fetchArtist(e)}
           />
-          <RaisedButton
+          <StyledRaisedButton
             label="Albums"
-            backgroundColor="#AA8899"
+            backgroundColor="hotpink"
             labelColor="#ffffff"
             onClick={e => this.getAlbums(e)}
-          />
-          <RaisedButton
-            label="Play"
-            backgroundColor="#AA8899"
-            labelColor="#ffffff"
-            onClick={e => this.playVideo()}
           />
         </div>
         {this.state.playVideo
@@ -139,25 +122,94 @@ class ArtistTile extends Component {
               videoFound={this.state.videoFound}
             />
           : null}
+        <YouTubeFunctions
+          youTubeFlagsCallback={this.setYouTubeFlags}
+          lastFMSessionKey={this.props.session.sessionKey}
+          ref="youtube"
+        />
       </StyledArtistTile>
     );
   }
 }
+const StyledArtistTile = styled(Card)`
 
-const StyledArtistTile = styled.div`
+  overflow: hidden;
+  position: relative;
   display: inline-block;
   margin: 15px;
   width: 260px;
-  height: 380px;
+  height: 307px;
   text-align: left;
   z-index: 1;
   padding: 0;
 `;
 
+const StyledArtistImage = styled(CardMedia)`
+  transition: .2s all;
+  &:hover {
+    -webkit-filter: brightness(50%);
+  }
+`;
+
+const StyledArtistName = styled.div`
+  overflow: visible;
+  height: 60px;
+  z-index: 4;
+
+  background: rgb(170, 136, 153);
+  background: -moz-linear-gradient(
+    45deg,
+    rgba(170, 136, 153, 1) 0%,
+    rgba(255, 224, 238, 1) 63%,
+    rgba(255, 224, 238, 1) 63%
+  );
+  background: -webkit-linear-gradient(
+    45deg,
+    rgba(170, 136, 153, 1) 0%,
+    rgba(255, 224, 238, 1) 63%,
+    rgba(255, 224, 238, 1) 63%
+  );
+  background: linear-gradient(
+    45deg,
+    rgba(170, 136, 153, 1) 0%,
+    rgba(255, 224, 238, 1) 63%,
+    rgba(255, 224, 238, 1) 63%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(
+      startColorstr='#aa8899',
+      endColorstr='#ffe0ee',
+      GradientType=1
+    );
+`;
+const StyledYouTubeFontAwesome = styled(FontAwesome)`
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.75);
+  color: #b31217;
+  position: absolute;
+  z-index: 5;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+  &:hover {
+    color: #e52d27;
+  }
+`;
+
+const StyledRaisedButton = styled(RaisedButton)`
+  margin: 3px;
+`;
+
 ArtistTile.propTypes = {
   name: propTypes.string.isRequired,
-  img: propTypes.string.isRequired,
-  match: propTypes.string.isRequired
+  img: propTypes.string.isRequired
 };
 
-export default connect()(withRouter(ArtistTile));
+const mapStateToProps = state => {
+  return {
+    results: state.similarArtists.artistsSimilar,
+    artistEntered: state.similarArtists.artistEntered,
+    message: state.similarArtists.message,
+    session: state.session
+  };
+};
+
+export default connect(mapStateToProps)(withRouter(ArtistTile));

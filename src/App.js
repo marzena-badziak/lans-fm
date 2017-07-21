@@ -1,13 +1,10 @@
 import React, { Component } from "react";
-// import logo from "./logo.svg";
 import { Router, Route, IndexRoute, hashHistory } from "react-router";
 import "./App.css";
-// import store from "./user-interface/store";
 import Home from "./Home";
 import Layout from "./Layout";
 import ArtistsGrid from "./artists/ArtistsGrid";
 import Login from "./session/Login";
-
 import AlbumsPage from "./albums/AlbumsPage";
 import AlbumPage from "./albums/AlbumPage";
 class App extends Component {
@@ -18,11 +15,11 @@ class App extends Component {
           <Route path="/">
             <IndexRoute component={Home} />
             <Route component={Layout}>
-              <Route path="searchResults" component={ArtistsGrid} />
               <Route path="login" component={Login} />
-              <Route path=":AritstName/albums" component={AlbumsPage} />
+              <Route path=":artistName" component={ArtistsGrid} />
+              <Route path=":artistName/:artistChoosen" component={AlbumsPage} />
               <Route
-                path=":AritstName/albums/:albumName"
+                path=":artistName/:artistChoosen/:albumName"
                 component={AlbumPage}
               />
             </Route>

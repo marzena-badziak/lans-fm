@@ -1,36 +1,25 @@
 import React, { Component } from "react";
 import SearchBar from "./user-interface/SearchBar";
-// import Navbar from "./user-interface/Navbar";
 import styled from "styled-components";
-// import ArtistsGrid from "./ArtistsGrid";
-//import store from "./user-interface/store";
-// import ArtistsGrid from "./ArtistsGrid";
 class Home extends Component {
   render() {
     return (
       <StyledHome className="App">
         <StyledLogo href="#">LansFm</StyledLogo>
 
-        <div
-          className="container"
-          style={{
-            paddingTop: "20vh",
-            height: "95vh"
-          }}
-        >
-          <StyledH1 htmlFor="search-bar">
+        <StyledContainer className="container">
+          <StyledHeaderMain htmlFor="search-bar">
             Search the least popular artists
-          </StyledH1>
-          <StyledH3>
+          </StyledHeaderMain>
+          <StyledHeaderSecondary>
             Type your favourite artist and discover similar ones!
-          </StyledH3>
+          </StyledHeaderSecondary>
           <SearchBar
             boxShadow="0px 0px 30px 3px rgba(0, 0, 0, 0.6);"
-            width="100%"
-            height="50px"
+            width="80%"
+            height="65px"
           />
-          {/* <ArtistsGrid /> */}
-        </div>
+        </StyledContainer>
       </StyledHome>
     );
   }
@@ -44,6 +33,7 @@ const StyledHome = styled.div`
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  height: 100vh;
 `;
 const StyledLogo = styled.a`
   position: relative;
@@ -52,32 +42,32 @@ const StyledLogo = styled.a`
   font-family: Righteous;
   color: white;
   font-size: x-large;
+  text-shadow: 3px 2px 12px rgba(0, 0, 0, 1);
 
   &:hover {
     color: #333;
     text-decoration: none;
   }
 `;
-// const StyledMainAppContainer = styled.div`
-//   background-image: url("http://cdn.wallpapersafari.com/79/66/H3GhW5.jpg");
-//   background-repeat: no-repeat;
-//   background-attachment: fixed;
-//   background-size: cover;
-// `;
 
-const StyledH1 = styled.h1`
+const StyledContainer = styled.div`padding-top: 20vh;`;
+
+const StyledHeaderMain = styled.h1`
+  font-size: 48px;
   display: inline-block;
   color: white;
   font-weight: 700;
   padding: 5px;
   margin: 10px;
+  text-shadow: 3px 2px 12px rgba(0, 0, 0, 1);
 `;
-const StyledH3 = styled.h3`
+const StyledHeaderSecondary = styled.h2`
   display: inline-block;
   color: white;
   font-weight: 700;
   padding: 5px;
-  margin: 5px;
+  margin: 10px;
+  text-shadow: 3px 2px 12px rgba(0, 0, 0, 1);
 `;
 
 export default Home;

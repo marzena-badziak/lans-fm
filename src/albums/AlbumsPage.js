@@ -1,86 +1,170 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAlbums } from "../artists/search-actions.js";
+import {
+  getAlbums,
+  getArtistInfo,
+  searchArtist
+} from "../artists/search-actions.js";
 import AlbumTile from "./AlbumTile";
 import styled from "styled-components";
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
+import { withRouter } from "react-router";
+import FlatButton from "material-ui/FlatButton";
 
 class AlbumsPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      fetched: false
-    };
-  }
   fetchAlbums = e => {
     this.props.dispatch(
       getAlbums({
-        data: this.props.params.AritstName
+        data: this.props.params.artistChoosen
+      })
+    );
+  };
+  fetchArtist = e => {
+    this.props.dispatch(
+      getArtistInfo({
+        artist: this.props.params.artistChoosen
       })
     );
   };
   componentDidMount() {
     this.fetchAlbums();
-    this.setState({
-      fetched: true
+    this.fetchArtist();
+  }
+  displayAvaliableAlbums(album, i) {
+    if (!(album.name === "(null)")) {
+      return (
+        <AlbumTile
+          key={i}
+          image={album.image[2]["#text"]}
+          title={album.name}
+          artist={album.artist.name}
+        />
+      );
+    }
+  }
+  mapAlbums() {
+    return this.props.albums.albums.album.map((album, i) => {
+      return this.displayAvaliableAlbums(album, i);
     });
+  }
+  displayPlaceHolder(placeholder) {
+    return (
+      <div>
+        {placeholder}
+      </div>
+    );
   }
   renderTiles() {
     if (this.props.albums.albums.length !== 0) {
-      return this.props.albums.albums.album.map((album, i) => {
-        if (!(album.name === "(null)")) {
-          return (
-            <AlbumTile
-              key={i}
-              image={album.image[2]["#text"]}
-              title={album.name}
-              artist={album.artist.name}
-            />
-          );
-        }
-      });
+      return this.mapAlbums();
     } else {
-      if (this.props.albums.message == "Searching") {
-        return (
-          <div>
-            <CircularProgress />
-          </div>
-        );
+      if (this.props.albums.message === "Searching") {
+        return this.displayPlaceHolder(<CircularProgress />);
       } else {
-        return (
-          <div>
-            {" "}{this.props.albums.message}
-          </div>
-        );
+        return this.displayPlaceHolder(this.props.albums.message);
       }
     }
   }
-  artistImageCheck = () => {
-    if (
-      this.props.results.filter(
-        artist => artist.name === this.props.params.AritstName
-      )[0]
-    ) {
-      return this.props.results.filter(
-        artist => artist.name === this.props.params.AritstName
-      )[0].image[2]["#text"];
-    }
+
+  goBackToSearchResults = e => {
+    e.preventDefault();
+    console.log("back to search");
+    this.props.router.push(this.props.params.artistName);
+  };
+  fetchSimilarArtist = e => {
+    this.props.dispatch(
+      searchArtist({
+        artist: this.props.params.artistChoosen
+      })
+    );
+    this.props.router.push(this.props.params.artistChoosen);
   };
   render() {
     return (
-      <div className="container">
-        <h2>
-          {this.props.params.AritstName}
-        </h2>
-        <Avatar
-          src={this.artistImageCheck()}
-          alt={`${this.props.params.AritstName} foto`}
-          size={200}
-        />
-        <SearchResultsContainer>
-          {this.renderTiles()}
-        </SearchResultsContainer>
+      <div>
+        <div
+          style={{
+            position: "absolute",
+            left: "0",
+            display: "block",
+            margin: "10px"
+          }}
+        >
+          <ul
+            style={{
+              display: "inline-block",
+              listStyleType: "none",
+              margin: "2px",
+              padding: "0",
+              color: "#aa8899",
+              fontWeight: "bold"
+            }}
+          >
+            <li
+              style={{
+                display: "inline",
+                margin: "0 auto",
+                marginTop: "10px",
+                cursor: "pointer"
+              }}
+              onClick={this.goBackToSearchResults}
+            >
+              / Search results: {this.props.params.artistName}
+            </li>
+          </ul>
+        </div>
+
+        <div className="container">
+          <div
+            style={{
+              display: "flex",
+              // flexDirection: "row",
+              // flexWrap: "wrap",
+              justifyContent: "flex-start",
+              alignItems: "flex-end",
+              alignContent: "flex-start",
+              margin: "10px",
+              marginTop: "30px"
+            }}
+          >
+            <Avatar
+              src={
+                this.props.artist.artist.image
+                  ? this.props.artist.artist.image[2]["#text"]
+                  : false
+              }
+              alt={`${this.props.artist.artist.name} foto`}
+              size={200}
+              style={{ marginTop: "40px" }}
+            />
+            <h2 style={{ fontSize: "50px" }}>
+              {this.props.artist.artist.name}
+            </h2>
+            <FlatButton
+              label="Search Similar"
+              onClick={e => this.fetchSimilarArtist(e)}
+              style={{ margin: "15px" }}
+              backgroundColor="darkgrey"
+              hoverColor="grey"
+            />
+          </div>
+          <h3 style={{ display: "block", margin: "0" }}>Albums:</h3>
+
+          <SearchResultsContainer
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              alignItems: "flex-start",
+              alignContent: "flex-start",
+              margin: "0 auto"
+            }}
+          >
+            {this.renderTiles()}
+          </SearchResultsContainer>
+        </div>
       </div>
     );
   }
@@ -89,7 +173,7 @@ const SearchResultsContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: flex-start;
   align-content: flex-start;
   float: none;
@@ -97,11 +181,10 @@ const SearchResultsContainer = styled.div`
   padding: 20px 0;
 `;
 const mapStateToProps = state => {
-  console.log (state.albums);
   return {
-    results: state.search.artistsSimilar,
+    results: state.similarArtists.artistsSimilar,
     albums: state.albums,
-    message: state.message
+    artist: state.artist
   };
 };
-export default connect(mapStateToProps)(AlbumsPage);
+export default connect(mapStateToProps)(withRouter(AlbumsPage));
