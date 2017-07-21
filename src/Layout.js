@@ -7,7 +7,7 @@ class Layout extends Component {
     return (
       <div>
         <div>
-          <Navbar />
+          <Navbar urlParams={this.props.location.pathname} />
           <StyledContentContainer>
             {this.props.children}
           </StyledContentContainer>

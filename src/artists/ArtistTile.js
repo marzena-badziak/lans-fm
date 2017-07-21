@@ -25,7 +25,6 @@ class ArtistTile extends Component {
     super(props);
 
     this.state = {
-      dropDownDisplay: "none",
       playVideo: false,
       videoId: "",
       videoFound: true
@@ -64,11 +63,6 @@ class ArtistTile extends Component {
     this.refs.youtube.getYoutubeVideoId(searchRequest);
   };
 
-  hideAlbums = e => {
-    this.setState({
-      dropDownDisplay: "none"
-    });
-  };
   render() {
     return (
       <StyledArtistTile
@@ -76,7 +70,10 @@ class ArtistTile extends Component {
         name={this.props.name}
         // onClick={e => this.getAlbums(e)}
       >
-        <StyledArtistImage overlay={<CardTitle title={this.props.name} />}>
+        <StyledArtistImage
+          onClick={e => this.getAlbums(e)}
+          overlay={<CardTitle title={this.props.name} />}
+        >
           <img
             src={this.props.img}
             alt={this.props.alt}

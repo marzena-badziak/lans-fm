@@ -14,7 +14,7 @@ export const loginAction = token => {
 
   return dispatch => {
     dispatch({
-      type: "LOGIN_ATTEMPT",
+      type: "LOGIN_ATTEMPT"
     });
     axios
       .get(`${lastfmRequestURLMaker(loginOptions)}`)
