@@ -11,7 +11,8 @@ const similarArtists = (
       return {
         ...state,
         message: "Searching: ",
-        artistEntered: action.artistEntered
+        artistEntered: action.artistEntered,
+        artistsSimilar: []
       };
     case "SEARCH_ARTIST_SUCCESS":
       return {

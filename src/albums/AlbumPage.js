@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getAlbumInfo } from "../artists/search-actions.js";
+import { getAlbumInfo } from "./search-actions.js";
 import { connect } from "react-redux";
 import { List, ListItem } from "material-ui/List";
 import Paper from "material-ui/Paper";
