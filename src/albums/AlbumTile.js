@@ -50,14 +50,6 @@ class AlbumTile extends Component {
             backgroundColor="plum"
             onClick ={() => this.scrobbleAlbum()}
             hoverColor="#ccd4d4"
-            icon={
-              <FontAwesome
-                className="fa fa-lastfm"
-                name="options"
-                size="lg"
-                aria-hidden="true"
-              />
-            }
           />
           <FlatButton
             label="Show Album"

@@ -38,6 +38,33 @@ export const fetchSongListAndScrobbleAlbum = (data) => {
   }
 }
 
+export const scrobbleSingleTrack = (data) => {
+  let scrobbleParams = {
+    artist: data.track.artist.name,
+    title: data.track.name,
+    timestamp: Math.floor((Date.now() / 1000) - data.track.duration),
+    api_key: lastfmKey.api_key,
+    sk: data.session.sessionKey,
+    method: "track.scrobble"
+  }
+  let apiSig = generateApiSig(scrobbleParams);
+  scrobbleParams = {...scrobbleParams, api_sig: apiSig};
+  axios({
+    method: "POST",
+    url: `${lastfmRequestURLMaker(scrobbleParams)}`,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    }
+  })
+  .then(function(response) {
+    console.log("Scrobbled");
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
+}
+
 const generateTracksParamsList = (tracks, sk) => {
   let i = 0;
   let scrobbleParams;
