@@ -17,7 +17,9 @@ class Navbar extends Component {
             height="35px"
           />
         }
-        iconElementRight={<LoginInfo />}
+        iconElementRight={
+          <LoginInfo currentPageParams={this.props.urlParams} />
+        }
         iconStyleLeft={{ marginTop: "0px" }}
         iconStyleRight={{ marginTop: "0px" }}
         showMenuIconButton={true}
