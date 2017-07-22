@@ -20,45 +20,56 @@ class AlbumPage extends Component {
   constructor(props) {
     super(props);
 
+    var displaySpotifyLogin =
+      this.props.session.spotifyAccessToken === "" ||
+      (this.props.session.spotifyExpiresIn !== "" &&
+        this.props.session.spotifyExpiresIn < Date.now())
+        ? true
+        : false;
+
     this.state = {
       spotifyAlbumUrl: "",
       spotifyAlbumFetched: false,
+      displaySpotifyLogin: displaySpotifyLogin,
 
       open: {},
       left: {},
       top: {}
     };
-    var headers = {
-      headers: {
-        Accept: "application/json",
-        Authorization: "Bearer " + this.props.session.spotifyAccessToken
-      }
-    };
-    console.log(this.props.params.albumName);
-    axios
-      .get(
-        "https://api.spotify.com/v1/search?q=album:" +
-          this.props.params.albumName +
-          " artist:" +
-          this.props.params.artistChoosen +
-          "&type=album",
-        headers
-      )
-      .then(response => {
-        console.log(response);
-        console.log(response.data.albums.items[0].uri);
-        var url =
-          "https://open.spotify.com/embed?uri=" +
-          response.data.albums.items[0].uri;
-        this.setState({ spotifyAlbumUrl: url }, () =>
-          this.setState({ spotifyAlbumFetched: true })
-        );
-        console.log(this.state.spotifyAlbumUrl);
-        console.log("flag: " + this.state.spotifyAlbumFetched);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+
+    if (!displaySpotifyLogin) {
+      var headers = {
+        headers: {
+          Accept: "application/json",
+          Authorization: "Bearer " + this.props.session.spotifyAccessToken
+        }
+      };
+      console.log(this.props.params.albumName);
+      axios
+        .get(
+          "https://api.spotify.com/v1/search?q=album:" +
+            this.props.params.albumName +
+            " artist:" +
+            this.props.params.artistChoosen +
+            "&type=album",
+          headers
+        )
+        .then(response => {
+          console.log(response);
+          console.log(response.data.albums.items[0].uri);
+          var url =
+            "https://open.spotify.com/embed?uri=" +
+            response.data.albums.items[0].uri;
+          this.setState({ spotifyAlbumUrl: url }, () =>
+            this.setState({ spotifyAlbumFetched: true })
+          );
+          console.log(this.state.spotifyAlbumUrl);
+          console.log("flag: " + this.state.spotifyAlbumFetched);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   }
 
   openMenu = (i, left, top) => {
@@ -206,14 +217,18 @@ class AlbumPage extends Component {
                     <h2 style={{ display: "block", textAlign: "center" }}>
                       {this.props.params.albumName}
                     </h2>
-                    <FlatButton
-                      label="Login to Spotify"
-                      onClick={e => this.setSpotifyId(e)}
-                      style={{ margin: "15px" }}
-                      backgroundColor="darkgrey"
-                      hoverColor="grey"
-                      href="https://accounts.spotify.com/authorize?client_id=7cd65f9a6005482cb3830530b1e52b16&response_type=token&redirect_uri=http://localhost:3000/loginSpotify/"
-                    />
+                    <div>
+                      {this.state.displaySpotifyLogin
+                        ? <FlatButton
+                            label="Login to Spotify"
+                            onClick={e => this.setSpotifyId(e)}
+                            style={{ margin: "15px" }}
+                            backgroundColor="darkgrey"
+                            hoverColor="grey"
+                            href="https://accounts.spotify.com/authorize?client_id=7cd65f9a6005482cb3830530b1e52b16&response_type=token&redirect_uri=http://localhost:3000/loginSpotify/"
+                          />
+                        : null}
+                    </div>
                   </div>
                   <div>
                     {this.state.spotifyAlbumFetched

@@ -22,7 +22,7 @@ class LoginInfo extends Component {
             type="hidden"
             name="cb"
             value={`http://localhost:3000/?currentUrl=${this.props
-              .currentPageParams}/#/login`}
+              .currentPageParams}/login`}
           />
           <FlatButton
             type="submit"
