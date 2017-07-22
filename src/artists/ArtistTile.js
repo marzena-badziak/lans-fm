@@ -8,11 +8,15 @@ import { Card, CardMedia, CardTitle } from "material-ui/Card";
 import ShowVideo from "./ShowVideo";
 import { withRouter } from "react-router";
 import FontAwesome from "react-fontawesome";
-import YouTubeFunctions from "../lib/youtube";
+import YouTubeLogic from "../lib/youtube";
 
 class ArtistTile extends Component {
   constructor(props) {
     super(props);
+    this.youTubeLogic = new YouTubeLogic(
+      this.setYouTubeFlags,
+      this.props.session.sessionKey
+    );
 
     this.state = {
       playVideo: false,
@@ -44,13 +48,12 @@ class ArtistTile extends Component {
   };
 
   playVideo = () => {
-    console.log(this.refs.youtube);
     var searchRequest =
       "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&q=" +
       this.props.name +
       "+VEVO" +
       "&type=video&key=AIzaSyBdXp1WnmYGXXuDFybXxK_94awGD5Qm-Zw";
-    this.refs.youtube.getYoutubeVideoId(searchRequest);
+    this.youTubeLogic.getYoutubeVideoId(searchRequest);
   };
 
   render() {
@@ -111,11 +114,6 @@ class ArtistTile extends Component {
               videoFound={this.state.videoFound}
             />
           : null}
-        <YouTubeFunctions
-          youTubeFlagsCallback={this.setYouTubeFlags}
-          lastFMSessionKey={this.props.session.sessionKey}
-          ref="youtube"
-        />
       </StyledArtistTile>
     );
   }

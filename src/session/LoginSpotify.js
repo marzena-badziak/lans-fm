@@ -4,39 +4,41 @@ import { Router, Route, IndexRoute, hashHistory } from "react-router";
 import { withRouter } from "react-router";
 
 class LoginSpotify extends Component {
-  // getParameterByName = name => {
-  //   var url = window.location.href;
-  //   name = name.replace(/[\[\]]/g, "\\$&");
-  //   var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-  //     results = regex.exec(url);
-  //
-  //   if (!results) return null;
-  //   if (!results[2]) return "";
-  //
-  //   return decodeURIComponent(results[2].replace(/\+/g, " "));
-  // };
+  constructor(props) {
+    super(props);
 
-  login = () => {
     var url = window.location.href;
-    var spotifyParams = /#access_token=([^&]+)&token_type=([^&]+)&expires_in=([^&]+)/g;
+    var spotifyParams = /#access_token=([^&]+)&token_type=([^&]+)&expires_in=([^&]+)&state=([^&]+)/g;
     var match = spotifyParams.exec(url);
     var token = match[1];
     var expires = match[3];
+    var spotifyRandomState = match[4];
+    console.log(url);
+    console.log(spotifyRandomState);
 
     console.log("got token: " + token + " " + expires);
 
-    this.props.dispatch({
-      type: "SPOTIFY_LOGIN",
-      spotifyAccessToken: token,
-      spotifyExpiresIn: new Date(Date.now() + 1000 * parseInt(expires))
-    });
-  };
+    if (spotifyRandomState === this.props.session.spotifyStateString) {
+      this.props.dispatch({
+        type: "SPOTIFY_LOGIN",
+        spotifyAccessToken: token,
+        spotifyExpiresIn: Date.now() + 1000 * parseInt(expires)
+      });
+    } else {
+      console.log("error during login, invalid state");
+    }
 
+    this.props.router.push("/");
+  }
   render() {
-    this.login();
-    //this.props.router.push("/");
-    return <div />;
+    return null;
   }
 }
 
-export default connect()(withRouter(LoginSpotify));
+const mapStateToProps = state => {
+  return {
+    session: state.session
+  };
+};
+
+export default connect(mapStateToProps)(withRouter(LoginSpotify));

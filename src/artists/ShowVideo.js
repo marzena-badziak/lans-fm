@@ -34,7 +34,7 @@ export class ShowVideo extends Component {
 const StyledVideoContainer = styled.div`
   z-index: 10;
   position: relative;
-  top: -302px;
+  top: -308px;
   left: 0;
 `;
 const NoVideoFoundMessage = styled.div`

@@ -15,18 +15,21 @@ import { scrobbleAlbum } from "./scrobble-album";
 import { SpotifyIframe } from "./SpotifyIframe";
 import axios from "axios";
 import Track from "./Track";
+import { StringUtils } from "../lib/utils";
 
 class AlbumPage extends Component {
   constructor(props) {
     super(props);
-
+    console.log("date now: " + Date.now());
+    console.log("expires: " + this.props.session.spotifyExpiresIn);
+    console.log("access token: " + this.props.session.spotifyAccessToken);
     var displaySpotifyLogin =
       this.props.session.spotifyAccessToken === "" ||
       (this.props.session.spotifyExpiresIn !== "" &&
         this.props.session.spotifyExpiresIn < Date.now())
         ? true
         : false;
-
+    console.log("display spotify: " + displaySpotifyLogin);
     this.state = {
       spotifyAlbumUrl: "",
       spotifyAlbumFetched: false,
@@ -37,6 +40,14 @@ class AlbumPage extends Component {
       top: {}
     };
 
+    if (displaySpotifyLogin) {
+      var stateString = StringUtils.randomString(32);
+      this.spotifyStateString = stateString;
+      var spotifyAuthorizationUrl = this.props.dispatch({
+        type: "SPOTIFY_GENERATE_STATE",
+        spotifyStateString: stateString
+      });
+    }
     if (!displaySpotifyLogin) {
       var headers = {
         headers: {
@@ -225,7 +236,10 @@ class AlbumPage extends Component {
                             style={{ margin: "15px" }}
                             backgroundColor="darkgrey"
                             hoverColor="grey"
-                            href="https://accounts.spotify.com/authorize?client_id=7cd65f9a6005482cb3830530b1e52b16&response_type=token&redirect_uri=http://localhost:3000/loginSpotify/"
+                            href={
+                              "https://accounts.spotify.com/authorize?client_id=7cd65f9a6005482cb3830530b1e52b16&response_type=token&redirect_uri=http://localhost:3000/loginSpotify/&state=" +
+                              this.spotifyStateString
+                            }
                           />
                         : null}
                     </div>

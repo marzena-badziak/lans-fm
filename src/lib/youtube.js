@@ -1,18 +1,22 @@
-import React, { Component } from "react";
 import axios from "axios";
 import { lastfmKey } from "../lib/lastfm-api";
 import md5 from "md5";
 
-var nowPlayingArtist;
-var nowPlayingTitle;
+export default class YouTubeLogic {
+  constructor(youTubeFlagsCallback, lastFMSessionKey) {
+    this.youTubeFlagsCallback = youTubeFlagsCallback;
+    this.lastFMSessionKey = lastFMSessionKey;
 
-export default class YouTubeFunctions extends Component {
+    this.nowPlayingArtist = "";
+    this.nowPlayingTitle = "";
+  }
+
   getYoutubeVideoId = searchRequest => {
     axios
       .get(searchRequest)
       .then(response => {
         var vId = response.data.items[0].id.videoId;
-        this.props.youTubeFlagsCallback(vId, true, true);
+        this.youTubeFlagsCallback(vId, true, true);
 
         axios
           .get(
@@ -34,8 +38,8 @@ export default class YouTubeFunctions extends Component {
               defaultArtist: response.data.items[0].snippet.channelTitle
             });
 
-            nowPlayingTitle = title;
-            nowPlayingArtist = artist;
+            this.nowPlayingTitle = title;
+            this.nowPlayingArtist = artist;
             this.scrobbleYouTubeVideo(artist, title, timestamp, duration);
           });
       })
@@ -52,7 +56,7 @@ export default class YouTubeFunctions extends Component {
   };
   scrobbleYouTubeVideo = (artist, title, timestamp, duration) => {
     setTimeout(() => {
-      if (nowPlayingArtist != artist || nowPlayingTitle != title) {
+      if (this.nowPlayingArtist != artist || this.nowPlayingTitle != title) {
         console.log("track won't be scrobbled");
         return;
       }
@@ -62,7 +66,7 @@ export default class YouTubeFunctions extends Component {
           "artist" +
           artist +
           "methodtrack.scrobblesk" +
-          this.props.lastFMSessionKey +
+          this.lastFMSessionKey +
           "timestamp" +
           timestamp +
           "track" +
@@ -81,7 +85,7 @@ export default class YouTubeFunctions extends Component {
             "&api_sig=" +
             sig +
             "&sk=" +
-            this.props.lastFMSessionKey +
+            this.lastFMSessionKey +
             "&api_key=" +
             lastfmKey.api_key
         )
@@ -98,14 +102,3 @@ export default class YouTubeFunctions extends Component {
     return null;
   }
 }
-
-// const mapStateToProps = state => {
-//   return {
-//     results: state.search.artistsSimilar,
-//     artistEntered: state.search.artistEntered,
-//     message: state.search.message,
-//     session: state.session
-//   };
-// };
-
-//export default connect(mapStateToProps)(YouTubeFunctions);

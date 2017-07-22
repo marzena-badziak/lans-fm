@@ -7,7 +7,8 @@ const session = (
     token: "",
     spotifyAccessToken: "",
     spotifyExpiresIn: "",
-    spotifyRefreshToken: ""
+    spotifyRefreshToken: "",
+    spotifyStateString: ""
   },
   action
 ) => {
@@ -36,6 +37,11 @@ const session = (
         ...state,
         sessionKey: "",
         massage: "Logged out"
+      };
+    case "SPOTIFY_GENERATE_STATE":
+      return {
+        ...state,
+        spotifyStateString: action.spotifyStateString
       };
     case "SPOTIFY_LOGIN_ATTEMPT":
       return {
