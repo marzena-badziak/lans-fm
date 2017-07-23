@@ -17,7 +17,7 @@ class AlbumTile extends Component {
   };
   openAlbum = () => {
     return this.props.router.push(
-      `${this.props.params.artistName}/${this.props.params.artistChoosen}/${this
+      `${this.props.params.artistName}/${this.props.params.artistChosen}/${this
         .props.title}`
     );
   };

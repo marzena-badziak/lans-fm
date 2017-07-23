@@ -19,9 +19,9 @@ class App extends Component {
               <Route path="login" component={Login} />
               <Route path="loginSpotify" component={LoginSpotify} />
               <Route path=":artistName" component={ArtistsGrid} />
-              <Route path=":artistName/:artistChoosen" component={AlbumsPage} />
+              <Route path=":artistName/:artistChosen" component={AlbumsPage} />
               <Route
-                path=":artistName/:artistChoosen/:albumName"
+                path=":artistName/:artistChosen/:albumName"
                 component={AlbumPage}
               />
             </Route>

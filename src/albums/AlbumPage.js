@@ -16,10 +16,12 @@ import { SpotifyIframe } from "./SpotifyIframe";
 import axios from "axios";
 import Track from "./Track";
 import { StringUtils } from "../lib/utils";
+import { SpotifyLogic } from "../lib/spotify";
 
 class AlbumPage extends Component {
   constructor(props) {
     super(props);
+
     console.log("date now: " + Date.now());
     console.log("expires: " + this.props.session.spotifyExpiresIn);
     console.log("access token: " + this.props.session.spotifyAccessToken);
@@ -32,13 +34,17 @@ class AlbumPage extends Component {
     console.log("display spotify: " + displaySpotifyLogin);
     this.state = {
       spotifyAlbumUrl: "",
-      spotifyAlbumFetched: false,
       displaySpotifyLogin: displaySpotifyLogin,
 
       open: {},
       left: {},
       top: {}
     };
+
+    this.spotifyLogic = new SpotifyLogic(
+      this.props.session.spotifyAccessToken,
+      this.setSpotifyAlbumUrl
+    );
 
     if (displaySpotifyLogin) {
       var stateString = StringUtils.randomString(32);
@@ -49,39 +55,16 @@ class AlbumPage extends Component {
       });
     }
     if (!displaySpotifyLogin) {
-      var headers = {
-        headers: {
-          Accept: "application/json",
-          Authorization: "Bearer " + this.props.session.spotifyAccessToken
-        }
-      };
-      console.log(this.props.params.albumName);
-      axios
-        .get(
-          "https://api.spotify.com/v1/search?q=album:" +
-            this.props.params.albumName +
-            " artist:" +
-            this.props.params.artistChoosen +
-            "&type=album",
-          headers
-        )
-        .then(response => {
-          console.log(response);
-          console.log(response.data.albums.items[0].uri);
-          var url =
-            "https://open.spotify.com/embed?uri=" +
-            response.data.albums.items[0].uri;
-          this.setState({ spotifyAlbumUrl: url }, () =>
-            this.setState({ spotifyAlbumFetched: true })
-          );
-          console.log(this.state.spotifyAlbumUrl);
-          console.log("flag: " + this.state.spotifyAlbumFetched);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      this.spotifyLogic.getSpotifyAlbumId(
+        this.props.params.albumName,
+        this.props.params.artistChosen
+      );
     }
   }
+  setSpotifyAlbumUrl = url => {
+    this.setState({ spotifyAlbumUrl: url });
+    console.log(this.state.spotifyAlbumUrl);
+  };
 
   openMenu = (i, left, top) => {
     if (this.state.open[`${i}`] === "block") {
@@ -109,7 +92,7 @@ class AlbumPage extends Component {
   fetchAlbum = e => {
     this.props.dispatch(
       getAlbumInfo({
-        artist: this.props.params.artistChoosen,
+        artist: this.props.params.artistChosen,
         album: this.props.params.albumName
       })
     );
@@ -126,7 +109,7 @@ class AlbumPage extends Component {
             <Track
               i={i}
               track={track}
-              artist={this.props.params.artistChoosen}
+              artist={this.props.params.artistChosen}
               open={this.state.open[`${i}`] || "none"}
               left={this.state.left[`${i}`] || 0}
               top={this.state.top[`${i}`] || 0}
@@ -150,7 +133,7 @@ class AlbumPage extends Component {
   goBackToArtistPage = e => {
     e.preventDefault();
     this.props.router.push(
-      `${this.props.params.artistName}/${this.props.params.artistChoosen}`
+      `${this.props.params.artistName}/${this.props.params.artistChosen}`
     );
   };
 
@@ -195,7 +178,7 @@ class AlbumPage extends Component {
               }}
               onClick={this.goBackToArtistPage}
             >
-              / {this.props.params.artistChoosen}
+              / {this.props.params.artistChosen}
             </li>
           </ul>
         </div>
@@ -245,7 +228,7 @@ class AlbumPage extends Component {
                     </div>
                   </div>
                   <div>
-                    {this.state.spotifyAlbumFetched
+                    {this.state.spotifyAlbumUrl !== ""
                       ? <SpotifyIframe
                           spotifyAlbumUrl={this.state.spotifyAlbumUrl}
                         />

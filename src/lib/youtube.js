@@ -44,7 +44,7 @@ export default class YouTubeLogic {
           });
       })
       .catch(err => {
-        this.props.youTubeFlagsCallback("", true, false);
+        this.youTubeFlagsCallback("", true, false);
       });
   };
   yTDurationToSeconds = duration => {
@@ -97,8 +97,4 @@ export default class YouTubeLogic {
         });
     }, duration * 1000 / 3);
   };
-
-  render() {
-    return null;
-  }
 }
