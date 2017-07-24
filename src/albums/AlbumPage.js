@@ -6,7 +6,6 @@ import Paper from "material-ui/Paper";
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
 import FlatButton from "material-ui/FlatButton";
-import FontAwesome from "react-fontawesome";
 import styled from "styled-components";
 import Divider from "material-ui/Divider";
 import moment from "moment";
@@ -84,19 +83,23 @@ class AlbumPage extends Component {
       open: { [`${i}`]: "none" }
     });
   };
-
   fetchAlbum = e => {
     this.props.dispatch(
       getAlbumInfo({
-        artist: this.props.params.artistChosen,
-        album: this.props.params.albumName
+        artist: this.replaceDashWithSpace(this.props.params.artistChosen),
+        album: this.replaceDashWithSpace(this.props.params.albumName)
       })
     );
   };
   componentDidMount() {
     this.fetchAlbum();
   }
-
+  replaceSpacesWithDashes(str) {
+    return str.replace(/\s+/g, "-");
+  }
+  replaceDashWithSpace(str) {
+    return str.replace(/-/g, " ");
+  }
   showTracks() {
     if (this.props.album.message === "GOT_ALBUMS") {
       if (this.props.album.album.tracks.track.length !== 0) {
@@ -105,7 +108,7 @@ class AlbumPage extends Component {
             <Track
               i={i}
               track={track}
-              artist={this.props.params.artistChosen}
+              artist={this.replaceDashWithSpace(this.props.params.artistChosen)}
               open={this.state.open[`${i}`] || "none"}
               left={this.state.left[`${i}`] || 0}
               top={this.state.top[`${i}`] || 0}
@@ -163,7 +166,8 @@ class AlbumPage extends Component {
               }}
               onClick={this.goBackToSearchResults}
             >
-              {" "}/ Search results: {this.props.params.artistName}{" "}
+              {" "}/ Search results:{" "}
+              {this.replaceDashWithSpace(this.props.params.artistName)}{" "}
             </li>
             <li
               style={{
@@ -174,7 +178,7 @@ class AlbumPage extends Component {
               }}
               onClick={this.goBackToArtistPage}
             >
-              / {this.props.params.artistChosen}
+              / {this.replaceDashWithSpace(this.props.params.artistChosen)}
             </li>
           </ul>
         </div>
@@ -205,7 +209,7 @@ class AlbumPage extends Component {
                       size={150}
                     />
                     <h2 style={{ display: "block", textAlign: "center" }}>
-                      {this.props.params.albumName}
+                      {this.replaceDashWithSpace(this.props.params.albumName)}
                     </h2>
                     <div>
                       {this.state.displaySpotifyLogin
@@ -227,6 +231,7 @@ class AlbumPage extends Component {
                     {this.state.spotifyAlbumUrl !== ""
                       ? <SpotifyIframe
                           spotifyAlbumUrl={this.state.spotifyAlbumUrl}
+                          title={this.state.spotifyAlbumUrl}
                         />
                       : null}
                   </div>

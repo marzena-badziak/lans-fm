@@ -3,9 +3,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Lato' sans-serif;
-  /*background-color: #ffe0ee;*/
-  background: url('https://files.slack.com/files-pri/T5X6DE6HX-F68Q4HP3M/background.png')
-    no-repeat center center fixed;
+  background: url('assets/background_small.jpg') no-repeat center center fixed;
+  /*background: url('https://files.slack.com/files-pri/T5X6DE6HX-F68Q4HP3M/background.png')*/
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

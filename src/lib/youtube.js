@@ -56,7 +56,7 @@ export default class YouTubeLogic {
   };
   scrobbleYouTubeVideo = (artist, title, timestamp, duration) => {
     setTimeout(() => {
-      if (this.nowPlayingArtist != artist || this.nowPlayingTitle != title) {
+      if (this.nowPlayingArtist !== artist || this.nowPlayingTitle !== title) {
         console.log("track won't be scrobbled");
         return;
       }
