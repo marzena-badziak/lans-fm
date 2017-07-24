@@ -28,14 +28,14 @@ class SearchBar extends Component {
         artist: this.state.searchValue
       })
     );
-<<<<<<< HEAD
-    this.props.router.push(this.state.searchValue);
-=======
     this.props.router.push(
       "/" + this.replaceSpacesWithDashes(this.state.searchValue)
     );
->>>>>>> 680eeffffcf52ad4a22bca5f3d1c0991bd1d2b62
   };
+
+  replaceSpacesWithDashes(str) {
+    return str.replace(/\s+/g, "-");
+  }
 
   render() {
     return (
