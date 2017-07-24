@@ -33,9 +33,9 @@ class ArtistsGrid extends Component {
     });
     return (
       <div>
-        <h2 style={{ paddingBottom: "20px" }}>
+        <StyledMessage>
           {this.props.message} {this.props.artistEntered}
-        </h2>
+        </StyledMessage>
         {this.props.message === "Searching: "
           ? <StyledCircularProgress color="#aa8899" />
           : false}
@@ -60,6 +60,8 @@ const SearchResultsContainer = styled.div`
   margin: 0 auto;
   padding: 20px 0;
 `;
+
+const StyledMessage = styled.h2`padding-bottom: 20px;`;
 const StyledCircularProgress = styled(CircularProgress)`
   display: block;
   margin: 0 auto;
