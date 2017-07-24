@@ -20,6 +20,7 @@ const StyledContentContainer = styled.div`
   background-color: rgba(255, 255, 255, .7);
   margin: 0;
   padding: 5px;
+  min-height: 89vh;
 `;
 
 export default Layout;

@@ -50,7 +50,6 @@ const StyledSearchBar = styled(SearchBar)`
 const StyledAppBar = styled(AppBar)`
   display: flex;
   align-items: center;
-  ${"" /* align-items: stretch; */}
   padding: 3px;
 
   /* Smartphones (portrait and landscape) ----------- */
@@ -62,7 +61,6 @@ const StyledAppBar = styled(AppBar)`
   @media only screen and (max-width : 320px) {
     padding: 2px;
   }
-
 `;
 
 const StyledLogo = styled.a`

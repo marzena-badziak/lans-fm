@@ -89,11 +89,9 @@ export default class YouTubeLogic {
             lastfmKey.api_key
         )
         .then(response => {
-          console.log(response);
+          alert("Track scrobbled");
         })
-        .catch(err => {
-          console.log(err);
-        });
-    }, duration * 1000 / 3);
+        .catch(err => {});
+    }, duration * 1000 / 10);
   };
 }
