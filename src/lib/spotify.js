@@ -13,7 +13,6 @@ export class SpotifyLogic {
         Authorization: "Bearer " + this.spotifyAccessToken
       }
     };
-    console.log(albumName);
     axios
       .get(
         "https://api.spotify.com/v1/search?q=album:" +
@@ -24,8 +23,6 @@ export class SpotifyLogic {
         headers
       )
       .then(response => {
-        console.log(response);
-        console.log(response.data.albums.items[0].uri);
         let url =
           "https://open.spotify.com/embed?uri=" +
           response.data.albums.items[0].uri;
