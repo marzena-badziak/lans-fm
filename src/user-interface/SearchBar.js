@@ -28,7 +28,7 @@ class SearchBar extends Component {
       })
     );
     this.props.router.push(
-      this.replaceSpacesWithDashes(this.state.searchValue)
+      "/" + this.replaceSpacesWithDashes(this.state.searchValue)
     );
   };
 
