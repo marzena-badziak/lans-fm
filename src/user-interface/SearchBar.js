@@ -44,13 +44,9 @@ class SearchBar extends Component {
             type="text"
             value={this.state.searchValue}
             placeholder="Your favourite artist"
-          />{" "}
+          />
           <StyledSearchSpan onClick={e => this.fetchArtist(e)}>
-            <FontAwesome
-              className="fa fa-search"
-              name="search"
-              style={{ textShadow: "0 1px 0 rgba(0, 0, 0, 0.1)" }}
-            />
+            <StyledFontAwesome className="fa fa-search" name="search" />
           </StyledSearchSpan>
         </StyledSearchBar>
       </form>
@@ -78,6 +74,10 @@ const StyledSearchSpan = styled.div`
   background-color: #dd8899;
   cursor: pointer;
 `;
+const StyledFontAwesome = styled(FontAwesome)`
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+`;
+
 const StyledSearchInput = styled.input`
   color: black;
   width: 100%;
