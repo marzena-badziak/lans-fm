@@ -35,11 +35,16 @@ class ArtistTile extends Component {
   };
   getAlbums = e => {
     e.preventDefault();
+    console.log(this.props.router);
     this.props.router.push(
-      `${this.props.params.artistName}/${this.props.name}`
+      this.replaceSpacesWithDashes(this.props.params.artistName) +
+        "/" +
+        this.replaceSpacesWithDashes(this.props.name)
     );
   };
-
+  replaceSpacesWithDashes(str) {
+    return str.replace(/\s+/g, "-");
+  }
   setYouTubeFlags = (videoId, playFlag, foundFlag) => {
     this.setState({
       videoId: videoId,

@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  getAlbums,
-  getArtistInfo
-} from "./search-actions.js";
-import {  searchArtist } from "../artists/search-actions.js";
+import { getAlbums, getArtistInfo } from "./search-actions.js";
+import { searchArtist } from "../artists/search-actions.js";
 import AlbumTile from "./AlbumTile";
 import styled from "styled-components";
 import Avatar from "material-ui/Avatar";
@@ -16,14 +13,14 @@ class AlbumsPage extends Component {
   fetchAlbums = e => {
     this.props.dispatch(
       getAlbums({
-        data: this.props.params.artistChosen
+        data: this.replaceDashWithSpace(this.props.params.artistChosen)
       })
     );
   };
   fetchArtist = e => {
     this.props.dispatch(
       getArtistInfo({
-        artist: this.props.params.artistChosen
+        artist: this.replaceDashWithSpace(this.props.params.artistChosen)
       })
     );
   };
@@ -66,11 +63,19 @@ class AlbumsPage extends Component {
       }
     }
   }
+  replaceSpacesWithDashes(str) {
+    return str.replace(/\s+/g, "-");
+  }
+  replaceDashWithSpace(str) {
+    return str.replace(/-/g, " ");
+  }
 
   goBackToSearchResults = e => {
     e.preventDefault();
     console.log("back to search");
-    this.props.router.push(this.props.params.artistName);
+    this.props.router.push(
+      this.replaceSpacesWithDashes(this.props.params.artistName)
+    );
   };
   fetchSimilarArtist = e => {
     this.props.dispatch(
@@ -78,7 +83,9 @@ class AlbumsPage extends Component {
         artist: this.props.params.artistChosen
       })
     );
-    this.props.router.push(this.props.params.artistChosen);
+    this.props.router.push(
+      this.replaceSpacesWithDashes(this.props.params.artistChosen)
+    );
   };
   render() {
     return (
@@ -110,7 +117,8 @@ class AlbumsPage extends Component {
               }}
               onClick={this.goBackToSearchResults}
             >
-              / Search results: {this.props.params.artistName}
+              / Search results:{" "}
+              {this.replaceDashWithSpace(this.props.params.artistName)}
             </li>
           </ul>
         </div>

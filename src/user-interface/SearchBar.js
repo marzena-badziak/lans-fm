@@ -27,8 +27,14 @@ class SearchBar extends Component {
         artist: this.state.searchValue
       })
     );
-    this.props.router.push(this.state.searchValue);
+    this.props.router.push(
+      this.replaceSpacesWithDashes(this.state.searchValue)
+    );
   };
+
+  replaceSpacesWithDashes(str) {
+    return str.replace(/\s+/g, "-");
+  }
   render() {
     return (
       <form onSubmit={e => this.fetchArtist(e)}>
