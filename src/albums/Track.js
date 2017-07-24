@@ -6,6 +6,7 @@ import moment from "moment";
 import { connect } from "react-redux";
 import { List, ListItem } from "material-ui/List";
 import { scrobbleSingleTrack } from "./scrobble-album.js";
+
 class Track extends Component {
   constructor(props) {
     super(props);
@@ -21,25 +22,33 @@ class Track extends Component {
   };
 
   scrobbleTrack = e => {
-    scrobbleSingleTrack({
-      session: this.props.session,
-      track: this.props.track
-    });
+     scrobbleSingleTrack({
+        session: this.props.session,
+        track: this.props.track
+      })
+      this.setState ({
+        scrobble: 1
+      })
   };
+
+  scrobbleInfo = () => {
+    if(this.state.scrobble === 0) {
+      console.log("Hello");
+      return "";
+    } else {
+      return (
+        <div className="alert alert-success alert-dismissible" role="alert">
+          Scrobbled<button type="button" className="close" dataDismiss="alert" ariaLabel="Close"><span ariaHidden="true">&times;</span></button>
+        </div>
+      )
+    }
+  }
+
 
   render() {
     return (
       <div key={this.props.i}>
-        <div className="alert alert-success alert-dismissible" role="alert">
-          Scrobbled<button
-            type="button"
-            className="close"
-            dataDismiss="alert"
-            ariaLabel="Close"
-          >
-            <span ariaHidden="true">&times;</span>
-          </button>
-        </div>
+      {this.scrobbleInfo()}
         <ListItem
           primaryText={`${this.props.i + 1}. ${this.props.track.name}`}
           onClick={e => this.changeDropdownState(e)}

@@ -69,8 +69,8 @@ const StyledLogo = styled.a`
   font-size: x-large;
   padding: 0;
   margin: -3px 0 15px 30px;
-  &:hover {
-    color: #e7f7ff;
+  ${"" /* margin-left: 30px; */} &:hover {
+    color: #333;
     text-decoration: none;
   }
   /* Smartphones (portrait and landscape) ----------- */
