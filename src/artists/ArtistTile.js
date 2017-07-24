@@ -25,6 +25,8 @@ class ArtistTile extends Component {
     };
   }
 
+
+
   fetchArtist = e => {
     e.preventDefault();
     this.props.dispatch(
@@ -33,19 +35,14 @@ class ArtistTile extends Component {
       })
     );
   };
+
   getAlbums = e => {
     e.preventDefault();
-    console.log(this.props.router);
     this.props.router.push(
-      "/" +
-        this.replaceSpacesWithDashes(this.props.params.artistName) +
-        "/" +
-        this.replaceSpacesWithDashes(this.props.name)
+      `${this.props.params.artistName}/${this.props.name}`
     );
   };
-  replaceSpacesWithDashes(str) {
-    return str.replace(/\s+/g, "-");
-  }
+
   setYouTubeFlags = (videoId, playFlag, foundFlag) => {
     this.setState({
       videoId: videoId,
@@ -54,10 +51,9 @@ class ArtistTile extends Component {
   };
 
   playVideo = () => {
-    var searchRequest =
-      "https://www.googleapis.com/youtube/v3/search?part=snippet&order=viewCount&q=" +
+    let searchRequest =
+      "https://www.googleapis.com/youtube/v3/search?part=snippet&q=" +
       this.props.name +
-      "+VEVO" +
       "&type=video&key=AIzaSyBdXp1WnmYGXXuDFybXxK_94awGD5Qm-Zw";
     this.youTubeLogic.getYoutubeVideoId(searchRequest);
   };
@@ -72,11 +68,12 @@ class ArtistTile extends Component {
           onClick={e => this.getAlbums(e)}
           overlay={<CardTitle title={this.props.name} />}
         >
-          <StyledImage
+          <img
             src={this.props.img}
             alt={this.props.alt}
             width="260px"
             height="260px"
+            style={{ position: "relative", cursor: "pointer" }}
           />
         </StyledArtistImage>
 
@@ -86,7 +83,18 @@ class ArtistTile extends Component {
           name="play"
           size="3x"
         />
-        <StyledButtonContainer>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "nowrap",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            padding: "3px",
+            position: "relative",
+            textAlign: "center"
+          }}
+        >
           <StyledRaisedButton
             backgroundColor="plum"
             label="Search similar"
@@ -100,7 +108,7 @@ class ArtistTile extends Component {
             labelColor="#ffffff"
             onClick={e => this.getAlbums(e)}
           />
-        </StyledButtonContainer>
+        </div>
         {this.state.playVideo
           ? <ShowVideo
               artist={this.props.name}
@@ -127,18 +135,41 @@ const StyledArtistTile = styled(Card)`
 
 const StyledArtistImage = styled(CardMedia)`
   transition: .2s all;
-  cursor: pointer;
-
   &:hover {
     -webkit-filter: brightness(50%);
   }
 `;
 
-const StyledImage = styled.img`
-  position: relative;
-  cursor: pointer;
-`;
+const StyledArtistName = styled.div`
+  overflow: visible;
+  height: 60px;
+  z-index: 4;
 
+  background: rgb(170, 136, 153);
+  background: -moz-linear-gradient(
+    45deg,
+    rgba(170, 136, 153, 1) 0%,
+    rgba(255, 224, 238, 1) 63%,
+    rgba(255, 224, 238, 1) 63%
+  );
+  background: -webkit-linear-gradient(
+    45deg,
+    rgba(170, 136, 153, 1) 0%,
+    rgba(255, 224, 238, 1) 63%,
+    rgba(255, 224, 238, 1) 63%
+  );
+  background: linear-gradient(
+    45deg,
+    rgba(170, 136, 153, 1) 0%,
+    rgba(255, 224, 238, 1) 63%,
+    rgba(255, 224, 238, 1) 63%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(
+      startColorstr='#aa8899',
+      endColorstr='#ffe0ee',
+      GradientType=1
+    );
+`;
 const StyledYouTubeFontAwesome = styled(FontAwesome)`
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.75);
   color: #b31217;
@@ -150,17 +181,6 @@ const StyledYouTubeFontAwesome = styled(FontAwesome)`
   &:hover {
     color: #e52d27;
   }
-`;
-
-const StyledButtonContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 3px;
-  position: relative;
-  text-align: center;
 `;
 
 const StyledRaisedButton = styled(RaisedButton)`
