@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import SearchBar from "./user-interface/SearchBar";
 import styled from "styled-components";
+import LoginInfo from "./session/LoginInfo"
+
 class Home extends Component {
   render() {
     return (
       <StyledHome className="App">
-        <StyledLogo href="#">LansFm</StyledLogo>
+        <StyledLogo href="/">LansFm</StyledLogo>
+        <StyledLogin><LoginInfo currentPageParams={this.props.urlParams} /></StyledLogin>
 
         <StyledContainer className="container">
           <StyledHeaderMain htmlFor="search-bar">
@@ -40,6 +43,21 @@ const StyledLogo = styled.a`
   top: 22px;
   left: -34vw;
   font-family: Righteous;
+  font-size: 2.5em;
+  color: white;
+  text-shadow: 3px 2px 12px rgba(0, 0, 0, 1);
+
+  &:hover {
+    color: #333;
+    text-decoration: none;
+  }
+`;
+
+const StyledLogin = styled.a`
+  position: relative;
+  top: 22px;
+  left: 34vw;
+  font-family: Righteous;
   color: white;
   font-size: x-large;
   text-shadow: 3px 2px 12px rgba(0, 0, 0, 1);
@@ -53,7 +71,7 @@ const StyledLogo = styled.a`
 const StyledContainer = styled.div`padding-top: 20vh;`;
 
 const StyledHeaderMain = styled.h1`
-  font-size: 48px;
+  font-size: 4em;
   display: inline-block;
   color: white;
   font-weight: 700;

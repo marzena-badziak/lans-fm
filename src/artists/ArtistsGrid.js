@@ -7,7 +7,6 @@ import propTypes from "prop-types";
 import CircularProgress from "material-ui/CircularProgress";
 
 class ArtistsGrid extends Component {
-
   fetchArtist = e => {
     this.props.dispatch(
       searchArtist({
@@ -19,7 +18,9 @@ class ArtistsGrid extends Component {
   componentDidMount() {
     this.fetchArtist();
   }
-
+  replaceDashWithSpace(str) {
+    return str.replace(/-/g, " ");
+  }
   render() {
     let grid = [];
     this.props.results.forEach(artist => {
@@ -31,11 +32,13 @@ class ArtistsGrid extends Component {
         />
       );
     });
+
     return (
       <div>
         <StyledMessage>
-          {this.props.message} {this.props.artistEntered}
+          {this.props.message}  {this.replaceDashWithSpace(this.props.artistEntered)}
         </StyledMessage>
+
         {this.props.message === "Searching: "
           ? <StyledCircularProgress color="#aa8899" />
           : false}
