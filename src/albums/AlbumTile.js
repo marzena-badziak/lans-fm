@@ -15,13 +15,20 @@ class AlbumTile extends Component {
       return "https://lastfm-img2.akamaized.net/i/u/174s/c6f59c1e5e7240a4c0d427abd71f3dbb.png";
     }
   };
+
   openAlbum = () => {
     return this.props.router.push(
-      `${this.props.params.artistName}/${this.props.params.artistChosen}/${this
-        .props.title}`
+      this.replaceSpacesWithDashes(this.props.params.artistName) +
+        "/" +
+        this.replaceSpacesWithDashes(this.props.params.artistChosen) +
+        "/" +
+        this.replaceSpacesWithDashes(this.props.title)
     );
   };
 
+  replaceSpacesWithDashes(str) {
+    return str.replace(/\s+/g, "-");
+  }
   scrobbleAlbum = e => {
     this.props.dispatch(
       fetchSongListAndScrobbleAlbum({
