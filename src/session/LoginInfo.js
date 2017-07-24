@@ -21,8 +21,7 @@ class LoginInfo extends Component {
           <input
             type="hidden"
             name="cb"
-            value={`http://localhost:3000/?currentUrl=${this.props
-              .currentPageParams}/login`}
+            value={`http://localhost:3000/login`}
           />
           <FlatButton
             type="submit"

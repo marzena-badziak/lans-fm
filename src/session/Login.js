@@ -22,7 +22,7 @@ class Login extends Component {
 
   render() {
     this.login();
-    this.props.router.push(this.getQueryVariable("currentUrl"));
+  //  this.props.router.push(this.getQueryVariable("currentUrl"));
     return <div />;
   }
 }
