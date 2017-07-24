@@ -29,7 +29,7 @@ class ArtistTile extends Component {
     e.preventDefault();
     this.props.dispatch(
       searchArtist({
-        artist: this.props.name
+        artist: this.props.params.artistName
       })
     );
   };
@@ -37,7 +37,8 @@ class ArtistTile extends Component {
     e.preventDefault();
     console.log(this.props.router);
     this.props.router.push(
-      this.replaceSpacesWithDashes(this.props.params.artistName) +
+      "/" +
+        this.replaceSpacesWithDashes(this.props.params.artistName) +
         "/" +
         this.replaceSpacesWithDashes(this.props.name)
     );

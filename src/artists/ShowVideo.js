@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 export class ShowVideo extends Component {
   render() {
-    var videoFound = "";
+    let videoFound = "";
     if (this.props.videoFound === false) {
       videoFound = false;
     } else {

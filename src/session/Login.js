@@ -4,12 +4,12 @@ import { withRouter } from "react-router";
 import { loginAction } from "./login-actions";
 
 class Login extends Component {
-  getQueryVariable = variable => {
-    var query = window.location.search.substring(1);
-    var vars = query.split("&");
-    for (var i = 0; i < vars.length; i++) {
-      var pair = vars[i].split("=");
-      if (pair[0] === variable) {
+  getQueryletiable = letiable => {
+    let query = window.location.search.substring(1);
+    let lets = query.split("&");
+    for (let i = 0; i < lets.length; i++) {
+      let pair = lets[i].split("=");
+      if (pair[0] === letiable) {
         return pair[1];
       }
     }
@@ -17,12 +17,12 @@ class Login extends Component {
   };
 
   login = () => {
-    this.props.dispatch(loginAction(this.getQueryVariable("token")));
+    this.props.dispatch(loginAction(this.getQueryletiable("token")));
   };
 
   render() {
     this.login();
-  //  this.props.router.push(this.getQueryVariable("currentUrl"));
+  //  this.props.router.push(this.getQueryletiable("currentUrl"));
     return <div />;
   }
 }

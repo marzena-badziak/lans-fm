@@ -1,27 +1,24 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Router, Route, IndexRoute, hashHistory } from "react-router";
 import { withRouter } from "react-router";
 
 class LoginSpotify extends Component {
   constructor(props) {
     super(props);
 
-    var url = window.location.href;
-    var spotifyParams = /#access_token=([^&]+)&token_type=([^&]+)&expires_in=([^&]+)&state=([^&]+)/g;
-    var match = spotifyParams.exec(url);
-    var token = match[1];
-    var expires = match[3];
-    var spotifyRandomState = match[4];
-    console.log(url);
-    console.log(spotifyRandomState);
-
-    console.log("got token: " + token + " " + expires);
+    let url = window.location.href;
+    let spotifyParams = /#access_token=([^&]+)&token_type=([^&]+)&expires_in=([^&]+)&state=([^&]+)/g;
+    let match = spotifyParams.exec(url);
+    let token = match[1];
+    let expires = match[3];
+    let spotifyRandomState = match[4];
 
     if (spotifyRandomState === this.props.session.spotifyStateString) {
       this.props.dispatch({
         type: "SPOTIFY_LOGIN",
         spotifyAccessToken: token,
-        spotifyExpiresIn: Date.now() + 1000 * parseInt(expires, 10)
+        spotifyExpiresIn: Date.now() + 1000 * parseInt(expires)
       });
     } else {
       console.log("error during login, invalid state");

@@ -15,7 +15,7 @@ export default class YouTubeLogic {
     axios
       .get(searchRequest)
       .then(response => {
-        var vId = response.data.items[0].id.videoId;
+        let vId = response.data.items[0].id.videoId;
         this.youTubeFlagsCallback(vId, true, true);
 
         axios
@@ -26,7 +26,7 @@ export default class YouTubeLogic {
               "&key=AIzaSyBdXp1WnmYGXXuDFybXxK_94awGD5Qm-Zw"
           )
           .then(resp => {
-            var duration = this.yTDurationToSeconds(
+            let duration = this.yTDurationToSeconds(
               resp.data.items[0].contentDetails.duration
             );
 
@@ -48,10 +48,10 @@ export default class YouTubeLogic {
       });
   };
   yTDurationToSeconds = duration => {
-    var match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-    var hours = parseInt(match[1], 10) || 0;
-    var minutes = parseInt(match[2], 10) || 0;
-    var seconds = parseInt(match[3], 10) || 0;
+    let match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+    let hours = parseInt(match[1]) || 0;
+    let minutes = parseInt(match[2]) || 0;
+    let seconds = parseInt(match[3]) || 0;
     return hours * 3600 + minutes * 60 + seconds;
   };
   scrobbleYouTubeVideo = (artist, title, timestamp, duration) => {
@@ -59,7 +59,7 @@ export default class YouTubeLogic {
       if (this.nowPlayingArtist !== artist || this.nowPlayingTitle !== title) {
         return;
       }
-      var sig = md5(
+      let sig = md5(
         "api_key" +
           lastfmKey.api_key +
           "artist" +

@@ -1,10 +1,10 @@
 export class StringUtils {
   static randomString = stringLength => {
-    var text = "";
-    var possible =
+    let text = "";
+    let possible =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    for (var i = 0; i < stringLength; i++)
+    for (let i = 0; i < stringLength; i++)
       text += possible.charAt(Math.floor(Math.random() * possible.length));
 
     return text;

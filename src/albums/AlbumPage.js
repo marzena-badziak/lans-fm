@@ -21,20 +21,16 @@ class AlbumPage extends Component {
   constructor(props) {
     super(props);
 
-    console.log("date now: " + Date.now());
-    console.log("expires: " + this.props.session.spotifyExpiresIn);
-    console.log("access token: " + this.props.session.spotifyAccessToken);
-    var displaySpotifyLogin =
+    let displaySpotifyLogin =
       this.props.session.spotifyAccessToken === "" ||
       (this.props.session.spotifyExpiresIn !== "" &&
         this.props.session.spotifyExpiresIn < Date.now())
         ? true
         : false;
-    console.log("display spotify: " + displaySpotifyLogin);
+
     this.state = {
       spotifyAlbumUrl: "",
       displaySpotifyLogin: displaySpotifyLogin,
-
       open: {},
       left: {},
       top: {}
@@ -46,9 +42,9 @@ class AlbumPage extends Component {
     );
 
     if (displaySpotifyLogin) {
-      var stateString = StringUtils.randomString(32);
+      let stateString = StringUtils.randomString(32);
       this.spotifyStateString = stateString;
-      var spotifyAuthorizationUrl = this.props.dispatch({
+      let spotifyAuthorizationUrl = this.props.dispatch({
         type: "SPOTIFY_GENERATE_STATE",
         spotifyStateString: stateString
       });
@@ -131,12 +127,12 @@ class AlbumPage extends Component {
   goBackToSearchResults = e => {
     e.preventDefault();
     console.log("back to search");
-    this.props.router.push(this.props.params.artistName);
+    this.props.router.push("/" + this.props.params.artistName);
   };
   goBackToArtistPage = e => {
     e.preventDefault();
     this.props.router.push(
-      `${this.props.params.artistName}/${this.props.params.artistChosen}`
+      `/${this.props.params.artistName}/${this.props.params.artistChosen}`
     );
   };
 

@@ -92,7 +92,7 @@ const generateTracksParamsList = (tracks, sk) => {
 const generateApiSig = (params) => {
   let apiSig = "";
   Object.keys(params).sort().forEach(function(key) {
-      var value = params[key];
+      let value = params[key];
       apiSig += key + value;
   });
   apiSig += lastfmKey.secret;
