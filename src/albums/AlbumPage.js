@@ -6,7 +6,6 @@ import Paper from "material-ui/Paper";
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
 import FlatButton from "material-ui/FlatButton";
-import FontAwesome from "react-fontawesome";
 import styled from "styled-components";
 import Divider from "material-ui/Divider";
 import moment from "moment";
@@ -236,6 +235,7 @@ class AlbumPage extends Component {
                     {this.state.spotifyAlbumUrl !== ""
                       ? <SpotifyIframe
                           spotifyAlbumUrl={this.state.spotifyAlbumUrl}
+                          title={this.state.spotifyAlbumUrl}
                         />
                       : null}
                   </div>

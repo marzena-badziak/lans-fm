@@ -143,36 +143,6 @@ const StyledArtistImage = styled(CardMedia)`
   }
 `;
 
-const StyledArtistName = styled.div`
-  overflow: visible;
-  height: 60px;
-  z-index: 4;
-
-  background: rgb(170, 136, 153);
-  background: -moz-linear-gradient(
-    45deg,
-    rgba(170, 136, 153, 1) 0%,
-    rgba(255, 224, 238, 1) 63%,
-    rgba(255, 224, 238, 1) 63%
-  );
-  background: -webkit-linear-gradient(
-    45deg,
-    rgba(170, 136, 153, 1) 0%,
-    rgba(255, 224, 238, 1) 63%,
-    rgba(255, 224, 238, 1) 63%
-  );
-  background: linear-gradient(
-    45deg,
-    rgba(170, 136, 153, 1) 0%,
-    rgba(255, 224, 238, 1) 63%,
-    rgba(255, 224, 238, 1) 63%
-  );
-  filter: progid:DXImageTransform.Microsoft.gradient(
-      startColorstr='#aa8899',
-      endColorstr='#ffe0ee',
-      GradientType=1
-    );
-`;
 const StyledYouTubeFontAwesome = styled(FontAwesome)`
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.75);
   color: #b31217;
