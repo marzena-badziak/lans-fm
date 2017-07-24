@@ -31,7 +31,6 @@ class SearchBar extends Component {
       "/" + this.replaceSpacesWithDashes(this.state.searchValue)
     );
   };
-
   replaceSpacesWithDashes(str) {
     return str.replace(/\s+/g, "-");
   }
