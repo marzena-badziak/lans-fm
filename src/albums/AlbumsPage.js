@@ -74,7 +74,7 @@ class AlbumsPage extends Component {
     e.preventDefault();
     console.log("back to search");
     this.props.router.push(
-      this.replaceSpacesWithDashes(this.props.params.artistName)
+      "/" + this.replaceSpacesWithDashes(this.props.params.artistName)
     );
   };
   fetchSimilarArtist = e => {
@@ -84,7 +84,7 @@ class AlbumsPage extends Component {
       })
     );
     this.props.router.push(
-      this.replaceSpacesWithDashes(this.props.params.artistChosen)
+      "/" + this.replaceSpacesWithDashes(this.props.params.artistChosen)
     );
   };
   render() {
