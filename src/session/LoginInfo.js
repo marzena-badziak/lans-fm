@@ -10,6 +10,7 @@ class LoginInfo extends Component {
   };
 
   loginInfo = () => {
+    console.log(this.props);
     if (this.props.session.sessionKey === "") {
       return (
         <form action="http://www.last.fm/api/auth ">
@@ -21,7 +22,8 @@ class LoginInfo extends Component {
           <input
             type="hidden"
             name="cb"
-            value={`http://localhost:3000/login`}
+            value={`http://localhost:3000/login?currentUrl=${this.props
+              .currentPageParams}`}
           />
           <FlatButton
             type="submit"
