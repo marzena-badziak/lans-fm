@@ -49,7 +49,7 @@ const NoVideoFoundMessage = styled.div`
 
 ShowVideo.propTypes = {
   videoId: propTypes.string.isRequired,
-  name: propTypes.string.isRequired
+  artist: propTypes.string.isRequired
 };
 
 export default ShowVideo;

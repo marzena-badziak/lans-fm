@@ -12,7 +12,7 @@ class Navbar extends Component {
     return (
       <StyledAppBar
         style={{ background: "none" }}
-        iconElementLeft={<StyledLogo href="#">LansFm</StyledLogo>}
+        iconElementLeft={<StyledLogo href="/">LansFm</StyledLogo>}
         title={
           <StyledSearchBar
             boxShadow=" 0px 0px 0px 0px rgba(0, 0, 0, 0)"
@@ -50,7 +50,6 @@ const StyledSearchBar = styled(SearchBar)`
 const StyledAppBar = styled(AppBar)`
   display: flex;
   align-items: center;
-  ${"" /* align-items: stretch; */}
   padding: 3px;
 
   /* Smartphones (portrait and landscape) ----------- */
@@ -62,7 +61,6 @@ const StyledAppBar = styled(AppBar)`
   @media only screen and (max-width : 320px) {
     padding: 2px;
   }
-
 `;
 
 const StyledLogo = styled.a`
@@ -71,7 +69,7 @@ const StyledLogo = styled.a`
   font-size: x-large;
   padding: 0;
   margin: -3px 0 15px 30px;
-  ${"" /* margin-left: 30px; */} &:hover {
+  &:hover {
     color: #e7f7ff;
     text-decoration: none;
   }

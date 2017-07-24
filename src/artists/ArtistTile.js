@@ -71,12 +71,11 @@ class ArtistTile extends Component {
           onClick={e => this.getAlbums(e)}
           overlay={<CardTitle title={this.props.name} />}
         >
-          <img
+          <StyledImage
             src={this.props.img}
             alt={this.props.alt}
             width="260px"
             height="260px"
-            style={{ position: "relative", cursor: "pointer" }}
           />
         </StyledArtistImage>
 
@@ -86,18 +85,7 @@ class ArtistTile extends Component {
           name="play"
           size="3x"
         />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "nowrap",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            padding: "3px",
-            position: "relative",
-            textAlign: "center"
-          }}
-        >
+        <StyledButtonContainer>
           <StyledRaisedButton
             backgroundColor="plum"
             label="Search similar"
@@ -111,7 +99,7 @@ class ArtistTile extends Component {
             labelColor="#ffffff"
             onClick={e => this.getAlbums(e)}
           />
-        </div>
+        </StyledButtonContainer>
         {this.state.playVideo
           ? <ShowVideo
               artist={this.props.name}
@@ -138,9 +126,16 @@ const StyledArtistTile = styled(Card)`
 
 const StyledArtistImage = styled(CardMedia)`
   transition: .2s all;
+  cursor: pointer;
+
   &:hover {
     -webkit-filter: brightness(50%);
   }
+`;
+
+const StyledImage = styled.img`
+  position: relative;
+  cursor: pointer;
 `;
 
 const StyledYouTubeFontAwesome = styled(FontAwesome)`
@@ -154,6 +149,17 @@ const StyledYouTubeFontAwesome = styled(FontAwesome)`
   &:hover {
     color: #e52d27;
   }
+`;
+
+const StyledButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 3px;
+  position: relative;
+  text-align: center;
 `;
 
 const StyledRaisedButton = styled(RaisedButton)`

@@ -57,7 +57,6 @@ export default class YouTubeLogic {
   scrobbleYouTubeVideo = (artist, title, timestamp, duration) => {
     setTimeout(() => {
       if (this.nowPlayingArtist !== artist || this.nowPlayingTitle !== title) {
-        console.log("track won't be scrobbled");
         return;
       }
       var sig = md5(
@@ -90,11 +89,9 @@ export default class YouTubeLogic {
             lastfmKey.api_key
         )
         .then(response => {
-          console.log(response);
+          alert("Track scrobbled");
         })
-        .catch(err => {
-          console.log(err);
-        });
-    }, duration * 1000 / 3);
+        .catch(err => {});
+    }, duration * 1000 / 10);
   };
 }

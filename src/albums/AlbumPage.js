@@ -190,23 +190,14 @@ class AlbumPage extends Component {
           className="container"
           style={{
             display: "flex",
-            // flexDirection: "column",
             justifyContent: "center"
-            // flexWrap: "nowrap"
           }}
         >
           <Paper
             style={{ width: "80vw", marginTop: "40px", paddingTop: "10px" }}
           >
             {this.props.album.message === "GOT_ALBUMS"
-              ? <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    flexWrap: "wrap",
-                    justifyContent: "space-between"
-                  }}
-                >
+              ? <StyledTopContainer>
                   <div>
                     <Avatar
                       src={this.props.album.album.image[2]["#text"]}
@@ -217,10 +208,9 @@ class AlbumPage extends Component {
                     </h2>
                     <div>
                       {this.state.displaySpotifyLogin
-                        ? <FlatButton
-                            label="Login to Spotify"
+                        ? <StyledFlatButton
+                            label="Quick listen on Spotify"
                             onClick={e => this.setSpotifyId(e)}
-                            style={{ margin: "15px" }}
                             backgroundColor="darkgrey"
                             hoverColor="grey"
                             href={
@@ -239,7 +229,7 @@ class AlbumPage extends Component {
                         />
                       : null}
                   </div>
-                </div>
+                </StyledTopContainer>
               : false}
             <List>
               {this.showTracks()}
@@ -250,6 +240,17 @@ class AlbumPage extends Component {
     );
   }
 }
+
+const StyledTopContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
+const StyledFlatButton = styled(FlatButton)`
+  margin: 5px;
+`;
 
 const mapStateToProps = state => {
   return {
