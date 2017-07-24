@@ -230,6 +230,7 @@ class AlbumPage extends Component {
                     {this.state.spotifyAlbumUrl !== ""
                       ? <SpotifyIframe
                           spotifyAlbumUrl={this.state.spotifyAlbumUrl}
+                          title={this.state.spotifyAlbumUrl}
                         />
                       : null}
                   </div>

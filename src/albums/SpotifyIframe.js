@@ -9,6 +9,7 @@ export class SpotifyIframe extends Component {
         height="300"
         frameBorder="0"
         allowTransparency="true"
+        title={this.props.title}
       />
     );
   }
