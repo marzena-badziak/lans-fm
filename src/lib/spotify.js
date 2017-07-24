@@ -7,7 +7,7 @@ export class SpotifyLogic {
   }
 
   getSpotifyAlbumId = (albumName, artistChosen) => {
-    var headers = {
+    let headers = {
       headers: {
         Accept: "application/json",
         Authorization: "Bearer " + this.spotifyAccessToken
@@ -26,7 +26,7 @@ export class SpotifyLogic {
       .then(response => {
         console.log(response);
         console.log(response.data.albums.items[0].uri);
-        var url =
+        let url =
           "https://open.spotify.com/embed?uri=" +
           response.data.albums.items[0].uri;
 

@@ -1,13 +1,27 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import { searchArtist } from "../artists/search-actions.js";
 import ArtistTile from "./ArtistTile.js";
 import propTypes from "prop-types";
 import CircularProgress from "material-ui/CircularProgress";
 
 class ArtistsGrid extends Component {
+
+  fetchArtist = e => {
+    this.props.dispatch(
+      searchArtist({
+        artist: this.props.params.artistName
+      })
+    );
+  };
+
+  componentDidMount() {
+    this.fetchArtist();
+  }
+
   render() {
-    var grid = [];
+    let grid = [];
     this.props.results.forEach(artist => {
       grid.push(
         <ArtistTile

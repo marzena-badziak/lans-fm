@@ -12,7 +12,7 @@ class Navbar extends Component {
     return (
       <StyledAppBar
         style={{ background: "none" }}
-        iconElementLeft={<StyledLogo href="#">LansFm</StyledLogo>}
+        iconElementLeft={<StyledLogo href="/">LansFm</StyledLogo>}
         title={
           <StyledSearchBar
             boxShadow=" 0px 0px 0px 0px rgba(0, 0, 0, 0)"

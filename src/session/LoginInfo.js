@@ -25,7 +25,7 @@ class LoginInfo extends Component {
           />
           <FlatButton
             type="submit"
-            label="Login"
+            label="Login to last.fm"
             labelStyle={{
               color: "white",
               fontWeight: "700",
@@ -37,7 +37,7 @@ class LoginInfo extends Component {
     } else {
       return (
         <FlatButton
-          label="Logout"
+          label="Logout from last.fm"
           labelStyle={{
             color: "white",
             fontWeight: "700",

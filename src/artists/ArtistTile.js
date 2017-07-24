@@ -29,7 +29,7 @@ class ArtistTile extends Component {
     e.preventDefault();
     this.props.dispatch(
       searchArtist({
-        artist: this.props.name
+        artist: this.props.params.artistName
       })
     );
   };
