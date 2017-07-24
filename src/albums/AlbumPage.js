@@ -16,6 +16,7 @@ import axios from "axios";
 import Track from "./Track";
 import { StringUtils } from "../lib/utils";
 import { SpotifyLogic } from "../lib/spotify";
+import Naviagion from "../user-interface/Navigation";
 
 class AlbumPage extends Component {
   constructor(props) {
@@ -124,64 +125,14 @@ class AlbumPage extends Component {
       return <CircularProgress />;
     }
   }
-  goBackToSearchResults = e => {
-    e.preventDefault();
-    console.log("back to search");
-    this.props.router.push("/" + this.props.params.artistName);
-  };
-  goBackToArtistPage = e => {
-    e.preventDefault();
-    this.props.router.push(
-      `/${this.props.params.artistName}/${this.props.params.artistChosen}`
-    );
-  };
 
   render() {
     return (
       <div>
-        <div
-          style={{
-            position: "absolute",
-            left: "0",
-            display: "block",
-            margin: "10px"
-          }}
-        >
-          <ul
-            style={{
-              display: "inline-block",
-              listStyleType: "none",
-              margin: "2px",
-              padding: "0",
-              color: "#aa8899",
-              fontWeight: "bold"
-            }}
-          >
-            <li
-              style={{
-                display: "inline",
-                margin: "0 auto",
-                marginTop: "10px",
-                cursor: "pointer"
-              }}
-              onClick={this.goBackToSearchResults}
-            >
-              {" "}/ Search results:{" "}
-              {this.replaceDashWithSpace(this.props.params.artistName)}{" "}
-            </li>
-            <li
-              style={{
-                display: "inline",
-                margin: "0 auto",
-                marginTop: "10px",
-                cursor: "pointer"
-              }}
-              onClick={this.goBackToArtistPage}
-            >
-              / {this.replaceDashWithSpace(this.props.params.artistChosen)}
-            </li>
-          </ul>
-        </div>
+        <Naviagion
+          artistName={this.props.params.artistName}
+          artistChosen={this.props.params.artistChosen}
+        />
         <div
           className="container"
           style={{
