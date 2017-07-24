@@ -14,6 +14,7 @@ class SearchBar extends Component {
       searchValue: ""
     };
   }
+
   setSearchValue = e => {
     this.setState({
       searchValue: e.target.value
@@ -27,14 +28,9 @@ class SearchBar extends Component {
         artist: this.state.searchValue
       })
     );
-    this.props.router.push(
-      this.replaceSpacesWithDashes(this.state.searchValue)
-    );
+    this.props.router.push(this.state.searchValue);
   };
 
-  replaceSpacesWithDashes(str) {
-    return str.replace(/\s+/g, "-");
-  }
   render() {
     return (
       <form onSubmit={e => this.fetchArtist(e)}>
@@ -73,7 +69,7 @@ const StyledSearchSpan = styled.div`
   display: flex;
   height: inherit;
   align-items: center;
-  padding: 0 15px;
+  padding: 0 25px;
   border-radius: 0px 10px 10px 0px;
   border: 1px solid #000000;
   background-color: #dd8899;
