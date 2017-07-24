@@ -127,12 +127,12 @@ class AlbumPage extends Component {
   goBackToSearchResults = e => {
     e.preventDefault();
     console.log("back to search");
-    this.props.router.push(this.props.params.artistName);
+    this.props.router.push("/" + this.props.params.artistName);
   };
   goBackToArtistPage = e => {
     e.preventDefault();
     this.props.router.push(
-      `${this.props.params.artistName}/${this.props.params.artistChosen}`
+      `/${this.props.params.artistName}/${this.props.params.artistChosen}`
     );
   };
 

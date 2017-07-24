@@ -18,7 +18,8 @@ class AlbumTile extends Component {
 
   openAlbum = () => {
     return this.props.router.push(
-      this.replaceSpacesWithDashes(this.props.params.artistName) +
+      "/" +
+        this.replaceSpacesWithDashes(this.props.params.artistName) +
         "/" +
         this.replaceSpacesWithDashes(this.props.params.artistChosen) +
         "/" +
