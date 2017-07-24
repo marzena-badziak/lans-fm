@@ -1,6 +1,7 @@
 import axios from "axios";
+// import { connect } from "react-redux";
 
-export class SpotifyLogic {
+class SpotifyLogic {
   constructor(spotifyAccessToken, setSpotifyAlbumUrlCallback) {
     this.setSpotifyAlbumUrlCallback = setSpotifyAlbumUrlCallback;
     this.spotifyAccessToken = spotifyAccessToken;
@@ -35,3 +36,4 @@ export class SpotifyLogic {
       });
   };
 }
+export default SpotifyLogic;

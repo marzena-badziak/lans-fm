@@ -15,7 +15,7 @@ import { SpotifyIframe } from "./SpotifyIframe";
 import axios from "axios";
 import Track from "./Track";
 import { StringUtils } from "../lib/utils";
-import { SpotifyLogic } from "../lib/spotify";
+import SpotifyLogic from "../lib/spotify";
 import Naviagion from "../user-interface/Navigation";
 
 class AlbumPage extends Component {
@@ -59,7 +59,13 @@ class AlbumPage extends Component {
   }
   setSpotifyAlbumUrl = url => {
     this.setState({ spotifyAlbumUrl: url });
-    console.log(this.state.spotifyAlbumUrl);
+  };
+
+  saveCurrentPath = e => {
+    this.props.dispatch({
+      type: "SAVE_CURRENT_PATH",
+      currentPath: this.props.location.pathname
+    });
   };
 
   openMenu = (i, left, top) => {
@@ -157,7 +163,7 @@ class AlbumPage extends Component {
                       {this.state.displaySpotifyLogin
                         ? <StyledFlatButton
                             label="Quick listen on Spotify"
-                            onClick={e => this.setSpotifyId(e)}
+                            onClick={e => this.saveCurrentPath(e)}
                             backgroundColor="darkgrey"
                             hoverColor="grey"
                             href={
