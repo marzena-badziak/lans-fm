@@ -5,7 +5,7 @@ import Divider from "material-ui/Divider";
 import moment from "moment";
 import { connect } from "react-redux";
 import { List, ListItem } from "material-ui/List";
-import {scrobbleSingleTrack} from "./scrobble-album.js";
+import { scrobbleSingleTrack } from "./scrobble-album.js";
 
 class Track extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class Track extends Component {
   };
 
   scrobbleTrack = e => {
-      scrobbleSingleTrack({
+     scrobbleSingleTrack({
         session: this.props.session,
         track: this.props.track
       })
@@ -103,20 +103,20 @@ class Track extends Component {
           </DropDownHeader>
           <Divider />
           <StyledDropDownItem onClick={() => this.scrobbleTrack()}>
-              {" "}<FontAwesome
-                className="fa fa-lastfm"
-                name="options"
-                size="lg"
-                aria-hidden="true"
-              />
-              {"  "}
-              Scrobble
+            {" "}<FontAwesome
+              className="fa fa-lastfm"
+              name="options"
+              size="lg"
+              aria-hidden="true"
+            />
+            {"  "}
+            Scrobble
           </StyledDropDownItem>
           <Divider />
           <StyledDropDownItem>
             <a
               href={`https://www.youtube.com/results?search_query=${this.props
-                .track.name}`}
+                .artist}+${this.props.track.name}`}
               target="blank"
             >
               {" "}<FontAwesome
@@ -132,8 +132,8 @@ class Track extends Component {
           <Divider />
           <StyledDropDownItem>
             <a
-              href={`https://open.spotify.com/search/results/${this.props.track
-                .name}`}
+              href={`https://open.spotify.com/search/results/${this.props
+                .artist} ${this.props.track.name}`}
               target="blank"
             >
               {" "}<FontAwesome
