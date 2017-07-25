@@ -132,7 +132,7 @@ class ArtistTile extends Component {
           />
           <StyledRaisedButton
             label="Albums"
-            backgroundColor="hotpink"
+            backgroundColor="#7a3e5e"
             labelColor="#ffffff"
             onClick={e => this.getAlbums(e)}
           />

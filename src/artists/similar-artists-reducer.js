@@ -17,7 +17,7 @@ const similarArtists = (
     case "SEARCH_ARTIST_SUCCESS":
       return {
         ...state,
-        message: "Search results for: ",
+        message: "Artists similar to ",
         artistsSimilar: action.artistsSimilar
       };
     case "SEARCH_ARTIST_FAIL":
