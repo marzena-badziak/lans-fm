@@ -22,7 +22,8 @@ class ArtistTile extends Component {
       playVideo: false,
       videoId: "",
       videoFound: true,
-      opacity: 0
+      opacity: 0,
+      showYouTubeIcon: false
     };
   }
 
@@ -58,11 +59,16 @@ class ArtistTile extends Component {
     this.youTubeLogic.getYoutubeVideoId(searchRequest);
   };
 
-  // showYouTubeIcon = e => {
-  //   e.preventDefault();
-  //
-  //
-  // }
+  showYouTubeIcon = e => {
+    e.preventDefault();
+    console.log("mouse over");
+    this.setState({ showYouTubeIcon: true });
+  };
+  hideYouTubeIcon = e => {
+    e.preventDefault();
+    console.log("mouse outside");
+    this.setState({ showYouTubeIcon: false });
+  };
 
   setOpacity(val) {
     this.setState({ opacity: val });
@@ -70,8 +76,11 @@ class ArtistTile extends Component {
 
   render() {
     return (
-      <StyledArtistTile name={this.props.name}>
-        // onMouseOver={e => this.showYouTubeIcon(e)}
+      <StyledArtistTile
+        name={this.props.name}
+        onMouseEnter={e => this.showYouTubeIcon(e)}
+        onMouseLeave={e => this.hideYouTubeIcon(e)}
+      >
         <StyledArtistImage
           onClick={e => this.getAlbums(e)}
           onMouseLeave={() => this.setOpacity(0)}
@@ -90,12 +99,14 @@ class ArtistTile extends Component {
             <TextOnOverlay>Show Artist</TextOnOverlay>
           </Overlay>
         </StyledArtistImage>
-        <StyledYouTubeFontAwesome
-          onClick={e => this.playVideo()}
-          className="fa fa-youtube-play"
-          name="play"
-          size="3x"
-        />
+        {this.state.showYouTubeIcon
+          ? <StyledYouTubeFontAwesome
+              onClick={e => this.playVideo()}
+              className="fa fa-youtube-play"
+              name="play"
+              size="3x"
+            />
+          : null}
         <div
           style={{
             display: "flex",
