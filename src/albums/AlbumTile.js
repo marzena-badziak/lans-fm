@@ -8,6 +8,12 @@ import { withRouter } from "react-router";
 import { fetchSongListAndScrobbleAlbum } from "./scrobble-album";
 
 class AlbumTile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      opacity: 0
+    };
+  }
   setImage = () => {
     if (this.props.image) {
       return this.props.image;
@@ -39,17 +45,25 @@ class AlbumTile extends Component {
       })
     );
   };
+  setOpacity(val) {
+    this.setState({ opacity: val });
+  }
 
   render() {
     return (
       <StyledAlbumCard>
         <AlbumImage
           onClick={() => this.openAlbum()}
+          onMouseLeave={() => this.setOpacity(0)}
+          onMouseEnter={() => this.setOpacity(1)}
           overlay={
             <CardTitle title={this.props.title} subtitle={this.props.artist} />
           }
         >
           <img src={this.setImage()} alt={`${this.props.title} cover`} />
+          <Overlay style={{ opacity: this.state.opacity }}>
+            <TextOnOverlay>Show Album</TextOnOverlay>
+          </Overlay>
         </AlbumImage>
         <CardActions>
           <FlatButton
@@ -78,6 +92,26 @@ margin 0 auto;
 margin-top: 30px;
 
 `;
+
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+`;
+const TextOnOverlay = styled.div`
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+`;
+
 const AlbumImage = styled(CardMedia)`
 
 transition: .2s all;

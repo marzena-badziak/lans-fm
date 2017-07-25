@@ -13,7 +13,7 @@ class Track extends Component {
 
     this.state = {
       open: "none",
-      scrobble: 0
+      isScrobbled: false
     };
   }
 
@@ -22,33 +22,41 @@ class Track extends Component {
   };
 
   scrobbleTrack = e => {
-     scrobbleSingleTrack({
-        session: this.props.session,
-        track: this.props.track
-      })
-      this.setState ({
-        scrobble: 1
-      })
+    console.log("a");
+    scrobbleSingleTrack({
+      session: this.props.session,
+      track: this.props.track
+    });
+    this.setState({
+      isScrobble: true
+    });
   };
 
   scrobbleInfo = () => {
-    if(this.state.scrobble === 0) {
+    if (!this.state.isScrobbled) {
       console.log("Hello");
       return "";
     } else {
       return (
         <div className="alert alert-success alert-dismissible" role="alert">
-          Scrobbled<button type="button" className="close" dataDismiss="alert" ariaLabel="Close"><span ariaHidden="true">&times;</span></button>
+          Scrobbled
+          <button
+            type="button"
+            className="close"
+            dataDismiss="alert"
+            ariaLabel="Close"
+          >
+            <span ariaHidden="true">&times;</span>
+          </button>
         </div>
-      )
+      );
     }
-  }
-
+  };
 
   render() {
     return (
       <div key={this.props.i}>
-      {this.scrobbleInfo()}
+        {this.scrobbleInfo()}
         <ListItem
           primaryText={`${this.props.i + 1}. ${this.props.track.name}`}
           onClick={e => this.changeDropdownState(e)}
