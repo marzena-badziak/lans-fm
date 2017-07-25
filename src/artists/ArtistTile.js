@@ -25,8 +25,6 @@ class ArtistTile extends Component {
     };
   }
 
-
-
   fetchArtist = e => {
     e.preventDefault();
     this.props.dispatch(
@@ -58,11 +56,17 @@ class ArtistTile extends Component {
     this.youTubeLogic.getYoutubeVideoId(searchRequest);
   };
 
+  // showYouTubeIcon = e => {
+  //   e.preventDefault();
+  //
+  //
+  // }
+
   render() {
     return (
       <StyledArtistTile
         name={this.props.name}
-        // onClick={e => this.getAlbums(e)}
+        // onMouseOver={e => this.showYouTubeIcon(e)}
       >
         <StyledArtistImage
           onClick={e => this.getAlbums(e)}

@@ -48,7 +48,11 @@ class SearchBar extends Component {
             placeholder="Your favourite artist"
           />
           <StyledSearchSpan onClick={e => this.fetchArtist(e)}>
-            <StyledFontAwesome className="fa fa-search" name="search" />
+            <StyledFontAwesome
+              className="fa fa-search"
+              name="search"
+              aria-label="Search"
+            />
           </StyledSearchSpan>
         </StyledSearchBar>
       </form>
