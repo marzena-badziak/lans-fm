@@ -25,13 +25,11 @@ class ArtistTile extends Component {
     };
   }
 
-
-
   fetchArtist = e => {
     e.preventDefault();
     this.props.dispatch(
       searchArtist({
-        artist: this.props.params.artistName
+        artist: this.props.name
       })
     );
   };
@@ -62,7 +60,6 @@ class ArtistTile extends Component {
     return (
       <StyledArtistTile
         name={this.props.name}
-        // onClick={e => this.getAlbums(e)}
       >
         <StyledArtistImage
           onClick={e => this.getAlbums(e)}

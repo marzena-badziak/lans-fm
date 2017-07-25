@@ -31,6 +31,10 @@ class AlbumTile extends Component {
     return str.replace(/\s+/g, "-");
   }
   scrobbleAlbum = e => {
+    if(this.props.session.sessionKey === ""){
+      alert("You are not logged on last.fm, please login and try again.");
+      return;
+    }
     this.props.dispatch(
       fetchSongListAndScrobbleAlbum({
         artist: this.props.artist,
