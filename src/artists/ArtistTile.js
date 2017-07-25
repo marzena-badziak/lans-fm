@@ -36,11 +36,15 @@ class ArtistTile extends Component {
     );
     this.props.router.push(this.props.name);
   };
-
+  replaceSpacesWithDashes(str) {
+    return str.replace(/\s+/g, "-");
+  }
   getAlbums = e => {
     e.preventDefault();
     this.props.router.push(
-      `${this.props.params.artistName}/${this.props.name}`
+      this.props.params.artistName +
+        "/" +
+        this.replaceSpacesWithDashes(this.props.name)
     );
   };
 
