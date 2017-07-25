@@ -6,6 +6,7 @@ import moment from "moment";
 import { connect } from "react-redux";
 import { List, ListItem } from "material-ui/List";
 import { scrobbleSingleTrack } from "./scrobble-album.js";
+import PropTypes from "prop-types";
 
 class Track extends Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class Track extends Component {
 
     this.state = {
       open: "none",
-      scrobble: 0
+      isScrobbled: false
     };
   }
 
@@ -22,33 +23,42 @@ class Track extends Component {
   };
 
   scrobbleTrack = e => {
-     scrobbleSingleTrack({
-        session: this.props.session,
-        track: this.props.track
-      })
-      this.setState ({
-        scrobble: 1
-      })
+    if(this.props.session.sessionKey === ""){
+      alert("You are not logged on last.fm, please login and try again.");
+    }
+    scrobbleSingleTrack({
+      session: this.props.session,
+      track: this.props.track
+    })
+    this.setState ({
+      isScrobbled: true
+    })
+    this.props.openMenu(this.props.i, 0, 0);
   };
 
+  closeScrobbleInfo = e => {
+    this.setState ({
+      isScrobbled: false
+    })
+  }
+
   scrobbleInfo = () => {
-    if(this.state.scrobble === 0) {
-      console.log("Hello");
+    if(this.state.isScrobbled === false) {
       return "";
     } else {
       return (
-        <div className="alert alert-success alert-dismissible" role="alert">
-          Scrobbled<button type="button" className="close" dataDismiss="alert" ariaLabel="Close"><span ariaHidden="true">&times;</span></button>
+        <div className="alert alert-success" role="alert">
+          Scrobbled
+          <button type="button" className="close" ariaLabel="Close" onClick={this.closeScrobbleInfo}><span ariaHidden="true">&times;</span></button>
         </div>
-      )
+      );
     }
   }
-
 
   render() {
     return (
       <div key={this.props.i}>
-      {this.scrobbleInfo()}
+        {this.scrobbleInfo()}
         <ListItem
           primaryText={`${this.props.i + 1}. ${this.props.track.name}`}
           onClick={e => this.changeDropdownState(e)}
@@ -178,4 +188,11 @@ const mapStateToProps = state => {
     session: state.session
   };
 };
+Track.propTypes = {
+  track: PropTypes.object.isRequired,
+  i: PropTypes.number.isRequired,
+  left: PropTypes.number,
+  top: PropTypes.number
+};
+
 export default connect(mapStateToProps)(Track);

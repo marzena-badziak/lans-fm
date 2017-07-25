@@ -125,7 +125,9 @@ class AlbumPage extends Component {
           );
         });
       } else {
-        return <div>Sorry tracks are not available for this album</div>;
+        return (
+          <div>Sorry tracks no tracks in last-fm database for this album</div>
+        );
       }
     } else {
       return <CircularProgress color="#aa8899" />;
@@ -177,7 +179,9 @@ class AlbumPage extends Component {
                             this.spotifyStateString
                           }
                         />
-                      : null}
+                      : <SpotifyAlert>
+                          This album is not available on spotify
+                        </SpotifyAlert>}
                   </div>
                   {this.state.spotifyAlbumUrl !== ""
                     ? <div
@@ -216,7 +220,11 @@ const StyledTopContainer = styled.div`
 const StyledFlatButton = styled(FlatButton)`
   margin: 5px;
 `;
-
+const SpotifyAlert = styled.div`
+  margin-right: 50px;
+  margin-top: 20px;
+`;
+const LastFMAlert = styled.div`padding: 35px;`;
 const mapStateToProps = state => {
   return {
     album: state.album,

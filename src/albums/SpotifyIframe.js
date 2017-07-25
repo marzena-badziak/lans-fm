@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import PropTypes from "prop-types";
 export class SpotifyIframe extends Component {
   render() {
     return (
@@ -14,3 +14,7 @@ export class SpotifyIframe extends Component {
     );
   }
 }
+SpotifyIframe.propTypes = {
+  title: PropTypes.string,
+  spotifyAlbumUrl: PropTypes.string
+};
