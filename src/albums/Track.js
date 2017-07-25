@@ -6,6 +6,7 @@ import moment from "moment";
 import { connect } from "react-redux";
 import { List, ListItem } from "material-ui/List";
 import { scrobbleSingleTrack } from "./scrobble-album.js";
+import PropTypes from "prop-types";
 
 class Track extends Component {
   constructor(props) {
@@ -187,4 +188,11 @@ const mapStateToProps = state => {
     session: state.session
   };
 };
+Track.propTypes = {
+  track: PropTypes.object.isRequired,
+  i: PropTypes.number.isRequired,
+  left: PropTypes.number,
+  top: PropTypes.number
+};
+
 export default connect(mapStateToProps)(Track);
