@@ -13,7 +13,7 @@ class Track extends Component {
 
     this.state = {
       open: "none",
-      scrobble: 0
+      isScrobbled: false
     };
   }
 
@@ -31,19 +31,19 @@ class Track extends Component {
       track: this.props.track
     })
     this.setState ({
-      scrobble: 1
+      isScrobbled: true
     })
     this.props.openMenu(this.props.i, 0, 0);
   };
 
   closeScrobbleInfo = e => {
     this.setState ({
-      scrobble: 0
+      isScrobbled: false
     })
   }
 
   scrobbleInfo = () => {
-    if(this.state.scrobble === 0) {
+    if(this.state.isScrobbled === false) {
       return "";
     } else {
       return (
@@ -51,14 +51,14 @@ class Track extends Component {
           Scrobbled
           <button type="button" className="close" ariaLabel="Close" onClick={this.closeScrobbleInfo}><span ariaHidden="true">&times;</span></button>
         </div>
-      )
+      );
     }
   }
 
   render() {
     return (
       <div key={this.props.i}>
-      {this.scrobbleInfo()}
+        {this.scrobbleInfo()}
         <ListItem
           primaryText={`${this.props.i + 1}. ${this.props.track.name}`}
           onClick={e => this.changeDropdownState(e)}

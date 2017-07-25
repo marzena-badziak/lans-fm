@@ -21,11 +21,11 @@ class LoginSpotify extends Component {
         spotifyExpiresIn: Date.now() + 1000 * parseInt(expires)
       });
     } else {
-      console.log("error during login, invalid state");
     }
-
-    this.props.router.push("/");
   }
+  componentDidMount = () => {
+    this.props.router.push(`${this.props.session.currentPath}`);
+  };
   render() {
     return null;
   }

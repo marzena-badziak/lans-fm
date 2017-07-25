@@ -21,7 +21,8 @@ class ArtistTile extends Component {
     this.state = {
       playVideo: false,
       videoId: "",
-      videoFound: true
+      videoFound: true,
+      opacity: 0
     };
   }
 
@@ -32,6 +33,7 @@ class ArtistTile extends Component {
         artist: this.props.name
       })
     );
+    this.props.router.push(this.props.name);
   };
 
   getAlbums = e => {
@@ -56,13 +58,17 @@ class ArtistTile extends Component {
     this.youTubeLogic.getYoutubeVideoId(searchRequest);
   };
 
+  setOpacity(val) {
+    this.setState({ opacity: val });
+  }
+
   render() {
     return (
-      <StyledArtistTile
-        name={this.props.name}
-      >
+      <StyledArtistTile name={this.props.name}>
         <StyledArtistImage
           onClick={e => this.getAlbums(e)}
+          onMouseLeave={() => this.setOpacity(0)}
+          onMouseEnter={() => this.setOpacity(1)}
           overlay={<CardTitle title={this.props.name} />}
         >
           <img
@@ -72,6 +78,10 @@ class ArtistTile extends Component {
             height="260px"
             style={{ position: "relative", cursor: "pointer" }}
           />
+
+          <Overlay style={{ opacity: this.state.opacity }}>
+            <TextOnOverlay>Show Artist</TextOnOverlay>
+          </Overlay>
         </StyledArtistImage>
 
         <StyledYouTubeFontAwesome
@@ -117,8 +127,27 @@ class ArtistTile extends Component {
     );
   }
 }
-const StyledArtistTile = styled(Card)`
 
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+`;
+const TextOnOverlay = styled.div`
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+`;
+
+const StyledArtistTile = styled(Card)`
   overflow: hidden;
   position: relative;
   display: inline-block;
@@ -141,7 +170,6 @@ const StyledArtistName = styled.div`
   overflow: visible;
   height: 60px;
   z-index: 4;
-
   background: rgb(170, 136, 153);
   background: -moz-linear-gradient(
     45deg,
@@ -183,7 +211,6 @@ const StyledYouTubeFontAwesome = styled(FontAwesome)`
 const StyledRaisedButton = styled(RaisedButton)`
   margin: 3px;
 `;
-
 ArtistTile.propTypes = {
   name: propTypes.string.isRequired,
   img: propTypes.string.isRequired
