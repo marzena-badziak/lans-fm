@@ -39,7 +39,6 @@ class AlbumTile extends Component {
   scrobbleAlbum = e => {
     if(this.props.session.sessionKey === ""){
       alert("You are not logged on last.fm, please login and try again.");
-      return;
     }
     this.props.dispatch(
       fetchSongListAndScrobbleAlbum({
