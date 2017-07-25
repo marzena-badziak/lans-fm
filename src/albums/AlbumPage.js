@@ -130,7 +130,15 @@ class AlbumPage extends Component {
         );
       }
     } else {
-      return <CircularProgress />;
+      if (this.props.album.message === "no_album") {
+        return (
+          <AlbumNotFundAlert>
+            Album not found in last-fm database
+          </AlbumNotFundAlert>
+        );
+      } else {
+        return <CircularProgress />;
+      }
     }
   }
 
@@ -212,6 +220,7 @@ const SpotifyAlert = styled.div`
   margin-right: 50px;
   margin-top: 20px;
 `;
+const AlbumNotFundAlert = styled.div`padding: 35px;`;
 const LastFMAlert = styled.div`padding: 35px;`;
 const mapStateToProps = state => {
   return {

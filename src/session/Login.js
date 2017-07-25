@@ -23,7 +23,6 @@ class Login extends Component {
   render() {
     this.login();
     const redirect_url = this.getQueryletiable("currentUrl");
-    console.log();
     if (redirect_url !== "undefined") {
       this.props.router.push(redirect_url);
     } else {

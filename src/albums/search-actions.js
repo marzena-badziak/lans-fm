@@ -15,6 +15,7 @@ export const getAlbums = data => {
     axios
       .get(`${lastfmRequestURLMaker(getAlbumOptions)}`)
       .then(function(response) {
+        console.log(response);
         if (response.data.topalbums) {
           dispatch({
             type: "SEARCH_ALBUMS",
@@ -46,10 +47,16 @@ export const getAlbumInfo = data => {
     axios
       .get(`${lastfmRequestURLMaker(getAlbumOptions)}`)
       .then(function(response) {
-        dispatch({
-          type: "GET_ALBUM_INFO",
-          payload: response.data.album
-        });
+        if (!response.data.error) {
+          dispatch({
+            type: "GET_ALBUM_INFO",
+            payload: response.data.album
+          });
+        } else {
+          dispatch({
+            type: "NO_ALBUM_INFO"
+          });
+        }
       })
       .catch(function(error) {
         console.log(error);
