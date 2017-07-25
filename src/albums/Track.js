@@ -25,6 +25,7 @@ class Track extends Component {
   scrobbleTrack = e => {
     if(this.props.session.sessionKey === ""){
       alert("You are not logged on last.fm, please login and try again.");
+      return;
     }
     scrobbleSingleTrack({
       session: this.props.session,
