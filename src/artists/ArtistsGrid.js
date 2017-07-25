@@ -36,7 +36,8 @@ class ArtistsGrid extends Component {
     return (
       <div>
         <StyledMessage>
-          {this.props.message}  {this.replaceDashWithSpace(this.props.artistEntered)}
+          {this.props.message}{" "}
+          {this.replaceDashWithSpace(this.props.artistEntered)}
         </StyledMessage>
 
         {this.props.message === "Searching: "
@@ -80,6 +81,7 @@ const mapStateToProps = state => {
 };
 ArtistsGrid.propTypes = {
   results: propTypes.array,
-  artistEntered: propTypes.string
+  artistEntered: propTypes.string,
+  message: propTypes.string
 };
 export default connect(mapStateToProps)(ArtistsGrid);

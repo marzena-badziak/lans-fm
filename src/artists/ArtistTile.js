@@ -213,7 +213,8 @@ const StyledRaisedButton = styled(RaisedButton)`
 `;
 ArtistTile.propTypes = {
   name: propTypes.string.isRequired,
-  img: propTypes.string.isRequired
+  img: propTypes.string.isRequired,
+  alt: propTypes.string
 };
 
 const mapStateToProps = state => {

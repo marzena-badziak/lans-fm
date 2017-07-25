@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
+import PropTypes from "prop-types";
 
 class Navigation extends Component {
   goBackToSearchResults = e => {
@@ -88,5 +89,9 @@ class Navigation extends Component {
     );
   }
 }
+Navigation.propTypes = {
+  artistChosen: PropTypes.string,
+  artistName: PropTypes.string.isRequired
+};
 
 export default withRouter(Navigation);
