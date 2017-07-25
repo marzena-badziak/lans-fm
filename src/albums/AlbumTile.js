@@ -21,7 +21,8 @@ class AlbumTile extends Component {
       playVideo: false,
       videoId: "",
       videoFound: true,
-      opacity: 0
+      opacity: 0,
+      showYouTubeIcon: false
     };
   }
 
@@ -70,6 +71,16 @@ class AlbumTile extends Component {
       playVideo: playFlag
     });
   };
+  showYouTubeIcon = e => {
+    e.preventDefault();
+    console.log("mouse over");
+    this.setState({ showYouTubeIcon: true });
+  };
+  hideYouTubeIcon = e => {
+    e.preventDefault();
+    console.log("mouse outside");
+    this.setState({ showYouTubeIcon: false });
+  };
 
   playVideo = () => {
     let searchRequest =
@@ -84,7 +95,10 @@ class AlbumTile extends Component {
 
   render() {
     return (
-      <StyledAlbumCard>
+      <StyledAlbumCard
+        onMouseEnter={e => this.showYouTubeIcon(e)}
+        onMouseLeave={e => this.hideYouTubeIcon(e)}
+      >
         <AlbumImage
           onClick={() => this.openAlbum()}
           onMouseLeave={() => this.setOpacity(0)}
@@ -98,12 +112,14 @@ class AlbumTile extends Component {
             <TextOnOverlay>Show Album</TextOnOverlay>
           </Overlay>
         </AlbumImage>
-        <StyledYouTubeFontAwesome
-          onClick={e => this.playVideo()}
-          className="fa fa-youtube-play"
-          name="play"
-          size="3x"
-        />
+        {this.state.showYouTubeIcon
+          ? <StyledYouTubeFontAwesome
+              onClick={e => this.playVideo()}
+              className="fa fa-youtube-play"
+              name="play"
+              size="3x"
+            />
+          : null}
         {this.state.playVideo
           ? <ShowVideo
               artist={this.props.name}
