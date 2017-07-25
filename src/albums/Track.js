@@ -23,38 +23,45 @@ class Track extends Component {
   };
 
   scrobbleTrack = e => {
-    if(this.props.session.sessionKey === ""){
+    if (this.props.session.sessionKey === "") {
       alert("You are not logged on last.fm, please login and try again.");
       return;
     }
     scrobbleSingleTrack({
       session: this.props.session,
       track: this.props.track
-    })
-    this.setState ({
+    });
+    this.setState({
       isScrobbled: true
-    })
+    });
     this.props.openMenu(this.props.i, 0, 0);
   };
 
   closeScrobbleInfo = e => {
-    this.setState ({
+    this.setState({
       isScrobbled: false
-    })
-  }
+    });
+  };
 
   scrobbleInfo = () => {
-    if(this.state.isScrobbled === false) {
+    if (this.state.isScrobbled === false) {
       return "";
     } else {
       return (
         <div className="alert alert-success" role="alert">
           Scrobbled
-          <button type="button" className="close" ariaLabel="Close" onClick={this.closeScrobbleInfo}><span ariaHidden="true">&times;</span></button>
+          <button
+            type="button"
+            className="close"
+            ariaLabel="Close"
+            onClick={this.closeScrobbleInfo}
+          >
+            <span ariaHidden="true">&times;</span>
+          </button>
         </div>
       );
     }
-  }
+  };
 
   render() {
     return (
@@ -114,14 +121,15 @@ class Track extends Component {
           </DropDownHeader>
           <Divider />
           <StyledDropDownItem onClick={() => this.scrobbleTrack()}>
-            {" "}<FontAwesome
-              className="fa fa-lastfm"
-              name="options"
-              size="lg"
-              aria-hidden="true"
-            />
-            {"  "}
-            Scrobble
+            <a>
+              <FontAwesome
+                className="fa fa-lastfm"
+                name="options"
+                size="lg"
+                aria-hidden="true"
+              />
+              Scrobble
+            </a>
           </StyledDropDownItem>
           <Divider />
           <StyledDropDownItem>

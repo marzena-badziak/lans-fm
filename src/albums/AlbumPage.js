@@ -17,6 +17,7 @@ import Track from "./Track";
 import { StringUtils } from "../lib/utils";
 import SpotifyLogic from "../lib/spotify";
 import Navigation from "../user-interface/Navigation";
+import FontAwesome from "react-fontawesome";
 
 class AlbumPage extends Component {
   constructor(props) {
@@ -130,8 +131,16 @@ class AlbumPage extends Component {
             padding: "3px 5px"
           }}
           onClick={e => this.saveCurrentPath(e)}
-          backgroundColor="darkgrey"
-          hoverColor="grey"
+          backgroundColor="#1db954"
+          hoverColor="#4bdf80"
+          icon={
+            <FontAwesome
+              className="fa fa-spotify"
+              name="options"
+              size="lg"
+              aria-hidden="true"
+            />
+          }
           href={
             "https://accounts.spotify.com/authorize?client_id=7cd65f9a6005482cb3830530b1e52b16&response_type=token&redirect_uri=http://localhost:3000/loginSpotify/&state=" +
             this.spotifyStateString
@@ -160,7 +169,9 @@ class AlbumPage extends Component {
         });
       } else {
         return (
-          <div>Sorry tracks no tracks in last-fm database for this album</div>
+          <LastFMAlert>
+            Sorry tracks no tracks in last-fm database for this album
+          </LastFMAlert>
         );
       }
     } else {
@@ -229,6 +240,7 @@ const StyledTopContainer = styled.div`
 `;
 
 const StyledFlatButton = styled(FlatButton)`
+  color:black;
   margin: 5px;
 `;
 const SpotifyAlert = styled.div`
