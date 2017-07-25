@@ -23,35 +23,38 @@ class Track extends Component {
   };
 
   scrobbleTrack = e => {
+    if(this.props.session.sessionKey === ""){
+      alert("You are not logged on last.fm, please login and try again.");
+      return;
+    }
     scrobbleSingleTrack({
       session: this.props.session,
       track: this.props.track
-    });
-    this.setState({
-      isScrobble: true
-    });
+    })
+    this.setState ({
+      isScrobbled: true
+    })
+    this.props.openMenu(this.props.i, 0, 0);
   };
 
+  closeScrobbleInfo = e => {
+    this.setState ({
+      isScrobbled: false
+    })
+  }
+
   scrobbleInfo = () => {
-    if (!this.state.isScrobbled) {
-      console.log("Hello");
+    if(this.state.isScrobbled === false) {
       return "";
     } else {
       return (
-        <div className="alert alert-success alert-dismissible" role="alert">
+        <div className="alert alert-success" role="alert">
           Scrobbled
-          <button
-            type="button"
-            className="close"
-            dataDismiss="alert"
-            ariaLabel="Close"
-          >
-            <span ariaHidden="true">&times;</span>
-          </button>
+          <button type="button" className="close" ariaLabel="Close" onClick={this.closeScrobbleInfo}><span ariaHidden="true">&times;</span></button>
         </div>
       );
     }
-  };
+  }
 
   render() {
     return (
