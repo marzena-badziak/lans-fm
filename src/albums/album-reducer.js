@@ -7,8 +7,13 @@ const album = (state = { album: {}, message: "" }, action) => {
       };
     case "GET_INFO_ATTEMPT":
       return {
-        album: [],
+        album: {},
         message: "Getting info"
+      };
+    case "NO_ALBUM_INFO":
+      return {
+        album: {},
+        message: "no_album"
       };
     default:
       return state;
