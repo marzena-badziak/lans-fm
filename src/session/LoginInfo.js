@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import FlatButton from "material-ui/FlatButton";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 class LoginInfo extends Component {
   logOut = () => {
@@ -10,7 +11,6 @@ class LoginInfo extends Component {
   };
 
   loginInfo = () => {
-    console.log(this.props);
     if (this.props.session.sessionKey === "") {
       return (
         <form action="http://www.last.fm/api/auth ">
@@ -64,6 +64,9 @@ const mapStateToProps = state => {
   return {
     session: state.session
   };
+};
+LoginInfo.propTypes = {
+  currentPageParams: PropTypes.string.isRequired
 };
 
 export default connect(mapStateToProps)(LoginInfo);
