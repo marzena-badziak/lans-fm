@@ -185,7 +185,9 @@ class AlbumPage extends Component {
                     </div>
                   </div>
                   <div>
-                    {this.state.spotifyAlbumUrl !== ""
+                    {console.log(this.props.session)}
+                    {this.state.spotifyAlbumUrl !== "" ||
+                    !this.props.session.spotifyAccessToken
                       ? <SpotifyIframe
                           spotifyAlbumUrl={this.state.spotifyAlbumUrl}
                           title={this.state.spotifyAlbumUrl}
