@@ -35,11 +35,15 @@ class ArtistTile extends Component {
     );
     this.props.router.push(this.props.name);
   };
-
+  replaceSpacesWithDashes(str) {
+    return str.replace(/\s+/g, "-");
+  }
   getAlbums = e => {
     e.preventDefault();
     this.props.router.push(
-      `${this.props.params.artistName}/${this.props.name}`
+      this.props.params.artistName +
+        "/" +
+        this.replaceSpacesWithDashes(this.props.name)
     );
   };
 
@@ -58,6 +62,12 @@ class ArtistTile extends Component {
     this.youTubeLogic.getYoutubeVideoId(searchRequest);
   };
 
+  // showYouTubeIcon = e => {
+  //   e.preventDefault();
+  //
+  //
+  // }
+
   setOpacity(val) {
     this.setState({ opacity: val });
   }
@@ -65,6 +75,7 @@ class ArtistTile extends Component {
   render() {
     return (
       <StyledArtistTile name={this.props.name}>
+        // onMouseOver={e => this.showYouTubeIcon(e)}
         <StyledArtistImage
           onClick={e => this.getAlbums(e)}
           onMouseLeave={() => this.setOpacity(0)}
@@ -83,7 +94,6 @@ class ArtistTile extends Component {
             <TextOnOverlay>Show Artist</TextOnOverlay>
           </Overlay>
         </StyledArtistImage>
-
         <StyledYouTubeFontAwesome
           onClick={e => this.playVideo()}
           className="fa fa-youtube-play"

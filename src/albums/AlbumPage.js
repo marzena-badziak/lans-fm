@@ -16,7 +16,7 @@ import axios from "axios";
 import Track from "./Track";
 import { StringUtils } from "../lib/utils";
 import SpotifyLogic from "../lib/spotify";
-import Naviagion from "../user-interface/Navigation";
+import Navigation from "../user-interface/Navigation";
 
 class AlbumPage extends Component {
   constructor(props) {
@@ -107,6 +107,40 @@ class AlbumPage extends Component {
   replaceDashWithSpace(str) {
     return str.replace(/-/g, " ");
   }
+  displaySpotify() {
+    if (this.props.session.spotifyAccessToken) {
+      if (this.state.spotifyAlbumUrl) {
+        return (
+          <SpotifyIframe
+            spotifyAlbumUrl={this.state.spotifyAlbumUrl}
+            title={this.state.spotifyAlbumUrl}
+          />
+        );
+      } else {
+        return (
+          <SpotifyAlert>This album is not available on spotify</SpotifyAlert>
+        );
+      }
+    } else {
+      return (
+        <StyledFlatButton
+          label="Quick listen on Spotify"
+          labelStyle={{
+            fontSize: "12px",
+            padding: "3px 5px"
+          }}
+          onClick={e => this.saveCurrentPath(e)}
+          backgroundColor="darkgrey"
+          hoverColor="grey"
+          href={
+            "https://accounts.spotify.com/authorize?client_id=7cd65f9a6005482cb3830530b1e52b16&response_type=token&redirect_uri=http://localhost:3000/loginSpotify/&state=" +
+            this.spotifyStateString
+          }
+        />
+      );
+    }
+  }
+
   showTracks() {
     if (this.props.album.message === "GOT_ALBUMS") {
       if (this.props.album.album.tracks.track.length !== 0) {
@@ -137,7 +171,7 @@ class AlbumPage extends Component {
           </AlbumNotFundAlert>
         );
       } else {
-        return <CircularProgress />;
+        return <CircularProgress color="#aa8899" />;
       }
     }
   }
@@ -145,7 +179,7 @@ class AlbumPage extends Component {
   render() {
     return (
       <div>
-        <Naviagion
+        <Navigation
           artistName={this.props.params.artistName}
           artistChosen={this.props.params.artistChosen}
         />
@@ -153,7 +187,8 @@ class AlbumPage extends Component {
           className="container"
           style={{
             display: "flex",
-            justifyContent: "center"
+            justifyContent: "space-around",
+            flexDirection: "column"
           }}
         >
           <Paper
@@ -161,7 +196,7 @@ class AlbumPage extends Component {
           >
             {this.props.album.message === "GOT_ALBUMS"
               ? <StyledTopContainer>
-                  <div>
+                  <div style={{ margin: "10px 20px" }}>
                     <Avatar
                       src={this.props.album.album.image[2]["#text"]}
                       size={150}
@@ -169,35 +204,12 @@ class AlbumPage extends Component {
                     <h2 style={{ display: "block", textAlign: "center" }}>
                       {this.replaceDashWithSpace(this.props.params.albumName)}
                     </h2>
-                    <div>
-                      {this.state.displaySpotifyLogin
-                        ? <StyledFlatButton
-                            label="Quick listen on Spotify"
-                            onClick={e => this.saveCurrentPath(e)}
-                            backgroundColor="darkgrey"
-                            hoverColor="grey"
-                            href={
-                              "https://accounts.spotify.com/authorize?client_id=7cd65f9a6005482cb3830530b1e52b16&response_type=token&redirect_uri=http://localhost:3000/loginSpotify/&state=" +
-                              this.spotifyStateString
-                            }
-                          />
-                        : null}
-                    </div>
                   </div>
-                  <div>
-                    {console.log(this.props.session)}
-                    {this.state.spotifyAlbumUrl !== "" ||
-                    !this.props.session.spotifyAccessToken
-                      ? <SpotifyIframe
-                          spotifyAlbumUrl={this.state.spotifyAlbumUrl}
-                          title={this.state.spotifyAlbumUrl}
-                        />
-                      : <SpotifyAlert>
-                          This album is not available on spotify
-                        </SpotifyAlert>}
+                  <div style={{ margin: "10px" }}>
+                    {this.displaySpotify()}
                   </div>
                 </StyledTopContainer>
-              : false}
+              : null}
             <List>
               {this.showTracks()}
             </List>
@@ -212,6 +224,7 @@ const StyledTopContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
   justify-content: space-between;
 `;
 

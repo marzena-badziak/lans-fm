@@ -1,15 +1,18 @@
 import React, { Component } from "react";
 import SearchBar from "./user-interface/SearchBar";
 import styled from "styled-components";
-import LoginInfo from "./session/LoginInfo"
+import LoginInfo from "./session/LoginInfo";
 
 class Home extends Component {
   render() {
     return (
       <StyledHome className="App">
-        <StyledLogo href="/">LansFm</StyledLogo>
-        <StyledLogin><LoginInfo currentPageParams={this.props.urlParams} /></StyledLogin>
-
+        <StyledTopBar>
+          <StyledLogo href="/">LansFm</StyledLogo>
+          <StyledLogin>
+            <LoginInfo currentPageParams={this.props.urlParams} />
+          </StyledLogin>
+        </StyledTopBar>
         <StyledContainer className="container">
           <StyledHeaderMain htmlFor="search-bar">
             Search the least popular artists
@@ -37,6 +40,11 @@ const StyledHome = styled.div`
   -o-background-size: cover;
   background-size: cover;
   height: 100vh;
+  width: 100vw;
+`;
+const StyledTopBar = styled.div`
+  margin: 0 auto;
+  padding: 0;
 `;
 const StyledLogo = styled.a`
   position: relative;
@@ -55,7 +63,7 @@ const StyledLogo = styled.a`
 
 const StyledLogin = styled.a`
   position: relative;
-  top: 22px;
+  top: -15px;
   left: 34vw;
   font-family: Righteous;
   color: white;
