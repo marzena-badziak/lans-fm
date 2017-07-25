@@ -8,7 +8,7 @@ import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
 import { withRouter } from "react-router";
 import FlatButton from "material-ui/FlatButton";
-import Naviagion from "../user-interface/Navigation";
+import Navigation from "../user-interface/Navigation";
 
 class AlbumsPage extends Component {
   fetchAlbums = e => {
@@ -58,7 +58,7 @@ class AlbumsPage extends Component {
       return this.mapAlbums();
     } else {
       if (this.props.albums.message === "Searching") {
-        return this.displayPlaceHolder(<CircularProgress />);
+        return this.displayPlaceHolder(<CircularProgress color="#aa8899" />);
       } else {
         return this.displayPlaceHolder(this.props.albums.message);
       }
@@ -91,16 +91,28 @@ class AlbumsPage extends Component {
   render() {
     return (
       <div>
-        <Naviagion artistName={this.props.params.artistName} />
+        <Navigation artistName={this.props.params.artistName} />
         <div className="container">
+          <FlatButton
+            label="Search Similar"
+            onClick={e => this.fetchSimilarArtist(e)}
+            style={{ margin: "5px" }}
+            backgroundColor="darkgrey"
+            hoverColor="grey"
+            style={{ position: "relative", float: "right" }}
+            labelStyle={{
+              fontSize: "12px",
+              padding: "3px 5px"
+            }}
+          />
           <div
             style={{
               display: "flex",
-              // flexDirection: "row",
-              // flexWrap: "wrap",
-              justifyContent: "flex-start",
-              alignItems: "flex-end",
-              alignContent: "flex-start",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              alignItems: "center",
+              alignContent: "center",
               margin: "10px",
               marginTop: "30px"
             }}
@@ -113,19 +125,13 @@ class AlbumsPage extends Component {
               }
               alt={`${this.props.artist.artist.name} foto`}
               size={200}
-              style={{ marginTop: "40px" }}
+              style={{ marginTop: "10px" }}
             />
-            <h2 style={{ fontSize: "50px" }}>
+            <h2 style={{ fontSize: "50px", marginLeft: "15px" }}>
               {this.props.artist.artist.name}
             </h2>
-            <FlatButton
-              label="Search Similar"
-              onClick={e => this.fetchSimilarArtist(e)}
-              style={{ margin: "15px" }}
-              backgroundColor="darkgrey"
-              hoverColor="grey"
-            />
           </div>
+
           <h3 style={{ display: "block", margin: "0" }}>Albums:</h3>
 
           <SearchResultsContainer

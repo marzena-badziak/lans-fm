@@ -16,7 +16,7 @@ import axios from "axios";
 import Track from "./Track";
 import { StringUtils } from "../lib/utils";
 import SpotifyLogic from "../lib/spotify";
-import Naviagion from "../user-interface/Navigation";
+import Navigation from "../user-interface/Navigation";
 
 class AlbumPage extends Component {
   constructor(props) {
@@ -130,6 +130,7 @@ class AlbumPage extends Component {
         );
       }
     } else {
+
       if (this.props.album.message === "no_album") {
         return (
           <AlbumNotFundAlert>
@@ -137,15 +138,16 @@ class AlbumPage extends Component {
           </AlbumNotFundAlert>
         );
       } else {
-        return <CircularProgress />;
+      return <CircularProgress color="#aa8899" />;
       }
+
     }
   }
 
   render() {
     return (
       <div>
-        <Naviagion
+        <Navigation
           artistName={this.props.params.artistName}
           artistChosen={this.props.params.artistChosen}
         />
@@ -153,7 +155,8 @@ class AlbumPage extends Component {
           className="container"
           style={{
             display: "flex",
-            justifyContent: "center"
+            justifyContent: "space-around",
+            flexDirection: "column"
           }}
         >
           <Paper
@@ -161,7 +164,7 @@ class AlbumPage extends Component {
           >
             {this.props.album.message === "GOT_ALBUMS"
               ? <StyledTopContainer>
-                  <div>
+                  <div style={{ margin: "10px 20px" }}>
                     <Avatar
                       src={this.props.album.album.image[2]["#text"]}
                       size={150}
@@ -169,31 +172,41 @@ class AlbumPage extends Component {
                     <h2 style={{ display: "block", textAlign: "center" }}>
                       {this.replaceDashWithSpace(this.props.params.albumName)}
                     </h2>
-                    <div>
-                      {this.state.displaySpotifyLogin
-                        ? <StyledFlatButton
-                            label="Quick listen on Spotify"
-                            onClick={e => this.saveCurrentPath(e)}
-                            backgroundColor="darkgrey"
-                            hoverColor="grey"
-                            href={
-                              "https://accounts.spotify.com/authorize?client_id=7cd65f9a6005482cb3830530b1e52b16&response_type=token&redirect_uri=http://localhost:3000/loginSpotify/&state=" +
-                              this.spotifyStateString
-                            }
-                          />
-                        : null}
-                    </div>
                   </div>
-                  <div>
-                    {this.state.spotifyAlbumUrl !== ""
-                      ? <SpotifyIframe
-                          spotifyAlbumUrl={this.state.spotifyAlbumUrl}
-                          title={this.state.spotifyAlbumUrl}
+                  <div style={{ margin: "10px 20px" }}>
+                    {this.state.displaySpotifyLogin
+                      ? <StyledFlatButton
+                          label="Quick listen on Spotify"
+                          labelStyle={{
+                            fontSize: "12px",
+                            padding: "3px 5px"
+                          }}
+                          onClick={e => this.saveCurrentPath(e)}
+                          backgroundColor="darkgrey"
+                          hoverColor="grey"
+                          href={
+                            "https://accounts.spotify.com/authorize?client_id=7cd65f9a6005482cb3830530b1e52b16&response_type=token&redirect_uri=http://localhost:3000/loginSpotify/&state=" +
+                            this.spotifyStateString
+                          }
                         />
                       : <SpotifyAlert>
                           This album is not available on spotify
                         </SpotifyAlert>}
                   </div>
+                  {this.state.spotifyAlbumUrl !== ""
+                    ? <div
+                        style={{
+                          alignSelf: "flex-end",
+                          marginRight: "20px",
+                          marginTop: "10px"
+                        }}
+                      >
+                        <SpotifyIframe
+                          spotifyAlbumUrl={this.state.spotifyAlbumUrl}
+                          title={this.state.spotifyAlbumUrl}
+                        />{" "}
+                      </div>
+                    : null}
                 </StyledTopContainer>
               : false}
             <List>
@@ -210,6 +223,7 @@ const StyledTopContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
   justify-content: space-between;
 `;
 
