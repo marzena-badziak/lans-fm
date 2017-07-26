@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import FlatButton from "material-ui/FlatButton";
 import { connect } from "react-redux";
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
+import DropDownMenu from "material-ui/DropDownMenu";
+import MenuItem from "material-ui/MenuItem";
 import styled from "styled-components";
 import MediaQuery from "react-responsive";
 
 class LoginInfo extends Component {
   constructor(props) {
-  super(props);
-  this.state = {value: 1};
-}
+    super(props);
+    this.state = { value: 1 };
+  }
 
-handleChange = (event, index, value) => this.setState({value});
+  handleChange = (event, index, value) => this.setState({ value });
 
   logOut = () => {
     this.props.dispatch({
@@ -55,7 +55,7 @@ handleChange = (event, index, value) => this.setState({value});
             onChange={this.handleChange}
             style={{
               verticalAlign: "bottom",
-              marginTop: "0px",
+              marginTop: "0px"
             }}
           >
             <MenuItem
@@ -79,7 +79,6 @@ handleChange = (event, index, value) => this.setState({value});
 }
 
 const StyledLoginInfo = styled.span`
-
   vertical-align: middle;
   letter-spacing: 0px;
   text-transform: uppercase;
@@ -93,7 +92,7 @@ const StyledLoginBox = styled.div`
   border: 10px none;
   box-sizing: border-box;
   display: inline-block;
-  font-family: Roboto,sans-serif;
+  font-family: Roboto, sans-serif;
   text-decoration: none;
   margin: 0px;
   padding: 0px;
@@ -112,8 +111,7 @@ const StyledLoginBox = styled.div`
   background-color: rgba(0, 0, 0, 0);
   text-align: center;
   -moz-user-select: none;
-`
-
+`;
 
 const mapStateToProps = state => {
   return {

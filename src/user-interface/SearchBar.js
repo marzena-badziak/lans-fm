@@ -38,7 +38,7 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <form onSubmit={e => this.fetchArtist(e)}>
+      <StyledForm onSubmit={e => this.fetchArtist(e)}>
         <StyledSearchBar {...this.props}>
           <StyledSearchInput
             onChange={e => this.setSearchValue(e)}
@@ -55,18 +55,18 @@ class SearchBar extends Component {
             />
           </StyledSearchSpan>
         </StyledSearchBar>
-      </form>
+      </StyledForm>
     );
   }
 }
+const StyledForm = styled.form`width: ${props => props.width};`;
 const StyledSearchBar = styled.div`
   box-shadow: ${props => props.boxShadow};
   border-radius: 15px;
   display: flex;
   align-items: baseline;
-  height: ${props => props.height};
   font-size: 20px;
-  width: ${props => props.width};
+  height: ${props => props.height};
   margin: 0 auto;
   @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
     font-size: 18px;
@@ -87,6 +87,14 @@ const StyledSearchSpan = styled.div`
   border: 1px solid #000000;
   background-color: #dd8899;
   cursor: pointer;
+  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    padding: 0 10px;
+  }
+
+  /* Smartphones (portrait) ----------- */
+  @media only screen and (max-width: 320px) {
+    padding: 0 5px;
+  }
 `;
 const StyledFontAwesome = styled(FontAwesome)`
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
@@ -115,6 +123,14 @@ const StyledSearchInput = styled.input`
 
   :-ms-input-placeholder {
     text-align: center;
+  }
+  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    padding: 0 5px;
+  }
+
+  /* Smartphones (portrait) ----------- */
+  @media only screen and (max-width: 320px) {
+    padding: 0 3px;
   }
 `;
 SearchBar.propTypes = {

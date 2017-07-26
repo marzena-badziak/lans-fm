@@ -23,7 +23,11 @@ class Navbar extends Component {
           <LoginInfo currentPageParams={this.props.urlParams} />
         }
         iconStyleLeft={{ marginTop: "0px" }}
-        iconStyleRight={{ marginTop: "0px", marginRight: "0px", padding: "0" }}
+        iconStyleRight={{
+          marginTop: "0px",
+          marginRight: "-15px",
+          padding: "0"
+        }}
         showMenuIconButton={true}
       />
     );
