@@ -134,63 +134,9 @@ class AlbumPage extends Component {
       return <CircularProgress />;
     }
   }
-  goBackToSearchResults = e => {
-    e.preventDefault();
-    this.props.router.push(this.props.params.artistName);
-  };
-  goBackToArtistPage = e => {
-    e.preventDefault();
-    this.props.router.push(
-      `${this.props.params.artistName}/${this.props.params.artistChosen}`
-    );
-  };
-
   render() {
     return (
       <div>
-        <div
-          style={{
-            position: "absolute",
-            left: "0",
-            display: "block",
-            margin: "10px"
-          }}
-        >
-          <ul
-            style={{
-              display: "inline-block",
-              listStyleType: "none",
-              margin: "2px",
-              padding: "0",
-              color: "#aa8899",
-              fontWeight: "bold"
-            }}
-          >
-            <li
-              style={{
-                display: "inline",
-                margin: "0 auto",
-                marginTop: "10px",
-                cursor: "pointer"
-              }}
-              onClick={this.goBackToSearchResults}
-            >
-              {" "}/ Search results:{" "}
-              {this.replaceDashWithSpace(this.props.params.artistName)}{" "}
-            </li>
-            <li
-              style={{
-                display: "inline",
-                margin: "0 auto",
-                marginTop: "10px",
-                cursor: "pointer"
-              }}
-              onClick={this.goBackToArtistPage}
-            >
-              / {this.replaceDashWithSpace(this.props.params.artistChosen)}
-            </li>
-          </ul>
-        </div>
         <div
           className="container"
           style={{
@@ -243,7 +189,7 @@ class AlbumPage extends Component {
                           title={this.state.spotifyAlbumUrl}
                         />
                       : null}
-                  </div
+                  </div>
                 </div>
               : false}
             <TrackList openMenu={this.openMenu} enableOnClickOutside={true}>

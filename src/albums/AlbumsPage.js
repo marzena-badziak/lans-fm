@@ -63,7 +63,7 @@ class AlbumsPage extends Component {
     this.fetchAlbums();
     this.fetchArtist();
   }
-  displayAvaliableAlbums(album, i) {
+  displayAvaliableAlbums = (album, i) => {
     if (!(album.name === "(null)")) {
       return (
         <AlbumTile
@@ -74,7 +74,7 @@ class AlbumsPage extends Component {
         />
       );
     }
-  }
+  };
   mapAlbums() {
     return this.props.albums.albums.album.map((album, i) => {
       return this.displayAvaliableAlbums(album, i);
