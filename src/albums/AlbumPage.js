@@ -20,6 +20,7 @@ import Navigation from "../user-interface/Navigation";
 import FontAwesome from "react-fontawesome";
 import SpotifyLoginButton from "./SpotifyLoginButton";
 import TrackList from "./TrackList";
+
 class AlbumPage extends Component {
   constructor(props) {
     super(props);
