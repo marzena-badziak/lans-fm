@@ -1,4 +1,4 @@
-export class StringUtils {
+export class LansFmUtils {
   static randomString = stringLength => {
     let text = "";
     let possible =
@@ -8,5 +8,10 @@ export class StringUtils {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
 
     return text;
+  };
+  static verifySpotifyToken = (token, expires) => {
+    return token === "" || (expires !== "" && expires < Date.now())
+      ? true
+      : false;
   };
 }

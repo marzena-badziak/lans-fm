@@ -14,10 +14,8 @@ import { scrobbleAlbum } from "./scrobble-album";
 import { SpotifyIframe } from "./SpotifyIframe";
 import axios from "axios";
 import Track from "./Track";
-import { StringUtils } from "../lib/utils";
-import SpotifyLogic from "../lib/spotify";
-import Navigation from "../user-interface/Navigation";
-import FontAwesome from "react-fontawesome";
+import { LansFmUtils } from "../lib/utils";
+import { SpotifyLogic } from "../lib/spotify";
 
 class AlbumPage extends Component {
   constructor(props) {
@@ -44,7 +42,7 @@ class AlbumPage extends Component {
     );
 
     if (displaySpotifyLogin) {
-      let stateString = StringUtils.randomString(32);
+      let stateString = LansFmUtils.randomString(32);
       this.spotifyStateString = stateString;
       let spotifyAuthorizationUrl = this.props.dispatch({
         type: "SPOTIFY_GENERATE_STATE",
@@ -60,13 +58,6 @@ class AlbumPage extends Component {
   }
   setSpotifyAlbumUrl = url => {
     this.setState({ spotifyAlbumUrl: url });
-  };
-
-  saveCurrentPath = e => {
-    this.props.dispatch({
-      type: "SAVE_CURRENT_PATH",
-      currentPath: this.props.location.pathname
-    });
   };
 
   openMenu = (i, left, top) => {
@@ -108,48 +99,6 @@ class AlbumPage extends Component {
   replaceDashWithSpace(str) {
     return str.replace(/-/g, " ");
   }
-  displaySpotify() {
-    if (this.props.session.spotifyAccessToken) {
-      if (this.state.spotifyAlbumUrl) {
-        return (
-          <SpotifyIframe
-            spotifyAlbumUrl={this.state.spotifyAlbumUrl}
-            title={this.state.spotifyAlbumUrl}
-          />
-        );
-      } else {
-        return (
-          <SpotifyAlert>This album is not available on spotify</SpotifyAlert>
-        );
-      }
-    } else {
-      return (
-        <StyledFlatButton
-          label="Quick listen on Spotify"
-          labelStyle={{
-            fontSize: "12px",
-            padding: "3px 5px"
-          }}
-          onClick={e => this.saveCurrentPath(e)}
-          backgroundColor="#1db954"
-          hoverColor="#4bdf80"
-          icon={
-            <FontAwesome
-              className="fa fa-spotify"
-              name="options"
-              size="lg"
-              aria-hidden="true"
-            />
-          }
-          href={
-            "https://accounts.spotify.com/authorize?client_id=7cd65f9a6005482cb3830530b1e52b16&response_type=token&redirect_uri=http://localhost:3000/loginSpotify/&state=" +
-            this.spotifyStateString
-          }
-        />
-      );
-    }
-  }
-
   showTracks() {
     if (this.props.album.message === "GOT_ALBUMS") {
       if (this.props.album.album.tracks.track.length !== 0) {
@@ -168,46 +117,91 @@ class AlbumPage extends Component {
           );
         });
       } else {
-        return (
-          <LastFMAlert>
-            Sorry tracks no tracks in last-fm database for this album
-          </LastFMAlert>
-        );
+        return <div>Sorry tracks are not available for this album</div>;
       }
     } else {
-      if (this.props.album.message === "no_album") {
-        return (
-          <AlbumNotFundAlert>
-            Album not found in last-fm database
-          </AlbumNotFundAlert>
-        );
-      } else {
-        return <CircularProgress color="#aa8899" />;
-      }
+      return <CircularProgress />;
     }
   }
+  goBackToSearchResults = e => {
+    e.preventDefault();
+    this.props.router.push(this.props.params.artistName);
+  };
+  goBackToArtistPage = e => {
+    e.preventDefault();
+    this.props.router.push(
+      `${this.props.params.artistName}/${this.props.params.artistChosen}`
+    );
+  };
 
   render() {
     return (
       <div>
-        <Navigation
-          artistName={this.props.params.artistName}
-          artistChosen={this.props.params.artistChosen}
-        />
+        <div
+          style={{
+            position: "absolute",
+            left: "0",
+            display: "block",
+            margin: "10px"
+          }}
+        >
+          <ul
+            style={{
+              display: "inline-block",
+              listStyleType: "none",
+              margin: "2px",
+              padding: "0",
+              color: "#aa8899",
+              fontWeight: "bold"
+            }}
+          >
+            <li
+              style={{
+                display: "inline",
+                margin: "0 auto",
+                marginTop: "10px",
+                cursor: "pointer"
+              }}
+              onClick={this.goBackToSearchResults}
+            >
+              {" "}/ Search results:{" "}
+              {this.replaceDashWithSpace(this.props.params.artistName)}{" "}
+            </li>
+            <li
+              style={{
+                display: "inline",
+                margin: "0 auto",
+                marginTop: "10px",
+                cursor: "pointer"
+              }}
+              onClick={this.goBackToArtistPage}
+            >
+              / {this.replaceDashWithSpace(this.props.params.artistChosen)}
+            </li>
+          </ul>
+        </div>
         <div
           className="container"
           style={{
             display: "flex",
-            justifyContent: "space-around",
-            flexDirection: "column"
+            // flexDirection: "column",
+            justifyContent: "center"
+            // flexWrap: "nowrap"
           }}
         >
           <Paper
             style={{ width: "80vw", marginTop: "40px", paddingTop: "10px" }}
           >
             {this.props.album.message === "GOT_ALBUMS"
-              ? <StyledTopContainer>
-                  <div style={{ margin: "10px 20px" }}>
+              ? <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    justifyContent: "space-between"
+                  }}
+                >
+                  <div>
                     <Avatar
                       src={this.props.album.album.image[2]["#text"]}
                       size={150}
@@ -215,12 +209,32 @@ class AlbumPage extends Component {
                     <h2 style={{ display: "block", textAlign: "center" }}>
                       {this.replaceDashWithSpace(this.props.params.albumName)}
                     </h2>
+                    <div>
+                      {this.state.displaySpotifyLogin
+                        ? <FlatButton
+                            label="Login to Spotify"
+                            onClick={e => this.setSpotifyId(e)}
+                            style={{ margin: "15px" }}
+                            backgroundColor="darkgrey"
+                            hoverColor="grey"
+                            href={
+                              "https://accounts.spotify.com/authorize?client_id=7cd65f9a6005482cb3830530b1e52b16&response_type=token&redirect_uri=http://localhost:3000/loginSpotify/&state=" +
+                              this.spotifyStateString
+                            }
+                          />
+                        : null}
+                    </div>
                   </div>
-                  <div style={{ margin: "10px" }}>
-                    {this.displaySpotify()}
+                  <div>
+                    {this.state.spotifyAlbumUrl !== ""
+                      ? <SpotifyIframe
+                          spotifyAlbumUrl={this.state.spotifyAlbumUrl}
+                          title={this.state.spotifyAlbumUrl}
+                        />
+                      : null}
                   </div>
-                </StyledTopContainer>
-              : null}
+                </div>
+              : false}
             <List>
               {this.showTracks()}
             </List>
@@ -231,24 +245,6 @@ class AlbumPage extends Component {
   }
 }
 
-const StyledTopContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  justify-content: space-between;
-`;
-
-const StyledFlatButton = styled(FlatButton)`
-  color:black;
-  margin: 5px;
-`;
-const SpotifyAlert = styled.div`
-  margin-right: 50px;
-  margin-top: 20px;
-`;
-const AlbumNotFundAlert = styled.div`padding: 35px;`;
-const LastFMAlert = styled.div`padding: 35px;`;
 const mapStateToProps = state => {
   return {
     album: state.album,

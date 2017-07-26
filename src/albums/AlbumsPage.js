@@ -7,10 +7,44 @@ import styled from "styled-components";
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
 import { withRouter } from "react-router";
+import { LansFmUtils } from "../lib/utils";
 import FlatButton from "material-ui/FlatButton";
 import Navigation from "../user-interface/Navigation";
+import { SpotifyIframe } from "./SpotifyIframe";
+import { SpotifyFollowIframe } from "./SpotifyFollowIframe";
+import { SpotifyLogic } from "../lib/spotify";
+import SpotifyLoginButton from "./SpotifyLoginButton";
 
 class AlbumsPage extends Component {
+  constructor(props) {
+    super(props);
+
+    let displaySpotifyLogin = LansFmUtils.verifySpotifyToken(
+      this.props.session.spotifyAccessToken,
+      this.props.session.spotifyExpiresIn
+    );
+
+    this.state = {
+      spotifyArtistUri: "",
+      displaySpotifyLogin: displaySpotifyLogin
+    };
+    this.spotifyLogic = new SpotifyLogic(
+      this.props.session.spotifyAccessToken,
+      this.setSpotifyArtistUri
+    );
+
+    if (displaySpotifyLogin) {
+      let stateString = LansFmUtils.randomString(32);
+      this.spotifyStateString = stateString;
+      let spotifyAuthorizationUrl = this.props.dispatch({
+        type: "SPOTIFY_GENERATE_STATE",
+        spotifyStateString: stateString
+      });
+    }
+    if (!displaySpotifyLogin) {
+      this.spotifyLogic.getSpotifyArtistUri(this.props.params.artistChosen);
+    }
+  }
   fetchAlbums = e => {
     this.props.dispatch(
       getAlbums({
@@ -92,7 +126,7 @@ class AlbumsPage extends Component {
   showListeners = () => {
     if(this.props.artist.artist.stats) {
       return(
-        <span>Listeners: {this.props.artist.artist.stats.listeners}</span>
+        <span>Listeners: {this.props.artist.artist.stats.listeners} </span>
       )
     } else {
         return;
@@ -102,13 +136,16 @@ class AlbumsPage extends Component {
   showPlaycount = () => {
     if(this.props.artist.artist.stats) {
       return(
-        <span>Playcount: {this.props.artist.artist.stats.playcount}</span>
+        <span>Play count: {this.props.artist.artist.stats.playcount} </span>
       )
     } else {
         return;
     }
   }
 
+  setSpotifyArtistUri = uri => {
+    this.setState({ spotifyArtistUri: uri });
+  };
   render() {
     return (
       <div>
@@ -153,6 +190,28 @@ class AlbumsPage extends Component {
             </h2>
             <div>{this.showListeners()}</div>
             <div>{this.showPlaycount()}</div>
+
+            {this.state.displaySpotifyLogin
+              ? <SpotifyLoginButton
+                  spotifyStateString={this.spotifyStateString}
+                  redirectUrl={this.props.location.pathname}
+                />
+              : this.state.spotifyArtistUri
+                ? <div>
+                    <SpotifyFollowIframe
+                      spotifyUri={this.state.spotifyArtistUri}
+                      title={this.state.spotifyArtistUri}
+                      width="200px"
+                      height="30px"
+                    />
+                    <SpotifyIframe
+                      spotifyUri={this.state.spotifyArtistUri}
+                      title={this.state.spotifyArtistUri}
+                      width="300"
+                      height="300"
+                    />
+                  </div>
+                : null}
           </div>
 
           <h3 style={{ display: "block", margin: "0" }}>Albums:</h3>
@@ -184,13 +243,14 @@ const SearchResultsContainer = styled.div`
   align-content: flex-start;
   float: none;
   margin: 0 auto;
-  padding: 20px 0-
+  padding: 20px 0;
 `;
 const mapStateToProps = state => {
   return {
     results: state.similarArtists.artistsSimilar,
     albums: state.albums,
-    artist: state.artist
+    artist: state.artist,
+    session: state.session
   };
 };
 export default connect(mapStateToProps)(withRouter(AlbumsPage));

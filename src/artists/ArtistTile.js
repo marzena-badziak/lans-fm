@@ -17,6 +17,7 @@ class ArtistTile extends Component {
       this.setYouTubeFlags,
       this.props.session.sessionKey
     );
+    this.enableYouTube = false;
 
     this.state = {
       playVideo: false,
@@ -103,13 +104,15 @@ class ArtistTile extends Component {
             <TextOnOverlay>Show Artist</TextOnOverlay>
           </Overlay>
         </StyledArtistImage>
-        {this.state.showYouTubeIcon
-          ? <StyledYouTubeFontAwesome
-              onClick={e => this.playVideo()}
-              className="fa fa-youtube-play"
-              name="play"
-              size="3x"
-            />
+        {this.enableYouTube
+          ? this.state.showYouTubeIcon
+            ? <StyledYouTubeFontAwesome
+                onClick={e => this.playVideo()}
+                className="fa fa-youtube-play"
+                name="play"
+                size="3x"
+              />
+            : null
           : null}
         <div
           style={{

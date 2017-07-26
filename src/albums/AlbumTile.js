@@ -17,6 +17,7 @@ class AlbumTile extends Component {
       this.setYouTubeFlags,
       this.props.session.sessionKey
     );
+    this.enableYouTube = false;
     this.state = {
       playVideo: false,
       videoId: "",
@@ -112,13 +113,15 @@ class AlbumTile extends Component {
             <TextOnOverlay>Show Album</TextOnOverlay>
           </Overlay>
         </AlbumImage>
-        {this.state.showYouTubeIcon
-          ? <StyledYouTubeFontAwesome
-              onClick={e => this.playVideo()}
-              className="fa fa-youtube-play"
-              name="play"
-              size="3x"
-            />
+        {this.enableYouTube
+          ? this.state.showYouTubeIcon
+            ? <StyledYouTubeFontAwesome
+                onClick={e => this.playVideo()}
+                className="fa fa-youtube-play"
+                name="play"
+                size="3x"
+              />
+            : null
           : null}
         {this.state.playVideo
           ? <ShowVideo
