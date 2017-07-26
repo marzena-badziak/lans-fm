@@ -15,6 +15,11 @@ import { SpotifyIframe } from "./SpotifyIframe";
 import axios from "axios";
 import Track from "./Track";
 import { LansFmUtils } from "../lib/utils";
+
+import Navigation from "../user-interface/Navigation";
+import FontAwesome from "react-fontawesome";
+import SpotifyLoginButton from "./SpotifyLoginButton";
+import TrackList from "./TrackList";
 import { SpotifyLogic } from "../lib/spotify";
 
 class AlbumPage extends Component {
@@ -60,7 +65,12 @@ class AlbumPage extends Component {
     this.setState({ spotifyAlbumUrl: url });
   };
 
-  openMenu = (i, left, top) => {
+  openMenu = (i, left, top, close = false) => {
+    if (close) {
+      this.setState({
+        open: {}
+      });
+    }
     if (this.state.open[`${i}`] === "block") {
       this.setState({
         open: {}
@@ -113,6 +123,7 @@ class AlbumPage extends Component {
               top={this.state.top[`${i}`] || 0}
               openMenu={this.openMenu}
               closeMenu={this.closeMenu}
+              disableOnClickOutside={true}
             />
           );
         });
@@ -232,12 +243,12 @@ class AlbumPage extends Component {
                           title={this.state.spotifyAlbumUrl}
                         />
                       : null}
-                  </div>
+                  </div
                 </div>
               : false}
-            <List>
+            <TrackList openMenu={this.openMenu} enableOnClickOutside={true}>
               {this.showTracks()}
-            </List>
+            </TrackList>
           </Paper>
         </div>
       </div>
