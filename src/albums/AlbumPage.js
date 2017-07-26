@@ -19,7 +19,7 @@ import SpotifyLogic from "../lib/spotify";
 import Navigation from "../user-interface/Navigation";
 import FontAwesome from "react-fontawesome";
 import SpotifyLoginButton from "./SpotifyLoginButton";
-
+import TrackList from "./TrackList";
 class AlbumPage extends Component {
   constructor(props) {
     super(props);
@@ -61,7 +61,12 @@ class AlbumPage extends Component {
     this.setState({ spotifyAlbumUri: uri });
   };
 
-  openMenu = (i, left, top) => {
+  openMenu = (i, left, top, close = false) => {
+    if (close) {
+      this.setState({
+        open: {}
+      });
+    }
     if (this.state.open[`${i}`] === "block") {
       this.setState({
         open: {}
@@ -144,6 +149,7 @@ class AlbumPage extends Component {
               top={this.state.top[`${i}`] || 0}
               openMenu={this.openMenu}
               closeMenu={this.closeMenu}
+              disableOnClickOutside={true}
             />
           );
         });
@@ -201,9 +207,9 @@ class AlbumPage extends Component {
                   </div>
                 </StyledTopContainer>
               : null}
-            <List>
+            <TrackList openMenu={this.openMenu} enableOnClickOutside={true}>
               {this.showTracks()}
-            </List>
+            </TrackList>
           </Paper>
         </div>
       </div>
