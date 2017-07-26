@@ -8,6 +8,8 @@ import RaisedButton from "material-ui/RaisedButton";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import CircularProgress from "material-ui/CircularProgress";
+
 class Tile extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +25,9 @@ class Tile extends Component {
       videoId: "",
       videoFound: true,
       opacity: 0,
-      showYouTubeIcon: false
+      showYouTubeIcon: false,
+      imageLoaded: false,
+      imageDisplay: "none"
     };
   }
   setOpacity(val) {
@@ -57,6 +61,12 @@ class Tile extends Component {
   replaceSpacesWithDashes(str) {
     return str.replace(/\s+/g, "-");
   }
+  imageLoaded = () => {
+    console.log("al");
+    this.setState({
+      imageDisplay: "block"
+    });
+  };
   render() {
     return (
       <StyledAlbumCard
@@ -74,7 +84,23 @@ class Tile extends Component {
             />
           }
         >
-          <img src={this.props.imageSrc} alt={this.props.imageAlt} />
+          {this.state.imageDisplay === "block"
+            ? <img
+                style={{ display: this.state.imageDisplay }}
+                src={this.props.imageSrc}
+                alt={this.props.imageAlt}
+                onLoad={() => this.imageLoaded()}
+              />
+            : <div>
+                {" "}<img
+                  style={{ display: this.state.imageDisplay }}
+                  src={this.props.imageSrc}
+                  alt={this.props.imageAlt}
+                  onLoad={() => this.imageLoaded()}
+                />
+                <CircularProgress size={260} color="#aa8899" />
+              </div>}
+
           <Overlay style={{ opacity: this.state.opacity }}>
             <TextOnOverlay>
               {this.props.labelSecond}

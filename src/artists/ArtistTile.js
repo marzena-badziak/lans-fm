@@ -54,4 +54,4 @@ ArtistTile.propTypes = {
   alt: propTypes.string
 };
 
-export default withRouter(ArtistTile);
+export default connect()(withRouter(ArtistTile));
