@@ -43,10 +43,8 @@ class ArtistsGrid extends Component {
         {this.props.message === "Searching: "
           ? <StyledCircularProgress color="#aa8899" />
           : false}
-        <SearchResultsContainer className="row">
-          <dbody>
-            {grid}
-          </dbody>
+        <SearchResultsContainer className="container">
+          {grid}
         </SearchResultsContainer>
       </div>
     );
@@ -60,9 +58,7 @@ const SearchResultsContainer = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   align-content: flex-start;
-  float: none;
   margin: 0 auto;
-  padding: 20px 0;
 `;
 
 const StyledMessage = styled.h2`padding-bottom: 20px;`;
