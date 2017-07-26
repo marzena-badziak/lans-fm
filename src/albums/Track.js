@@ -13,7 +13,7 @@ class Track extends Component {
     super(props);
 
     this.state = {
-      open: "none",
+      open: props.open,
       isScrobbled: false
     };
   }
@@ -78,6 +78,7 @@ class Track extends Component {
                 justifyContent: "space-around",
                 alignItems: "center"
               }}
+              id={this.props.i}
             >
               <span>
                 {moment()
@@ -197,6 +198,7 @@ const mapStateToProps = state => {
     session: state.session
   };
 };
+
 Track.propTypes = {
   track: PropTypes.object.isRequired,
   i: PropTypes.number.isRequired,

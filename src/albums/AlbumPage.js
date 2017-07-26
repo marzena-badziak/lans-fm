@@ -189,7 +189,7 @@ class AlbumPage extends Component {
             // flexWrap: "nowrap"
           }}
         >
-          <Paper
+              <Paper
             style={{ width: "80vw", marginTop: "40px", paddingTop: "10px" }}
           >
             {this.props.album.message === "GOT_ALBUMS"
