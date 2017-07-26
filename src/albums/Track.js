@@ -44,8 +44,8 @@ class Track extends Component {
   };
 
   scrobbleInfo = () => {
-    if (this.state.isScrobbled === false) {
-      return "";
+    if(this.state.isScrobbled === false) {
+      return;
     } else {
       return (
         <div className="alert alert-success" role="alert">

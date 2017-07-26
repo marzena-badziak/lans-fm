@@ -12,7 +12,7 @@ import FlatButton from "material-ui/FlatButton";
 import Navigation from "../user-interface/Navigation";
 import { SpotifyIframe } from "./SpotifyIframe";
 import { SpotifyFollowIframe } from "./SpotifyFollowIframe";
-import SpotifyLogic from "../lib/spotify";
+import { SpotifyLogic } from "../lib/spotify";
 import SpotifyLoginButton from "./SpotifyLoginButton";
 
 class AlbumsPage extends Component {
@@ -123,6 +123,24 @@ class AlbumsPage extends Component {
     );
   };
 
+  addSpaces = (number) => {
+    let remainder = number.length % 3;
+    return (number.substr(0, remainder) + number.substr(remainder).replace(/(\d{3})/g, ' $1')).trim();
+  }
+
+  showStats = () => {
+    if(this.props.artist.artist.stats) {
+      return(
+        <div>
+          <span><strong>Listeners:</strong> {this.addSpaces(this.props.artist.artist.stats.listeners)} </span>
+          <span><strong>Playcount:</strong> {this.addSpaces(this.props.artist.artist.stats.playcount)} </span>
+        </div>
+      )
+    } else {
+        return;
+    }
+  }
+
   setSpotifyArtistUri = uri => {
     this.setState({ spotifyArtistUri: uri });
   };
@@ -165,9 +183,16 @@ class AlbumsPage extends Component {
               size={200}
               style={{ marginTop: "10px" }}
             />
-            <h2 style={{ fontSize: "50px", marginLeft: "15px" }}>
-              {this.props.artist.artist.name}
-            </h2>
+            <div style={{
+              display: "flex",
+              flexDirection: "column"
+            }}
+            >
+              <h2 style={{ fontSize: "50px", marginLeft: "15px" }}>
+                {this.props.artist.artist.name}
+              </h2>
+              {this.showStats()}
+            </div>
 
             {this.state.displaySpotifyLogin
               ? <SpotifyLoginButton

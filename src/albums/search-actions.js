@@ -15,7 +15,6 @@ export const getAlbums = data => {
     axios
       .get(`${lastfmRequestURLMaker(getAlbumOptions)}`)
       .then(function(response) {
-        console.log(response);
         if (response.data.topalbums) {
           dispatch({
             type: "SEARCH_ALBUMS",
@@ -70,7 +69,7 @@ export const getArtistInfo = data => {
     api_key: lastfmKey.api_key,
     method: "artist.getInfo"
   };
-  console.log(getArtistOptions);
+
   return dispatch => {
     dispatch({
       type: "GET_ARTIST_INFO_ATTEMPT"
