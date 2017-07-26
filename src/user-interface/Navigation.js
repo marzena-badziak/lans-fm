@@ -79,7 +79,7 @@ class Navigation extends Component {
             listStyleType: "none",
             margin: "2px",
             padding: "0",
-            color: "#aa8899",
+            color: "#7a3e5e",
             fontWeight: "bold"
           }}
         >

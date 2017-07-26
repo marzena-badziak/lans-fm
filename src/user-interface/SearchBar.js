@@ -68,13 +68,21 @@ const StyledSearchBar = styled.div`
   font-size: 20px;
   width: ${props => props.width};
   margin: 0 auto;
+  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    font-size: 18px;
+  }
+
+  /* Smartphones (portrait) ----------- */
+  @media only screen and (max-width: 320px) {
+    font-size: 16px;
+  }
 `;
 const StyledSearchSpan = styled.div`
   color: white;
   display: flex;
   height: inherit;
   align-items: center;
-  padding: 0 25px;
+  padding: 0 20px;
   border-radius: 0px 10px 10px 0px;
   border: 1px solid #000000;
   background-color: #dd8899;

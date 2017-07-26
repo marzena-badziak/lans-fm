@@ -118,8 +118,8 @@ class AlbumsPage extends Component {
             label="Search Similar"
             onClick={e => this.fetchSimilarArtist(e)}
             style={{ margin: "5px" }}
-            backgroundColor="darkgrey"
-            hoverColor="grey"
+            backgroundColor="#7a3e5e"
+            hoverColor="plum"
             style={{ position: "relative", float: "right" }}
             labelStyle={{
               fontSize: "12px",

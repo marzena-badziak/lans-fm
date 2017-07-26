@@ -37,7 +37,7 @@ class ArtistsGrid extends Component {
       <div>
         <StyledMessage>
           {this.props.message}{" "}
-          {this.replaceDashWithSpace(this.props.artistEntered)}
+          <strong>{this.replaceDashWithSpace(this.props.artistEntered)}</strong>
         </StyledMessage>
 
         {this.props.message === "Searching: "

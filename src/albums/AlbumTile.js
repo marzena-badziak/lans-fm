@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Card, CardActions, CardMedia, CardTitle } from "material-ui/Card";
 import styled from "styled-components";
-import FlatButton from "material-ui/FlatButton";
+import RaisedButton from "material-ui/RaisedButton";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
@@ -127,20 +127,28 @@ class AlbumTile extends Component {
               videoFound={this.state.videoFound}
             />
           : null}
-        <CardActions>
-          <FlatButton
+        <StyledCardActions>
+          <StyledRaisedButton
             label="Scrobble"
             backgroundColor="plum"
             onClick={() => this.scrobbleAlbum()}
             hoverColor="#ccd4d4"
+            labelStyle={{
+              padding: "5px 13px",
+              color: "white"
+            }}
           />
-          <FlatButton
+          <StyledRaisedButton
             label="Show Album"
-            backgroundColor="hotpink"
+            backgroundColor="#7a3e5e"
             onClick={() => this.openAlbum()}
             hoverColor="#ccd4d4"
+            labelStyle={{
+              padding: "5px 13px",
+              color: "white"
+            }}
           />
-        </CardActions>
+        </StyledCardActions>
       </StyledAlbumCard>
     );
   }
@@ -152,7 +160,10 @@ position: relative;
 width: 260px;
 margin 0 auto;
 margin-top: 30px;
-
+`;
+const StyledCardActions = styled(CardActions)`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Overlay = styled.div`
@@ -194,6 +205,9 @@ const StyledYouTubeFontAwesome = styled(FontAwesome)`
   &:hover {
     color: #e52d27;
   }
+`;
+const StyledRaisedButton = styled(RaisedButton)`
+  margin: 0;
 `;
 
 AlbumTile.propTypes = {

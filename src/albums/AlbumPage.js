@@ -17,6 +17,7 @@ import Track from "./Track";
 import { StringUtils } from "../lib/utils";
 import SpotifyLogic from "../lib/spotify";
 import Navigation from "../user-interface/Navigation";
+import FontAwesome from "react-fontawesome";
 
 class AlbumPage extends Component {
   constructor(props) {
@@ -107,6 +108,48 @@ class AlbumPage extends Component {
   replaceDashWithSpace(str) {
     return str.replace(/-/g, " ");
   }
+  displaySpotify() {
+    if (this.props.session.spotifyAccessToken) {
+      if (this.state.spotifyAlbumUrl) {
+        return (
+          <SpotifyIframe
+            spotifyAlbumUrl={this.state.spotifyAlbumUrl}
+            title={this.state.spotifyAlbumUrl}
+          />
+        );
+      } else {
+        return (
+          <SpotifyAlert>This album is not available on spotify</SpotifyAlert>
+        );
+      }
+    } else {
+      return (
+        <StyledFlatButton
+          label="Quick listen on Spotify"
+          labelStyle={{
+            fontSize: "12px",
+            padding: "3px 5px"
+          }}
+          onClick={e => this.saveCurrentPath(e)}
+          backgroundColor="#1db954"
+          hoverColor="#4bdf80"
+          icon={
+            <FontAwesome
+              className="fa fa-spotify"
+              name="options"
+              size="lg"
+              aria-hidden="true"
+            />
+          }
+          href={
+            "https://accounts.spotify.com/authorize?client_id=7cd65f9a6005482cb3830530b1e52b16&response_type=token&redirect_uri=http://localhost:3000/loginSpotify/&state=" +
+            this.spotifyStateString
+          }
+        />
+      );
+    }
+  }
+
   showTracks() {
     if (this.props.album.message === "GOT_ALBUMS") {
       if (this.props.album.album.tracks.track.length !== 0) {
@@ -126,11 +169,12 @@ class AlbumPage extends Component {
         });
       } else {
         return (
-          <div>Sorry tracks no tracks in last-fm database for this album</div>
+          <LastFMAlert>
+            Sorry tracks no tracks in last-fm database for this album
+          </LastFMAlert>
         );
       }
     } else {
-
       if (this.props.album.message === "no_album") {
         return (
           <AlbumNotFundAlert>
@@ -138,9 +182,8 @@ class AlbumPage extends Component {
           </AlbumNotFundAlert>
         );
       } else {
-      return <CircularProgress color="#aa8899" />;
+        return <CircularProgress color="#aa8899" />;
       }
-
     }
   }
 
@@ -173,42 +216,11 @@ class AlbumPage extends Component {
                       {this.replaceDashWithSpace(this.props.params.albumName)}
                     </h2>
                   </div>
-                  <div style={{ margin: "10px 20px" }}>
-                    {this.state.displaySpotifyLogin
-                      ? <StyledFlatButton
-                          label="Quick listen on Spotify"
-                          labelStyle={{
-                            fontSize: "12px",
-                            padding: "3px 5px"
-                          }}
-                          onClick={e => this.saveCurrentPath(e)}
-                          backgroundColor="darkgrey"
-                          hoverColor="grey"
-                          href={
-                            "https://accounts.spotify.com/authorize?client_id=7cd65f9a6005482cb3830530b1e52b16&response_type=token&redirect_uri=http://localhost:3000/loginSpotify/&state=" +
-                            this.spotifyStateString
-                          }
-                        />
-                      : <SpotifyAlert>
-                          This album is not available on spotify
-                        </SpotifyAlert>}
+                  <div style={{ margin: "10px" }}>
+                    {this.displaySpotify()}
                   </div>
-                  {this.state.spotifyAlbumUrl !== ""
-                    ? <div
-                        style={{
-                          alignSelf: "flex-end",
-                          marginRight: "20px",
-                          marginTop: "10px"
-                        }}
-                      >
-                        <SpotifyIframe
-                          spotifyAlbumUrl={this.state.spotifyAlbumUrl}
-                          title={this.state.spotifyAlbumUrl}
-                        />{" "}
-                      </div>
-                    : null}
                 </StyledTopContainer>
-              : false}
+              : null}
             <List>
               {this.showTracks()}
             </List>
@@ -228,6 +240,7 @@ const StyledTopContainer = styled.div`
 `;
 
 const StyledFlatButton = styled(FlatButton)`
+  color:black;
   margin: 5px;
 `;
 const SpotifyAlert = styled.div`
