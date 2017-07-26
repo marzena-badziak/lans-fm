@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import FlatButton from "material-ui/FlatButton";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 
 class LoginInfo extends Component {
   logOut = () => {
@@ -22,8 +21,7 @@ class LoginInfo extends Component {
           <input
             type="hidden"
             name="cb"
-            value={`http://localhost:3000/login?currentUrl=${this.props
-              .currentPageParams}`}
+            value={`http://localhost:3000/login`}
           />
           <FlatButton
             type="submit"
@@ -39,7 +37,7 @@ class LoginInfo extends Component {
     } else {
       return (
         <FlatButton
-          label="Logout from last.fm"
+          label={`Hi, ${this.props.session.username}`}
           labelStyle={{
             color: "white",
             fontWeight: "700",
@@ -64,9 +62,6 @@ const mapStateToProps = state => {
   return {
     session: state.session
   };
-};
-LoginInfo.propTypes = {
-  currentPageParams: PropTypes.string.isRequired
 };
 
 export default connect(mapStateToProps)(LoginInfo);

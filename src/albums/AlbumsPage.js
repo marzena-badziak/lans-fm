@@ -123,20 +123,18 @@ class AlbumsPage extends Component {
     );
   };
 
-  showListeners = () => {
-    if(this.props.artist.artist.stats) {
-      return(
-        <span>Listeners: {this.props.artist.artist.stats.listeners} </span>
-      )
-    } else {
-        return;
-    }
+  addSpaces = (number) => {
+    let remainder = number.length % 3;
+    return (number.substr(0, remainder) + number.substr(remainder).replace(/(\d{3})/g, ' $1')).trim();
   }
 
-  showPlaycount = () => {
+  showStats = () => {
     if(this.props.artist.artist.stats) {
       return(
-        <span>Play count: {this.props.artist.artist.stats.playcount} </span>
+        <div>
+          <span><strong>Listeners:</strong> {this.addSpaces(this.props.artist.artist.stats.listeners)} </span>
+          <span><strong>Playcount:</strong> {this.addSpaces(this.props.artist.artist.stats.playcount)} </span>
+        </div>
       )
     } else {
         return;
@@ -185,11 +183,16 @@ class AlbumsPage extends Component {
               size={200}
               style={{ marginTop: "10px" }}
             />
-            <h2 style={{ fontSize: "50px", marginLeft: "15px" }}>
-              {this.props.artist.artist.name}
-            </h2>
-            <div>{this.showListeners()}</div>
-            <div>{this.showPlaycount()}</div>
+            <div style={{
+              display: "flex",
+              flexDirection: "column"
+            }}
+            >
+              <h2 style={{ fontSize: "50px", marginLeft: "15px" }}>
+                {this.props.artist.artist.name}
+              </h2>
+              {this.showStats()}
+            </div>
 
             {this.state.displaySpotifyLogin
               ? <SpotifyLoginButton
