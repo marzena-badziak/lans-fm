@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import FlatButton from "material-ui/FlatButton";
 import { connect } from "react-redux";
+import MediaQuery from "react-responsive";
 
 class LoginInfo extends Component {
   logOut = () => {
@@ -29,22 +30,39 @@ class LoginInfo extends Component {
             labelStyle={{
               color: "white",
               fontWeight: "700",
-              marginRight: "8px"
+              marginRight: "0"
             }}
           />
         </form>
       );
     } else {
       return (
-        <FlatButton
-          label={`Hi, ${this.props.session.username}`}
-          labelStyle={{
-            color: "white",
-            fontWeight: "700",
-            marginRight: "8px"
-          }}
-          onClick={() => this.logOut()}
-        />
+        <div>
+          <MediaQuery query="(min-width: 481px)">
+            <FlatButton
+              label={`Hi, ${this.props.session.username}`}
+              labelStyle={{
+                color: "white",
+                fontWeight: "700",
+                marginRight: "0",
+                padding: "5px"
+              }}
+              onClick={() => this.logOut()}
+            />
+          </MediaQuery>
+          <MediaQuery query="(max-width: 480px)">
+            <FlatButton
+              label={`Hi, ${this.props.session.username}`}
+              labelStyle={{
+                color: "white",
+                fontWeight: "700",
+                marginRight: "-20px",
+                padding: "5px"
+              }}
+              onClick={() => this.logOut()}
+            />
+          </MediaQuery>
+        </div>
       );
     }
   };
