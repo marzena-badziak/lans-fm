@@ -172,7 +172,6 @@ class AlbumPage extends Component {
       }
     }
   }
-
   render() {
     return (
       <div>
