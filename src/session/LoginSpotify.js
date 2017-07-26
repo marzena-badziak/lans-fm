@@ -1,6 +1,5 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { connect } from "react-redux";
-import { Router, Route, IndexRoute, hashHistory } from "react-router";
 import { withRouter } from "react-router";
 
 class LoginSpotify extends Component {
@@ -18,7 +17,7 @@ class LoginSpotify extends Component {
       this.props.dispatch({
         type: "SPOTIFY_LOGIN",
         spotifyAccessToken: token,
-        spotifyExpiresIn: Date.now() + 1000 * parseInt(expires)
+        spotifyExpiresIn: Date.now() + 1000 * parseInt(expires, 10)
       });
     } else {
     }

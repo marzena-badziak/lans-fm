@@ -49,9 +49,9 @@ export default class YouTubeLogic {
   };
   yTDurationToSeconds = duration => {
     let match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-    let hours = parseInt(match[1]) || 0;
-    let minutes = parseInt(match[2]) || 0;
-    let seconds = parseInt(match[3]) || 0;
+    let hours = parseInt(match[1], 10) || 0;
+    let minutes = parseInt(match[2], 10) || 0;
+    let seconds = parseInt(match[3], 10) || 0;
     return hours * 3600 + minutes * 60 + seconds;
   };
   scrobbleYouTubeVideo = (artist, title, timestamp, duration) => {
