@@ -1,6 +1,5 @@
 import axios from "axios";
 // import { connect } from "react-redux";
-
 export class SpotifyLogic {
   constructor(spotifyAccessToken, setSpotifyUrlCallback) {
     this.setSpotifyUrlCallback = setSpotifyUrlCallback;
