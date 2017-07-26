@@ -88,6 +88,27 @@ class AlbumsPage extends Component {
       "/" + this.replaceSpacesWithDashes(this.props.params.artistChosen)
     );
   };
+
+  showListeners = () => {
+    if(this.props.artist.artist.stats) {
+      return(
+        <span>Listeners: {this.props.artist.artist.stats.listeners}</span>
+      )
+    } else {
+        return;
+    }
+  }
+
+  showPlaycount = () => {
+    if(this.props.artist.artist.stats) {
+      return(
+        <span>Playcount: {this.props.artist.artist.stats.playcount}</span>
+      )
+    } else {
+        return;
+    }
+  }
+
   render() {
     return (
       <div>
@@ -130,6 +151,8 @@ class AlbumsPage extends Component {
             <h2 style={{ fontSize: "50px", marginLeft: "15px" }}>
               {this.props.artist.artist.name}
             </h2>
+            <div>{this.showListeners()}</div>
+            <div>{this.showPlaycount()}</div>
           </div>
 
           <h3 style={{ display: "block", margin: "0" }}>Albums:</h3>
@@ -161,7 +184,7 @@ const SearchResultsContainer = styled.div`
   align-content: flex-start;
   float: none;
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 20px 0-
 `;
 const mapStateToProps = state => {
   return {
