@@ -21,7 +21,8 @@ class ArtistTile extends Component {
   getAlbums = e => {
     e.preventDefault();
     this.props.router.push(
-      this.props.params.artistName +
+      "/" +
+        this.replaceSpacesWithDashes(this.props.params.artistName) +
         "/" +
         this.replaceSpacesWithDashes(this.props.name)
     );
