@@ -1,24 +1,25 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-export class SpotifyIframe extends Component {
+export class SpotifyFollowIframe extends Component {
   render() {
     return (
       <iframe
         src={
-          "https://open.spotify.com/embed?uri=" +
+          "https://embed.spotify.com/follow/1/?uri=" +
           this.props.spotifyUri +
-          "&theme=white"
+          "&theme=light&size=basic"
         }
         width={this.props.width}
         height={this.props.height}
         frameBorder="0"
         allowTransparency="true"
+        scrolling="no"
         title={this.props.title}
       />
     );
   }
 }
-SpotifyIframe.propTypes = {
+SpotifyFollowIframe.propTypes = {
   title: PropTypes.string,
-  spotifyUri: PropTypes.string
+  spotifyAlbumUri: PropTypes.string
 };

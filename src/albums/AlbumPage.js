@@ -14,24 +14,23 @@ import { scrobbleAlbum } from "./scrobble-album";
 import { SpotifyIframe } from "./SpotifyIframe";
 import axios from "axios";
 import Track from "./Track";
-import { StringUtils } from "../lib/utils";
+import { LansFmUtils } from "../lib/utils";
 import SpotifyLogic from "../lib/spotify";
 import Navigation from "../user-interface/Navigation";
 import FontAwesome from "react-fontawesome";
+import SpotifyLoginButton from "./SpotifyLoginButton";
 
 class AlbumPage extends Component {
   constructor(props) {
     super(props);
 
-    let displaySpotifyLogin =
-      this.props.session.spotifyAccessToken === "" ||
-      (this.props.session.spotifyExpiresIn !== "" &&
-        this.props.session.spotifyExpiresIn < Date.now())
-        ? true
-        : false;
+    let displaySpotifyLogin = LansFmUtils.verifySpotifyToken(
+      this.props.session.spotifyAccessToken,
+      this.props.session.spotifyExpiresIn
+    );
 
     this.state = {
-      spotifyAlbumUrl: "",
+      spotifyAlbumUri: "",
       displaySpotifyLogin: displaySpotifyLogin,
       open: {},
       left: {},
@@ -40,11 +39,11 @@ class AlbumPage extends Component {
 
     this.spotifyLogic = new SpotifyLogic(
       this.props.session.spotifyAccessToken,
-      this.setSpotifyAlbumUrl
+      this.setSpotifyAlbumUri
     );
 
     if (displaySpotifyLogin) {
-      let stateString = StringUtils.randomString(32);
+      let stateString = LansFmUtils.randomString(32);
       this.spotifyStateString = stateString;
       let spotifyAuthorizationUrl = this.props.dispatch({
         type: "SPOTIFY_GENERATE_STATE",
@@ -52,21 +51,14 @@ class AlbumPage extends Component {
       });
     }
     if (!displaySpotifyLogin) {
-      this.spotifyLogic.getSpotifyAlbumId(
+      this.spotifyLogic.getSpotifyAlbumUri(
         this.props.params.albumName,
         this.props.params.artistChosen
       );
     }
   }
-  setSpotifyAlbumUrl = url => {
-    this.setState({ spotifyAlbumUrl: url });
-  };
-
-  saveCurrentPath = e => {
-    this.props.dispatch({
-      type: "SAVE_CURRENT_PATH",
-      currentPath: this.props.location.pathname
-    });
+  setSpotifyAlbumUri = uri => {
+    this.setState({ spotifyAlbumUri: uri });
   };
 
   openMenu = (i, left, top) => {
@@ -109,12 +101,18 @@ class AlbumPage extends Component {
     return str.replace(/-/g, " ");
   }
   displaySpotify() {
-    if (this.props.session.spotifyAccessToken) {
-      if (this.state.spotifyAlbumUrl) {
+    if (
+      this.props.session.spotifyAccessToken &&
+      this.props.session.spotifyExpiresIn > Date.now()
+    ) {
+      if (this.state.spotifyAlbumUri) {
         return (
           <SpotifyIframe
-            spotifyAlbumUrl={this.state.spotifyAlbumUrl}
-            title={this.state.spotifyAlbumUrl}
+            spotifyUri={this.state.spotifyAlbumUri}
+            title={this.state.spotifyUri}
+            width="300"
+            height="300"
+            theme="white"
           />
         );
       } else {
@@ -124,27 +122,9 @@ class AlbumPage extends Component {
       }
     } else {
       return (
-        <StyledFlatButton
-          label="Quick listen on Spotify"
-          labelStyle={{
-            fontSize: "12px",
-            padding: "3px 5px"
-          }}
-          onClick={e => this.saveCurrentPath(e)}
-          backgroundColor="#1db954"
-          hoverColor="#4bdf80"
-          icon={
-            <FontAwesome
-              className="fa fa-spotify"
-              name="options"
-              size="lg"
-              aria-hidden="true"
-            />
-          }
-          href={
-            "https://accounts.spotify.com/authorize?client_id=7cd65f9a6005482cb3830530b1e52b16&response_type=token&redirect_uri=http://localhost:3000/loginSpotify/&state=" +
-            this.spotifyStateString
-          }
+        <SpotifyLoginButton
+          spotifyStateString={this.spotifyStateString}
+          redirectUrl={this.props.location.pathname}
         />
       );
     }
@@ -239,10 +219,6 @@ const StyledTopContainer = styled.div`
   justify-content: space-between;
 `;
 
-const StyledFlatButton = styled(FlatButton)`
-  color:black;
-  margin: 5px;
-`;
 const SpotifyAlert = styled.div`
   margin-right: 50px;
   margin-top: 20px;
