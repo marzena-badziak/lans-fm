@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import onClickOutside from "react-onclickoutside";
-
+// co tu sie dzieje?
 class TrackList extends Component {
   handleClickOutside = e => {
     this.props.openMenu(null, 0, 0, true);

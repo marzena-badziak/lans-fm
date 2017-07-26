@@ -107,6 +107,7 @@ class AlbumsPage extends Component {
 
   goBackToSearchResults = e => {
     e.preventDefault();
+    // console.log
     console.log("back to search");
     this.props.router.push(
       "/" + this.replaceSpacesWithDashes(this.props.params.artistName)
@@ -152,9 +153,11 @@ class AlbumsPage extends Component {
           <FlatButton
             label="Search Similar"
             onClick={e => this.fetchSimilarArtist(e)}
+            {/* inline style */}
             style={{ margin: "5px" }}
             backgroundColor="#7a3e5e"
             hoverColor="plum"
+            {/* inline style x2 */}
             style={{ position: "relative", float: "right" }}
             labelStyle={{
               fontSize: "12px",
@@ -162,6 +165,7 @@ class AlbumsPage extends Component {
             }}
           />
           <div
+            {/* inline style */}
             style={{
               display: "flex",
               flexDirection: "row",
@@ -175,25 +179,29 @@ class AlbumsPage extends Component {
           >
             <Avatar
               src={
+                {/* to powinno byc w funkcji */}
                 this.props.artist.artist.image
                   ? this.props.artist.artist.image[2]["#text"]
                   : ""
               }
               alt={`${this.props.artist.artist.name} foto`}
               size={200}
+              {/* inline style */}
               style={{ marginTop: "10px" }}
             />
+            {/* inline style */}
             <div style={{
               display: "flex",
               flexDirection: "column"
             }}
             >
+              {/* inline style */}
               <h2 style={{ fontSize: "50px", marginLeft: "15px" }}>
                 {this.props.artist.artist.name}
               </h2>
               {this.showStats()}
             </div>
-
+            {/* to powinno byc w funkcji */}
             {this.state.displaySpotifyLogin
               ? <SpotifyLoginButton
                   spotifyStateString={this.spotifyStateString}
@@ -216,10 +224,11 @@ class AlbumsPage extends Component {
                   </div>
                 : null}
           </div>
-
+          {/* inline style */}
           <h3 style={{ display: "block", margin: "0" }}>Albums:</h3>
 
           <SearchResultsContainer
+            {/* inline style */}
             style={{
               display: "flex",
               flexDirection: "row",

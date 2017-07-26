@@ -72,6 +72,7 @@ class Track extends Component {
           onClick={e => this.changeDropdownState(e)}
           rightIcon={
             <div
+            {/* inline style */}
               style={{
                 width: "100px",
                 display: "flex",
@@ -87,6 +88,7 @@ class Track extends Component {
                   .format("mm:ss")}
               </span>
               <span
+               {/* inline style */}
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -99,14 +101,17 @@ class Track extends Component {
                   name="options"
                   size="lg"
                   aria-hidden="true"
+                  {/* inline style */}
                   style={{ paddingLeft: "12px" }}
                 />
               </span>
             </div>
           }
+          {/* inline style */}
           style={{ textAlign: "left" }}
         />
         <List
+          {/* inline style */}
           style={{
             display: `${this.props.open}`,
             position: "absolute",
