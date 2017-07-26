@@ -1,11 +1,5 @@
 import React, { Component } from "react";
-import {
-  Router,
-  Route,
-  IndexRoute,
-  browserHistory,
-  hashHistory
-} from "react-router";
+import { Router, Route, IndexRoute, browserHistory } from "react-router";
 import "./App.css";
 import Home from "./Home";
 import Layout from "./Layout";

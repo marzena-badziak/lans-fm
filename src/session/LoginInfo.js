@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import styled from "styled-components";
+import MediaQuery from "react-responsive";
 
 class LoginInfo extends Component {
   constructor(props) {
@@ -39,7 +40,7 @@ handleChange = (event, index, value) => this.setState({value});
             labelStyle={{
               color: "white",
               fontWeight: "700",
-              marginRight: "8px"
+              marginRight: "0"
             }}
           />
         </form>
