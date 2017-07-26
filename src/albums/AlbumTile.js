@@ -1,12 +1,9 @@
 import React, { Component } from "react";
-import { Card, CardActions, CardMedia, CardTitle } from "material-ui/Card";
-import styled from "styled-components";
-import FlatButton from "material-ui/FlatButton";
-import propTypes from "prop-types";
-import { connect } from "react-redux";
-import { withRouter } from "react-router";
-import FontAwesome from "react-fontawesome";
 import { fetchSongListAndScrobbleAlbum } from "./scrobble-album";
+import { connect } from "react-redux";
+import Tile from "../user-interface/Tile";
+import { withRouter } from "react-router";
+import propTypes from "prop-types";
 
 class AlbumTile extends Component {
   setImage = () => {
@@ -16,14 +13,25 @@ class AlbumTile extends Component {
       return "https://lastfm-img2.akamaized.net/i/u/174s/c6f59c1e5e7240a4c0d427abd71f3dbb.png";
     }
   };
+  replaceSpacesWithDashes(str) {
+    return str.replace(/\s+/g, "-");
+  }
   openAlbum = () => {
     return this.props.router.push(
-      `${this.props.params.artistName}/${this.props.params.artistChoosen}/${this
-        .props.title}`
+      "/" +
+        this.replaceSpacesWithDashes(this.props.params.artistName) +
+        "/" +
+        this.replaceSpacesWithDashes(this.props.params.artistChosen) +
+        "/" +
+        this.replaceSpacesWithDashes(this.props.title)
     );
   };
 
   scrobbleAlbum = e => {
+    if (this.props.session.sessionKey === "") {
+      alert("You are not logged on last.fm, please login and try again.");
+      return;
+    }
     this.props.dispatch(
       fetchSongListAndScrobbleAlbum({
         artist: this.props.artist,
@@ -32,63 +40,33 @@ class AlbumTile extends Component {
       })
     );
   };
-
   render() {
+    const image = this.setImage();
     return (
-      <StyledAlbumCard>
-        <AlbumImage
-          onClick={() => this.openAlbum()}
-          overlay={
-            <CardTitle title={this.props.title} subtitle={this.props.artist} />
-          }
-        >
-          <img src={this.setImage()} alt={`${this.props.title} cover`} />
-        </AlbumImage>
-        <CardActions>
-          <FlatButton
-            label="Scrobble"
-            backgroundColor="plum"
-            onClick={() => this.scrobbleAlbum()}
-            hoverColor="#ccd4d4"
-          />
-          <FlatButton
-            label="Show Album"
-            backgroundColor="hotpink"
-            onClick={() => this.openAlbum()}
-            hoverColor="#ccd4d4"
-          />
-        </CardActions>
-      </StyledAlbumCard>
+      <Tile
+        opener={() => this.openAlbum}
+        cardTitle={this.props.title}
+        subtitle={this.props.artist}
+        imageSrc={image}
+        imageAlt={`${this.props.title} cover`}
+        firstButtonOnClick={() => this.scrobbleAlbum}
+        secondButtonOnClick={() => this.openAlbum}
+        labelFirst="Scrobble"
+        labelSecond="Open Album"
+      />
     );
   }
 }
-const StyledAlbumCard = styled(Card)`
-${"" /* overflow: hidden;
-position: relative;
-display: inline-block; */}
-width: 260px;
-margin 0 auto;
-margin-top: 30px;
-
-`;
-const AlbumImage = styled(CardMedia)`
-
-transition: .2s all;
-
-&:hover{
-  -webkit-filter: brightness(80%)
-}
-`;
-
-AlbumTile.propTypes = {
-  title: propTypes.string,
-  image: propTypes.string,
-  artist: propTypes.string
-};
 
 const mapStateToProps = state => {
   return {
     session: state.session
   };
 };
+AlbumTile.propTypes = {
+  title: propTypes.string,
+  image: propTypes.string,
+  artist: propTypes.string
+};
+
 export default connect(mapStateToProps)(withRouter(AlbumTile));

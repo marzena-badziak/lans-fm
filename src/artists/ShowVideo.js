@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 export class ShowVideo extends Component {
   render() {
-    var videoFound = "";
+    let videoFound = "";
     if (this.props.videoFound === false) {
       videoFound = false;
     } else {
@@ -33,8 +33,8 @@ export class ShowVideo extends Component {
 
 const StyledVideoContainer = styled.div`
   z-index: 10;
-  position: relative;
-  top: -302px;
+  position: absolute;
+  top: 0;
   left: 0;
 `;
 const NoVideoFoundMessage = styled.div`
@@ -49,7 +49,8 @@ const NoVideoFoundMessage = styled.div`
 
 ShowVideo.propTypes = {
   videoId: propTypes.string.isRequired,
-  name: propTypes.string.isRequired
+  artist: propTypes.string.isRequired,
+  videoFound: propTypes.string.isRequired
 };
 
 export default ShowVideo;

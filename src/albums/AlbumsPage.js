@@ -1,29 +1,61 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  getAlbums,
-  getArtistInfo,
-  searchArtist
-} from "../artists/search-actions.js";
+import { getAlbums, getArtistInfo } from "./search-actions.js";
+import { searchArtist } from "../artists/search-actions.js";
 import AlbumTile from "./AlbumTile";
 import styled from "styled-components";
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
 import { withRouter } from "react-router";
+import { LansFmUtils } from "../lib/utils";
 import FlatButton from "material-ui/FlatButton";
+import Navigation from "../user-interface/Navigation";
+import { SpotifyIframe } from "./SpotifyIframe";
+import { SpotifyFollowIframe } from "./SpotifyFollowIframe";
+import { SpotifyLogic } from "../lib/spotify";
+import SpotifyLoginButton from "./SpotifyLoginButton";
 
 class AlbumsPage extends Component {
+  constructor(props) {
+    super(props);
+
+    let displaySpotifyLogin = LansFmUtils.verifySpotifyToken(
+      this.props.session.spotifyAccessToken,
+      this.props.session.spotifyExpiresIn
+    );
+
+    this.state = {
+      spotifyArtistUri: "",
+      displaySpotifyLogin: displaySpotifyLogin
+    };
+    this.spotifyLogic = new SpotifyLogic(
+      this.props.session.spotifyAccessToken,
+      this.setSpotifyArtistUri
+    );
+
+    if (displaySpotifyLogin) {
+      let stateString = LansFmUtils.randomString(32);
+      this.spotifyStateString = stateString;
+      let spotifyAuthorizationUrl = this.props.dispatch({
+        type: "SPOTIFY_GENERATE_STATE",
+        spotifyStateString: stateString
+      });
+    }
+    if (!displaySpotifyLogin) {
+      this.spotifyLogic.getSpotifyArtistUri(this.props.params.artistChosen);
+    }
+  }
   fetchAlbums = e => {
     this.props.dispatch(
       getAlbums({
-        data: this.props.params.artistChoosen
+        data: this.replaceDashWithSpace(this.props.params.artistChosen)
       })
     );
   };
   fetchArtist = e => {
     this.props.dispatch(
       getArtistInfo({
-        artist: this.props.params.artistChoosen
+        artist: this.replaceDashWithSpace(this.props.params.artistChosen)
       })
     );
   };
@@ -31,7 +63,7 @@ class AlbumsPage extends Component {
     this.fetchAlbums();
     this.fetchArtist();
   }
-  displayAvaliableAlbums(album, i) {
+  displayAvaliableAlbums = (album, i) => {
     if (!(album.name === "(null)")) {
       return (
         <AlbumTile
@@ -42,7 +74,7 @@ class AlbumsPage extends Component {
         />
       );
     }
-  }
+  };
   mapAlbums() {
     return this.props.albums.albums.album.map((album, i) => {
       return this.displayAvaliableAlbums(album, i);
@@ -60,70 +92,83 @@ class AlbumsPage extends Component {
       return this.mapAlbums();
     } else {
       if (this.props.albums.message === "Searching") {
-        return this.displayPlaceHolder(<CircularProgress />);
+        return this.displayPlaceHolder(<CircularProgress color="#aa8899" />);
       } else {
         return this.displayPlaceHolder(this.props.albums.message);
       }
     }
   }
+  replaceSpacesWithDashes(str) {
+    return str.replace(/\s+/g, "-");
+  }
+  replaceDashWithSpace(str) {
+    return str.replace(/-/g, " ");
+  }
 
   goBackToSearchResults = e => {
     e.preventDefault();
     console.log("back to search");
-    this.props.router.push(this.props.params.artistName);
+    this.props.router.push(
+      "/" + this.replaceSpacesWithDashes(this.props.params.artistName)
+    );
   };
   fetchSimilarArtist = e => {
     this.props.dispatch(
       searchArtist({
-        artist: this.props.params.artistChoosen
+        artist: this.props.params.artistChosen
       })
     );
-    this.props.router.push(this.props.params.artistChoosen);
+    this.props.router.push(
+      "/" + this.replaceSpacesWithDashes(this.props.params.artistChosen)
+    );
+  };
+
+  addSpaces = (number) => {
+    let remainder = number.length % 3;
+    return (number.substr(0, remainder) + number.substr(remainder).replace(/(\d{3})/g, ' $1')).trim();
+  }
+
+  showStats = () => {
+    if(this.props.artist.artist.stats) {
+      return(
+        <div>
+          <span><strong>Listeners:</strong> {this.addSpaces(this.props.artist.artist.stats.listeners)} </span>
+          <span><strong>Playcount:</strong> {this.addSpaces(this.props.artist.artist.stats.playcount)} </span>
+        </div>
+      )
+    } else {
+        return;
+    }
+  }
+
+  setSpotifyArtistUri = uri => {
+    this.setState({ spotifyArtistUri: uri });
   };
   render() {
     return (
       <div>
-        <div
-          style={{
-            position: "absolute",
-            left: "0",
-            display: "block",
-            margin: "10px"
-          }}
-        >
-          <ul
-            style={{
-              display: "inline-block",
-              listStyleType: "none",
-              margin: "2px",
-              padding: "0",
-              color: "#aa8899",
-              fontWeight: "bold"
-            }}
-          >
-            <li
-              style={{
-                display: "inline",
-                margin: "0 auto",
-                marginTop: "10px",
-                cursor: "pointer"
-              }}
-              onClick={this.goBackToSearchResults}
-            >
-              / Search results: {this.props.params.artistName}
-            </li>
-          </ul>
-        </div>
-
+        <Navigation artistName={this.props.params.artistName} />
         <div className="container">
+          <FlatButton
+            label="Search Similar"
+            onClick={e => this.fetchSimilarArtist(e)}
+            style={{ margin: "5px" }}
+            backgroundColor="#7a3e5e"
+            hoverColor="plum"
+            style={{ position: "relative", float: "right" }}
+            labelStyle={{
+              fontSize: "12px",
+              padding: "3px 5px"
+            }}
+          />
           <div
             style={{
               display: "flex",
-              // flexDirection: "row",
-              // flexWrap: "wrap",
-              justifyContent: "flex-start",
-              alignItems: "flex-end",
-              alignContent: "flex-start",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              alignItems: "center",
+              alignContent: "center",
               margin: "10px",
               marginTop: "30px"
             }}
@@ -132,23 +177,46 @@ class AlbumsPage extends Component {
               src={
                 this.props.artist.artist.image
                   ? this.props.artist.artist.image[2]["#text"]
-                  : false
+                  : ""
               }
               alt={`${this.props.artist.artist.name} foto`}
               size={200}
-              style={{ marginTop: "40px" }}
+              style={{ marginTop: "10px" }}
             />
-            <h2 style={{ fontSize: "50px" }}>
-              {this.props.artist.artist.name}
-            </h2>
-            <FlatButton
-              label="Search Similar"
-              onClick={e => this.fetchSimilarArtist(e)}
-              style={{ margin: "15px" }}
-              backgroundColor="darkgrey"
-              hoverColor="grey"
-            />
+            <div style={{
+              display: "flex",
+              flexDirection: "column"
+            }}
+            >
+              <h2 style={{ fontSize: "50px", marginLeft: "15px" }}>
+                {this.props.artist.artist.name}
+              </h2>
+              {this.showStats()}
+            </div>
+
+            {this.state.displaySpotifyLogin
+              ? <SpotifyLoginButton
+                  spotifyStateString={this.spotifyStateString}
+                  redirectUrl={this.props.location.pathname}
+                />
+              : this.state.spotifyArtistUri
+                ? <div>
+                    <SpotifyFollowIframe
+                      spotifyUri={this.state.spotifyArtistUri}
+                      title={this.state.spotifyArtistUri}
+                      width="200px"
+                      height="30px"
+                    />
+                    <SpotifyIframe
+                      spotifyUri={this.state.spotifyArtistUri}
+                      title={this.state.spotifyArtistUri}
+                      width="300"
+                      height="300"
+                    />
+                  </div>
+                : null}
           </div>
+
           <h3 style={{ display: "block", margin: "0" }}>Albums:</h3>
 
           <SearchResultsContainer
@@ -184,7 +252,8 @@ const mapStateToProps = state => {
   return {
     results: state.similarArtists.artistsSimilar,
     albums: state.albums,
-    artist: state.artist
+    artist: state.artist,
+    session: state.session
   };
 };
 export default connect(mapStateToProps)(withRouter(AlbumsPage));

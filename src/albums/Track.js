@@ -5,14 +5,16 @@ import Divider from "material-ui/Divider";
 import moment from "moment";
 import { connect } from "react-redux";
 import { List, ListItem } from "material-ui/List";
-import {scrobbleSingleTrack} from "./scrobble-album.js";
+import { scrobbleSingleTrack } from "./scrobble-album.js";
+import PropTypes from "prop-types";
+
 class Track extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      open: "none",
-      scrobble: 0
+      open: props.open,
+      isScrobbled: false
     };
   }
 
@@ -21,19 +23,50 @@ class Track extends Component {
   };
 
   scrobbleTrack = e => {
-      scrobbleSingleTrack({
-        session: this.props.session,
-        track: this.props.track
-      })
+    if (this.props.session.sessionKey === "") {
+      alert("You are not logged on last.fm, please login and try again.");
+      return;
+    }
+    scrobbleSingleTrack({
+      session: this.props.session,
+      track: this.props.track
+    });
+    this.setState({
+      isScrobbled: true
+    });
+    this.props.openMenu(this.props.i, 0, 0);
   };
 
+  closeScrobbleInfo = e => {
+    this.setState({
+      isScrobbled: false
+    });
+  };
+
+  scrobbleInfo = () => {
+    if(this.state.isScrobbled === false) {
+      return;
+    } else {
+      return (
+        <div className="alert alert-success" role="alert">
+          Scrobbled
+          <button
+            type="button"
+            className="close"
+            ariaLabel="Close"
+            onClick={this.closeScrobbleInfo}
+          >
+            <span ariaHidden="true">&times;</span>
+          </button>
+        </div>
+      );
+    }
+  };
 
   render() {
     return (
       <div key={this.props.i}>
-      <div className="alert alert-success alert-dismissible" role="alert">
-        Scrobbled<button type="button" className="close" dataDismiss="alert" ariaLabel="Close"><span ariaHidden="true">&times;</span></button>
-      </div>
+        {this.scrobbleInfo()}
         <ListItem
           primaryText={`${this.props.i + 1}. ${this.props.track.name}`}
           onClick={e => this.changeDropdownState(e)}
@@ -45,6 +78,7 @@ class Track extends Component {
                 justifyContent: "space-around",
                 alignItems: "center"
               }}
+              id={this.props.i}
             >
               <span>
                 {moment()
@@ -88,20 +122,21 @@ class Track extends Component {
           </DropDownHeader>
           <Divider />
           <StyledDropDownItem onClick={() => this.scrobbleTrack()}>
-              {" "}<FontAwesome
+            <a>
+              <FontAwesome
                 className="fa fa-lastfm"
                 name="options"
                 size="lg"
                 aria-hidden="true"
               />
-              {"  "}
               Scrobble
+            </a>
           </StyledDropDownItem>
           <Divider />
           <StyledDropDownItem>
             <a
               href={`https://www.youtube.com/results?search_query=${this.props
-                .track.name}`}
+                .artist}+${this.props.track.name}`}
               target="blank"
             >
               {" "}<FontAwesome
@@ -117,8 +152,8 @@ class Track extends Component {
           <Divider />
           <StyledDropDownItem>
             <a
-              href={`https://open.spotify.com/search/results/${this.props.track
-                .name}`}
+              href={`https://open.spotify.com/search/results/${this.props
+                .artist} ${this.props.track.name}`}
               target="blank"
             >
               {" "}<FontAwesome
@@ -163,4 +198,12 @@ const mapStateToProps = state => {
     session: state.session
   };
 };
+
+Track.propTypes = {
+  track: PropTypes.object.isRequired,
+  i: PropTypes.number.isRequired,
+  left: PropTypes.number,
+  top: PropTypes.number
+};
+
 export default connect(mapStateToProps)(Track);

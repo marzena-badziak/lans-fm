@@ -4,13 +4,15 @@ import styled from "styled-components";
 import AppBar from "material-ui/AppBar";
 import { connect } from "react-redux";
 import LoginInfo from "../session/LoginInfo";
+import injectTapEventPlugin from "react-tap-event-plugin";
 
+injectTapEventPlugin();
 class Navbar extends Component {
   render() {
     return (
       <StyledAppBar
         style={{ background: "none" }}
-        iconElementLeft={<StyledLogo href="#">LansFm</StyledLogo>}
+        iconElementLeft={<StyledLogo href="/">LansFm</StyledLogo>}
         title={
           <StyledSearchBar
             boxShadow=" 0px 0px 0px 0px rgba(0, 0, 0, 0)"
@@ -21,7 +23,7 @@ class Navbar extends Component {
           <LoginInfo currentPageParams={this.props.urlParams} />
         }
         iconStyleLeft={{ marginTop: "0px" }}
-        iconStyleRight={{ marginTop: "0px" }}
+        iconStyleRight={{ marginTop: "0px", marginRight: "0px", padding: "0" }}
         showMenuIconButton={true}
       />
     );
@@ -48,7 +50,6 @@ const StyledSearchBar = styled(SearchBar)`
 const StyledAppBar = styled(AppBar)`
   display: flex;
   align-items: center;
-  ${"" /* align-items: stretch; */}
   padding: 3px;
 
   /* Smartphones (portrait and landscape) ----------- */
@@ -60,21 +61,6 @@ const StyledAppBar = styled(AppBar)`
   @media only screen and (max-width : 320px) {
     padding: 2px;
   }
-
-`;
-
-const StyledForm = styled.form`
-  /* Smartphones (portrait and landscape) ----------- */
-  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-    margin: 0;
-    padding: 0;
-  }
-
-  /* Smartphones (portrait) ----------- */
-  @media only screen and (max-width: 320px) {
-    margin: 0;
-    padding: 0;
-  }
 `;
 
 const StyledLogo = styled.a`
@@ -84,7 +70,7 @@ const StyledLogo = styled.a`
   padding: 0;
   margin: -3px 0 15px 30px;
   ${"" /* margin-left: 30px; */} &:hover {
-    color: #e7f7ff;
+    color: #333;
     text-decoration: none;
   }
   /* Smartphones (portrait and landscape) ----------- */

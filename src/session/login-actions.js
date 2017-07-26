@@ -19,7 +19,6 @@ export const loginAction = token => {
     axios
       .get(`${lastfmRequestURLMaker(loginOptions)}`)
       .then(function(response) {
-        console.log(response);
         dispatch({
           type: "LOGIN_SUCCESS",
           apiSig: loginOptions.api_sig,

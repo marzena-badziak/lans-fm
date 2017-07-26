@@ -1,19 +1,22 @@
-import React, { Component } from "react";
 import axios from "axios";
-import { connect } from "react-redux";
 import { lastfmKey } from "../lib/lastfm-api";
 import md5 from "md5";
 
-var nowPlayingArtist;
-var nowPlayingTitle;
+export default class YouTubeLogic {
+  constructor(youTubeFlagsCallback, lastFMSessionKey) {
+    this.youTubeFlagsCallback = youTubeFlagsCallback;
+    this.lastFMSessionKey = lastFMSessionKey;
 
-export default class YouTubeFunctions extends Component {
+    this.nowPlayingArtist = "";
+    this.nowPlayingTitle = "";
+  }
+
   getYoutubeVideoId = searchRequest => {
     axios
       .get(searchRequest)
       .then(response => {
-        var vId = response.data.items[0].id.videoId;
-        this.props.youTubeFlagsCallback(vId, true, true);
+        let vId = response.data.items[0].id.videoId;
+        this.youTubeFlagsCallback(vId, true, true);
 
         axios
           .get(
@@ -23,7 +26,7 @@ export default class YouTubeFunctions extends Component {
               "&key=AIzaSyBdXp1WnmYGXXuDFybXxK_94awGD5Qm-Zw"
           )
           .then(resp => {
-            var duration = this.yTDurationToSeconds(
+            let duration = this.yTDurationToSeconds(
               resp.data.items[0].contentDetails.duration
             );
 
@@ -35,35 +38,34 @@ export default class YouTubeFunctions extends Component {
               defaultArtist: response.data.items[0].snippet.channelTitle
             });
 
-            nowPlayingTitle = title;
-            nowPlayingArtist = artist;
+            this.nowPlayingTitle = title;
+            this.nowPlayingArtist = artist;
             this.scrobbleYouTubeVideo(artist, title, timestamp, duration);
           });
       })
       .catch(err => {
-        this.props.youTubeFlagsCallback("", true, false);
+        this.youTubeFlagsCallback("", true, false);
       });
   };
   yTDurationToSeconds = duration => {
-    var match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-    var hours = parseInt(match[1]) || 0;
-    var minutes = parseInt(match[2]) || 0;
-    var seconds = parseInt(match[3]) || 0;
+    let match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+    let hours = parseInt(match[1], 10) || 0;
+    let minutes = parseInt(match[2], 10) || 0;
+    let seconds = parseInt(match[3], 10) || 0;
     return hours * 3600 + minutes * 60 + seconds;
   };
   scrobbleYouTubeVideo = (artist, title, timestamp, duration) => {
     setTimeout(() => {
-      if (nowPlayingArtist != artist || nowPlayingTitle != title) {
-        console.log("track won't be scrobbled");
+      if (this.nowPlayingArtist !== artist || this.nowPlayingTitle !== title) {
         return;
       }
-      var sig = md5(
+      let sig = md5(
         "api_key" +
           lastfmKey.api_key +
           "artist" +
           artist +
           "methodtrack.scrobblesk" +
-          this.props.lastFMSessionKey +
+          this.lastFMSessionKey +
           "timestamp" +
           timestamp +
           "track" +
@@ -82,31 +84,14 @@ export default class YouTubeFunctions extends Component {
             "&api_sig=" +
             sig +
             "&sk=" +
-            this.props.lastFMSessionKey +
+            this.lastFMSessionKey +
             "&api_key=" +
             lastfmKey.api_key
         )
         .then(response => {
-          console.log(response);
+          alert("Track scrobbled");
         })
-        .catch(err => {
-          console.log(err);
-        });
-    }, duration * 1000 / 3);
+        .catch(err => {});
+    }, duration * 1000 / 10);
   };
-
-  render() {
-    return null;
-  }
 }
-
-// const mapStateToProps = state => {
-//   return {
-//     results: state.search.artistsSimilar,
-//     artistEntered: state.search.artistEntered,
-//     message: state.search.message,
-//     session: state.session
-//   };
-// };
-
-//export default connect(mapStateToProps)(YouTubeFunctions);

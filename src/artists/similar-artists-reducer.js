@@ -11,12 +11,13 @@ const similarArtists = (
       return {
         ...state,
         message: "Searching: ",
-        artistEntered: action.artistEntered
+        artistEntered: action.artistEntered,
+        artistsSimilar: []
       };
     case "SEARCH_ARTIST_SUCCESS":
       return {
         ...state,
-        message: "Search results for: ",
+        message: "Artists similar to ",
         artistsSimilar: action.artistsSimilar
       };
     case "SEARCH_ARTIST_FAIL":

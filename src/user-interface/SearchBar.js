@@ -5,7 +5,6 @@ import propTypes from "prop-types";
 import { withRouter } from "react-router";
 import styled from "styled-components";
 import FontAwesome from "react-fontawesome";
-import MediaQuery from "react-responsive";
 
 class SearchBar extends Component {
   constructor(props) {
@@ -15,6 +14,7 @@ class SearchBar extends Component {
       searchValue: ""
     };
   }
+
   setSearchValue = e => {
     this.setState({
       searchValue: e.target.value
@@ -28,8 +28,14 @@ class SearchBar extends Component {
         artist: this.state.searchValue
       })
     );
-    this.props.router.push(this.state.searchValue);
+    this.props.router.push(
+      "/" + this.replaceSpacesWithDashes(this.state.searchValue)
+    );
   };
+  replaceSpacesWithDashes(str) {
+    return str.replace(/\s+/g, "-");
+  }
+
   render() {
     return (
       <form onSubmit={e => this.fetchArtist(e)}>
@@ -40,13 +46,13 @@ class SearchBar extends Component {
             type="text"
             value={this.state.searchValue}
             placeholder="Your favourite artist"
-          />{" "}
+          />
           <StyledSearchSpan onClick={e => this.fetchArtist(e)}>
-              <FontAwesome
-                className="fa fa-search"
-                name="search"
-                style={{ textShadow: "0 1px 0 rgba(0, 0, 0, 0.1)" }}
-              />
+            <StyledFontAwesome
+              className="fa fa-search"
+              name="search"
+              aria-label="Search"
+            />
           </StyledSearchSpan>
         </StyledSearchBar>
       </form>
@@ -62,18 +68,30 @@ const StyledSearchBar = styled.div`
   font-size: 20px;
   width: ${props => props.width};
   margin: 0 auto;
+  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    font-size: 18px;
+  }
+
+  /* Smartphones (portrait) ----------- */
+  @media only screen and (max-width: 320px) {
+    font-size: 16px;
+  }
 `;
 const StyledSearchSpan = styled.div`
   color: white;
   display: flex;
   height: inherit;
   align-items: center;
-  padding: 0 15px;
+  padding: 0 20px;
   border-radius: 0px 10px 10px 0px;
   border: 1px solid #000000;
   background-color: #dd8899;
   cursor: pointer;
 `;
+const StyledFontAwesome = styled(FontAwesome)`
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+`;
+
 const StyledSearchInput = styled.input`
   color: black;
   width: 100%;

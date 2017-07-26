@@ -1,13 +1,28 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import { searchArtist } from "../artists/search-actions.js";
 import ArtistTile from "./ArtistTile.js";
 import propTypes from "prop-types";
 import CircularProgress from "material-ui/CircularProgress";
 
 class ArtistsGrid extends Component {
+  fetchArtist = e => {
+    this.props.dispatch(
+      searchArtist({
+        artist: this.props.params.artistName
+      })
+    );
+  };
+
+  componentDidMount() {
+    this.fetchArtist();
+  }
+  replaceDashWithSpace(str) {
+    return str.replace(/-/g, " ");
+  }
   render() {
-    var grid = [];
+    let grid = [];
     this.props.results.forEach(artist => {
       grid.push(
         <ArtistTile
@@ -17,18 +32,19 @@ class ArtistsGrid extends Component {
         />
       );
     });
+
     return (
       <div>
-        <h2 style={{ paddingBottom: "20px" }}>
-          {this.props.message} {this.props.artistEntered}
-        </h2>
+        <StyledMessage>
+          {this.props.message}{" "}
+          <strong>{this.replaceDashWithSpace(this.props.artistEntered)}</strong>
+        </StyledMessage>
+
         {this.props.message === "Searching: "
           ? <StyledCircularProgress color="#aa8899" />
           : false}
-        <SearchResultsContainer className="row">
-          <dbody>
-            {grid}
-          </dbody>
+        <SearchResultsContainer className="container">
+          {grid}
         </SearchResultsContainer>
       </div>
     );
@@ -42,10 +58,10 @@ const SearchResultsContainer = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   align-content: flex-start;
-  float: none;
   margin: 0 auto;
-  padding: 20px 0;
 `;
+
+const StyledMessage = styled.h2`padding-bottom: 20px;`;
 const StyledCircularProgress = styled(CircularProgress)`
   display: block;
   margin: 0 auto;
@@ -61,6 +77,7 @@ const mapStateToProps = state => {
 };
 ArtistsGrid.propTypes = {
   results: propTypes.array,
-  artistEntered: propTypes.string
+  artistEntered: propTypes.string,
+  message: propTypes.string
 };
 export default connect(mapStateToProps)(ArtistsGrid);

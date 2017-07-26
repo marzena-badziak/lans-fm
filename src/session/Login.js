@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Router, Route, IndexRoute, hashHistory } from "react-router";
 import { withRouter } from "react-router";
 import { loginAction } from "./login-actions";
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
 
 class Login extends Component {
-  getQueryVariable = variable => {
-    var query = window.location.search.substring(1);
-    var vars = query.split("&");
-    for (var i = 0; i < vars.length; i++) {
-      var pair = vars[i].split("=");
-      if (pair[0] == variable) {
+  getQueryletiable = letiable => {
+    let query = window.location.search.substring(1);
+    let lets = query.split("&");
+    for (let i = 0; i < lets.length; i++) {
+      let pair = lets[i].split("=");
+      if (pair[0] === letiable) {
         return pair[1];
       }
     }
@@ -18,12 +19,18 @@ class Login extends Component {
   };
 
   login = () => {
-    this.props.dispatch(loginAction(this.getQueryVariable("token")));
+    this.props.dispatch(loginAction(this.getQueryletiable("token")));
   };
 
   render() {
     this.login();
-    this.props.router.push(this.getQueryVariable("currentUrl"));
+    const redirect_url = this.getQueryletiable("currentUrl");
+    if (redirect_url !== "undefined") {
+      this.props.router.push(redirect_url);
+    } else {
+      this.props.router.push("/");
+    }
+
     return <div />;
   }
 }
