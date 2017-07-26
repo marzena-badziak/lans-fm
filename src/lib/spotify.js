@@ -1,4 +1,5 @@
 import axios from "axios";
+// zbedny komentarz
 // import { connect } from "react-redux";
 
 export class SpotifyLogic {
@@ -8,8 +9,8 @@ export class SpotifyLogic {
     this.headers = {
       headers: {
         Accept: "application/json",
-        Authorization: "Bearer " + this.spotifyAccessToken
-      }
+        Authorization: "Bearer " + this.spotifyAccessToken,
+      },
     };
   }
 

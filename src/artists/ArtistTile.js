@@ -10,7 +10,7 @@ class ArtistTile extends Component {
     e.preventDefault();
     this.props.dispatch(
       searchArtist({
-        artist: this.props.name
+        artist: this.props.name,
       })
     );
     this.props.router.push(this.props.name);
@@ -20,6 +20,8 @@ class ArtistTile extends Component {
   }
   getAlbums = e => {
     e.preventDefault();
+    // budowanie url powinno byc w oddzielnej metodzie
+    // lepiej uzyc `` do zlozenia stringa niz z +
     this.props.router.push(
       "/" +
         this.replaceSpacesWithDashes(this.props.params.artistName) +
@@ -51,7 +53,7 @@ class ArtistTile extends Component {
 ArtistTile.propTypes = {
   name: propTypes.string.isRequired,
   img: propTypes.string.isRequired,
-  alt: propTypes.string
+  alt: propTypes.string,
 };
 
 export default withRouter(ArtistTile);

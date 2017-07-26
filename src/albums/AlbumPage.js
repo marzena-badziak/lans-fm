@@ -1,3 +1,4 @@
+// jakos duzo tych importow tu
 import React, { Component } from "react";
 import { getAlbumInfo } from "./search-actions.js";
 import { connect } from "react-redux";
@@ -15,6 +16,7 @@ import { SpotifyIframe } from "./SpotifyIframe";
 import axios from "axios";
 import Track from "./Track";
 import { LansFmUtils } from "../lib/utils";
+// niepotrzebna przerwa
 
 import Navigation from "../user-interface/Navigation";
 import FontAwesome from "react-fontawesome";
@@ -27,6 +29,7 @@ class AlbumPage extends Component {
     super(props);
 
     let displaySpotifyLogin =
+      // to moznaby zapisac jako metode
       this.props.session.spotifyAccessToken === "" ||
       (this.props.session.spotifyExpiresIn !== "" &&
         this.props.session.spotifyExpiresIn < Date.now())
@@ -38,7 +41,7 @@ class AlbumPage extends Component {
       displaySpotifyLogin: displaySpotifyLogin,
       open: {},
       left: {},
-      top: {}
+      top: {},
     };
 
     this.spotifyLogic = new SpotifyLogic(
@@ -51,9 +54,11 @@ class AlbumPage extends Component {
       this.spotifyStateString = stateString;
       let spotifyAuthorizationUrl = this.props.dispatch({
         type: "SPOTIFY_GENERATE_STATE",
-        spotifyStateString: stateString
+        spotifyStateString: stateString,
       });
     }
+    // co tu sie dzieje?
+    // nie jestesmy zalogowani w spotify wiec pobieramy album ze spotify?
     if (!displaySpotifyLogin) {
       this.spotifyLogic.getSpotifyAlbumId(
         this.props.params.albumName,
@@ -65,38 +70,44 @@ class AlbumPage extends Component {
     this.setState({ spotifyAlbumUrl: url });
   };
 
+  // dziwne jakies parametry tu macie
   openMenu = (i, left, top, close = false) => {
+    // czym rozni sie
+    // if (close) {
+    // od
+    // if (this.state.open[`${i}`] === "block") {
     if (close) {
       this.setState({
-        open: {}
+        open: {},
       });
     }
     if (this.state.open[`${i}`] === "block") {
       this.setState({
-        open: {}
+        open: {},
       });
     } else {
+      // najpierw ustawiamy jeden stan z pustym obiektem a potem nadpisujemy to?
       this.setState({
-        open: {}
+        open: {},
       });
       this.setState({
         open: { [`${i}`]: "block" },
         left: { [`${i}`]: left },
-        top: { [`${i}`]: top }
+        top: { [`${i}`]: top },
       });
     }
   };
 
   closeMenu = i => {
     this.setState({
-      open: { [`${i}`]: "none" }
+      open: { [`${i}`]: "none" },
     });
   };
   fetchAlbum = e => {
     this.props.dispatch(
       getAlbumInfo({
         artist: this.replaceDashWithSpace(this.props.params.artistChosen),
-        album: this.replaceDashWithSpace(this.props.params.albumName)
+        album: this.replaceDashWithSpace(this.props.params.albumName),
       })
     );
   };
@@ -110,6 +121,7 @@ class AlbumPage extends Component {
     return str.replace(/-/g, " ");
   }
   showTracks() {
+    // co to za warunkowy mutant? :O
     if (this.props.album.message === "GOT_ALBUMS") {
       if (this.props.album.album.tracks.track.length !== 0) {
         return this.props.album.album.tracks.track.map((track, i) => {
@@ -139,30 +151,35 @@ class AlbumPage extends Component {
       <div>
         <div
           className="container"
+          {/* inline style */}
           style={{
             display: "flex",
+            {/* zbedny komentarz  */}
             // flexDirection: "column",
-            justifyContent: "center"
+            justifyContent: "center",
+            {/* zbedny komentarz  */}
             // flexWrap: "nowrap"
-          }}
-        >
+          }}>
           <Paper
-            style={{ width: "80vw", marginTop: "40px", paddingTop: "10px" }}
-          >
+            {/* inline style */}
+            style={{ width: "80vw", marginTop: "40px", paddingTop: "10px" }}>
+            {/* to musi wyjechac do funkcji albo komponentu innego */}
             {this.props.album.message === "GOT_ALBUMS"
               ? <div
+                  {/* inline style */}
                   style={{
                     display: "flex",
                     flexDirection: "row",
                     flexWrap: "wrap",
-                    justifyContent: "space-between"
-                  }}
-                >
+                    justifyContent: "space-between",
+                  }}>
                   <div>
                     <Avatar
+                      {/* wyciagniecie tego obrazka powinno byc w innej funkcji */}
                       src={this.props.album.album.image[2]["#text"]}
                       size={150}
                     />
+                    {/* inline style */}
                     <h2 style={{ display: "block", textAlign: "center" }}>
                       {this.replaceDashWithSpace(this.props.params.albumName)}
                     </h2>
@@ -205,7 +222,7 @@ class AlbumPage extends Component {
 const mapStateToProps = state => {
   return {
     album: state.album,
-    session: state.session
+    session: state.session,
   };
 };
 export default connect(mapStateToProps)(withRouter(AlbumPage));

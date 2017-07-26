@@ -17,6 +17,8 @@ class AlbumTile extends Component {
     return str.replace(/\s+/g, "-");
   }
   openAlbum = () => {
+    // zbudowanie urla powinno byc w osobnej funkcji
+    // mozecie uzyc `` zamiast klejenia stringa z +
     return this.props.router.push(
       "/" +
         this.replaceSpacesWithDashes(this.props.params.artistName) +
@@ -36,7 +38,7 @@ class AlbumTile extends Component {
       fetchSongListAndScrobbleAlbum({
         artist: this.props.artist,
         album: this.props.title,
-        session: this.props.session
+        session: this.props.session,
       })
     );
   };
@@ -60,13 +62,13 @@ class AlbumTile extends Component {
 
 const mapStateToProps = state => {
   return {
-    session: state.session
+    session: state.session,
   };
 };
 AlbumTile.propTypes = {
   title: propTypes.string,
   image: propTypes.string,
-  artist: propTypes.string
+  artist: propTypes.string,
 };
 
 export default connect(mapStateToProps)(withRouter(AlbumTile));

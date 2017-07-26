@@ -10,7 +10,7 @@ class ArtistsGrid extends Component {
   fetchArtist = e => {
     this.props.dispatch(
       searchArtist({
-        artist: this.props.params.artistName
+        artist: this.props.params.artistName,
       })
     );
   };
@@ -23,6 +23,7 @@ class ArtistsGrid extends Component {
   }
   render() {
     let grid = [];
+    // czemu forEach a nie map?
     this.props.results.forEach(artist => {
       grid.push(
         <ArtistTile
@@ -72,12 +73,12 @@ const mapStateToProps = state => {
   return {
     results: state.similarArtists.artistsSimilar,
     artistEntered: state.similarArtists.artistEntered,
-    message: state.similarArtists.message
+    message: state.similarArtists.message,
   };
 };
 ArtistsGrid.propTypes = {
   results: propTypes.array,
   artistEntered: propTypes.string,
-  message: propTypes.string
+  message: propTypes.string,
 };
 export default connect(mapStateToProps)(ArtistsGrid);
