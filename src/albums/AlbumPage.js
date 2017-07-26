@@ -50,7 +50,7 @@ class AlbumPage extends Component {
       });
     }
     if (!displaySpotifyLogin) {
-      this.spotifyLogic.getSpotifyAlbumId(
+      this.spotifyLogic.getSpotifyAlbumUri(
         this.props.params.albumName,
         this.props.params.artistChosen
       );
