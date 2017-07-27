@@ -16,6 +16,7 @@ class ArtistTile extends Component {
     );
     this.props.router.push(this.props.name);
   };
+
   setImage = () => {
     if (this.props.img) {
       return this.props.img;
@@ -23,6 +24,7 @@ class ArtistTile extends Component {
       return "https://lastfm-img2.akamaized.net/i/u/174s/c6f59c1e5e7240a4c0d427abd71f3dbb.png";
     }
   };
+
   buildAlbumsAddress = () => {
     return (
       "/" +

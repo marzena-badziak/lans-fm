@@ -6,7 +6,6 @@ import { encodeURI, decodeURI } from "../lib/utils";
 class Navigation extends Component {
   goBackToSearchResults = e => {
     e.preventDefault();
-    console.log("back to search");
     this.props.router.push("/" + encodeURIComponent(this.props.artistName));
   };
   goBackToArtistPage = e => {
@@ -17,6 +16,7 @@ class Navigation extends Component {
       )}`
     );
   };
+
   showProperBreadcrump() {
     if (!this.props.artistChosen) {
       return (
