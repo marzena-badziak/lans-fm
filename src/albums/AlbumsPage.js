@@ -104,9 +104,7 @@ class AlbumsPage extends Component {
         artist: this.props.params.artistChosen
       })
     );
-    this.props.router.push(
-      "/" + encodeURI(this.props.params.artistChosen)
-    );
+    this.props.router.push("/" + encodeURI(this.props.params.artistChosen));
   };
 
   addSpaces = number => {
@@ -119,14 +117,14 @@ class AlbumsPage extends Component {
     if (this.props.artist.artist.stats) {
       return (
         <div>
-          <span>
+          <ArtistStat>
             <strong>Listeners:</strong>{" "}
             {this.addSpaces(this.props.artist.artist.stats.listeners)}{" "}
-          </span>
-          <span>
+          </ArtistStat>
+          <ArtistStat>
             <strong>Playcount:</strong>{" "}
             {this.addSpaces(this.props.artist.artist.stats.playcount)}{" "}
-          </span>
+          </ArtistStat>
         </div>
       );
     } else {
@@ -156,20 +154,19 @@ class AlbumsPage extends Component {
     } else {
       if (this.state.spotifyArtistUri) {
         return (
-          <div>
-            <SpotifyFollowIframe
-              spotifyUri={this.state.spotifyArtistUri}
-              title={this.state.spotifyArtistUri}
-              width="200px"
-              height="30px"
-            />
+          <SpotifyContainer>
             <SpotifyIframe
               spotifyUri={this.state.spotifyArtistUri}
               title={this.state.spotifyArtistUri}
-              width="300"
-              height="300"
+              height="300px"
             />
-          </div>
+            <SpotifyFollowIframe
+              spotifyUri={this.state.spotifyArtistUri}
+              title={this.state.spotifyArtistUri}
+              width="145px"
+              height="30px"
+            />
+          </SpotifyContainer>
         );
       }
     }
@@ -180,34 +177,34 @@ class AlbumsPage extends Component {
       <div>
         <Navigation artistName={this.props.params.artistName} />
         <div className="container">
-          <SearchSimilarButton
-            label="Search Similar"
-            onClick={e => this.fetchSimilarArtist(e)}
-            backgroundColor="#7a3e5e"
-            hoverColor="plum"
-            labelStyle={{
-              fontSize: "12px",
-              padding: "3px 5px"
-            }}
-          />
           <Container>
-            <Avatar
-              src={this.setImage()}
-              alt={`${this.props.artist.artist.name} foto`}
-              size={200}
-              style={{ marginTop: "10px" }}
-            />
+            <AtristInfoContainer>
+              <Avatar
+                src={this.setImage()}
+                alt={`${this.props.artist.artist.name} foto`}
+                size={200}
+                style={{ marginTop: "10px" }}
+              />
+            </AtristInfoContainer>
             <StatsContainer>
               <ArtistName>
                 {this.props.artist.artist.name}
               </ArtistName>
               {this.showStats()}
+              <SearchSimilarButton
+                label="Search Similar"
+                onClick={e => this.fetchSimilarArtist(e)}
+                backgroundColor="#7a3e5e"
+                hoverColor="plum"
+                labelStyle={{
+                  fontSize: "12px",
+                  padding: "3px 5px",
+                  color: "white"
+                }}
+              />
             </StatsContainer>
             {this.showSpotify()}
           </Container>
-
-          <AlbumsHeader>Albums:</AlbumsHeader>
-
           <SearchResultsContainer>
             {this.renderTiles()}
           </SearchResultsContainer>
@@ -216,32 +213,39 @@ class AlbumsPage extends Component {
     );
   }
 }
+const ArtistStat = styled.div`margin-bottom: 5px;`;
+const SpotifyContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+const AtristInfoContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 const AlbumsHeader = styled.h3`
   display: block;
   margin: 0;
 `;
-const ArtistName = styled.h2`
-  font-size: 50px;
-  margin-left: 15px;
-`;
+const ArtistName = styled.h2`font-size: 50px;`;
 const StatsContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin-left: 25px;
 `;
 const Container = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   align-content: center;
   margin: 10px;
   margin-top: 30px;
 `;
 const SearchSimilarButton = styled(FlatButton)`
-  margin: 5px;
-  position: relative;
-  float: right;
+  margin-top: 15px;
 `;
 const SearchResultsContainer = styled.div`
   display: flex;

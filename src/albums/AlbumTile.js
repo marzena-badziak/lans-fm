@@ -6,7 +6,6 @@ import { withRouter } from "react-router";
 import propTypes from "prop-types";
 import { encodeURI, decodeURI } from "../lib/utils";
 
-
 class AlbumTile extends Component {
   setImage = () => {
     if (this.props.image) {
@@ -15,10 +14,6 @@ class AlbumTile extends Component {
       return "https://lastfm-img2.akamaized.net/i/u/174s/c6f59c1e5e7240a4c0d427abd71f3dbb.png";
     }
   };
-  replaceSpacesWithDashes(str) {
-    return str.replace(/\s+/g, "_");
-    return encodeURIComponent(str);
-  }
   createAlbumUrl = (...args) => {
     const urlArr = [...args].map(item => {
       return "/" + encodeURI(item);
