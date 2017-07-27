@@ -1,4 +1,5 @@
 import axios from "axios";
+import {decodeURI} from "./utils"
 
 export class SpotifyLogic {
   constructor(spotifyAccessToken, setSpotifyUrlCallback) {
@@ -16,9 +17,9 @@ export class SpotifyLogic {
     axios
       .get(
         "https://api.spotify.com/v1/search?q=album:" +
-          albumName +
+          decodeURI(albumName) +
           " artist:" +
-          artistChosen +
+          decodeURI(artistChosen) +
           "&type=album",
         this.headers
       )
@@ -36,7 +37,7 @@ export class SpotifyLogic {
     axios
       .get(
         "https://api.spotify.com/v1/search?q=artist:" +
-          artistChosen +
+          decodeURI(artistChosen) +
           "&type=artist",
         this.headers
       )
