@@ -32,7 +32,8 @@ handleChange = (event, index, value) => this.setState({value});
           <input
             type="hidden"
             name="cb"
-            value={`http://localhost:3000/login`}
+            value={`http://localhost:3000/login?currentUrl=${this.props
+              .currentPageParams}`}
           />
           <FlatButton
             type="submit"
