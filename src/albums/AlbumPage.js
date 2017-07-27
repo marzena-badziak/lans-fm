@@ -1,25 +1,19 @@
 import React, { Component } from "react";
 import { getAlbumInfo } from "./search-actions.js";
 import { connect } from "react-redux";
-import { List } from "material-ui/List";
 import Paper from "material-ui/Paper";
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
-import FlatButton from "material-ui/FlatButton";
 import styled from "styled-components";
-import Divider from "material-ui/Divider";
-import moment from "moment";
 import { withRouter } from "react-router";
-import { scrobbleAlbum } from "./scrobble-album";
 import { SpotifyIframe } from "./SpotifyIframe";
-import axios from "axios";
 import Track from "./Track";
 import { LansFmUtils } from "../lib/utils";
 import { SpotifyLogic } from "../lib/spotify";
 import Navigation from "../user-interface/Navigation";
-import FontAwesome from "react-fontawesome";
 import SpotifyLoginButton from "./SpotifyLoginButton";
 import TrackList from "./TrackList";
+
 class AlbumPage extends Component {
   constructor(props) {
     super(props);
@@ -61,12 +55,7 @@ class AlbumPage extends Component {
     this.setState({ spotifyAlbumUri: uri });
   };
 
-  openMenu = (i, left, top, close = false) => {
-    if (close) {
-      this.setState({
-        open: {}
-      });
-    }
+  openMenu = (i, left, top) => {
     if (this.state.open[`${i}`] === "block") {
       this.setState({
         open: {}
@@ -83,9 +72,9 @@ class AlbumPage extends Component {
     }
   };
 
-  closeMenu = i => {
+  closeMenu = () => {
     this.setState({
-      open: { [`${i}`]: "none" }
+      open: {}
     });
   };
   fetchAlbum = e => {
@@ -134,45 +123,69 @@ class AlbumPage extends Component {
       );
     }
   }
-
-  showTracks() {
-    if (this.props.album.message === "GOT_ALBUMS") {
-      if (this.props.album.album.tracks.track.length !== 0) {
-        return this.props.album.album.tracks.track.map((track, i) => {
-          return (
-            <Track
-              i={i}
-              track={track}
-              artist={this.replaceDashWithSpace(this.props.params.artistChosen)}
-              open={this.state.open[`${i}`] || "none"}
-              left={this.state.left[`${i}`] || 0}
-              top={this.state.top[`${i}`] || 0}
-              openMenu={this.openMenu}
-              closeMenu={this.closeMenu}
-              disableOnClickOutside={true}
-            />
-          );
-        });
-      } else {
+  checkIfAlbumHasTracks() {
+    if (this.props.album.album.tracks.track.length !== 0) {
+      return this.props.album.album.tracks.track.map((track, i) => {
         return (
-          <LastFMAlert>
-            Sorry tracks no tracks in last-fm database for this album
-          </LastFMAlert>
+          <Track
+            i={i}
+            track={track}
+            artist={this.replaceDashWithSpace(this.props.params.artistChosen)}
+            open={this.state.open[`${i}`] || "none"}
+            left={this.state.left[`${i}`] || 0}
+            top={this.state.top[`${i}`] || 0}
+            openMenu={this.openMenu}
+            closeMenu={this.closeMenu}
+            disableOnClickOutside={true}
+          />
         );
-      }
+      });
     } else {
-      if (this.props.album.message === "no_album") {
-        return (
-          <AlbumNotFundAlert>
-            Album not found in last-fm database
-          </AlbumNotFundAlert>
-        );
-      } else {
-        return <CircularProgress color="#aa8899" />;
-      }
+      return (
+        <LastFMAlert>
+          Sorry tracks no tracks in last-fm database for this album
+        </LastFMAlert>
+      );
     }
   }
-
+  albumNotFound() {
+    if (this.props.album.message === "no_album") {
+      return (
+        <AlbumNotFundAlert>
+          Album not found in last-fm database
+        </AlbumNotFundAlert>
+      );
+    } else {
+      return <CircularProgress color="#aa8899" />;
+    }
+  }
+  showTracks() {
+    if (this.props.album.message === "GOT_ALBUMS") {
+      return this.checkIfAlbumHasTracks();
+    } else {
+      return this.albumNotFound();
+    }
+  }
+  getAlbumImage(imageType) {
+    return this.props.album.album.image[imageType]["#text"];
+  }
+  showAlbumInfo() {
+    if (this.props.album.message === "GOT_ALBUMS") {
+      return (
+        <StyledTopContainer>
+          <AlbumInfo style={{ margin: "10px 20px" }}>
+            <Avatar src={this.getAlbumImage(2)} size={150} />
+            <AlbumName>
+              {this.replaceDashWithSpace(this.props.params.albumName)}
+            </AlbumName>
+          </AlbumInfo>
+          <SpotifyContainer>
+            {this.displaySpotify()}
+          </SpotifyContainer>
+        </StyledTopContainer>
+      );
+    }
+  }
   render() {
     return (
       <div>
@@ -180,43 +193,34 @@ class AlbumPage extends Component {
           artistName={this.props.params.artistName}
           artistChosen={this.props.params.artistChosen}
         />
-        <div
-          className="container"
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            flexDirection: "column"
-          }}
-        >
-          <Paper
-            style={{ width: "80vw", marginTop: "40px", paddingTop: "10px" }}
-          >
-            {this.props.album.message === "GOT_ALBUMS"
-              ? <StyledTopContainer>
-                  <div style={{ margin: "10px 20px" }}>
-                    <Avatar
-                      src={this.props.album.album.image[2]["#text"]}
-                      size={150}
-                    />
-                    <h2 style={{ display: "block", textAlign: "center" }}>
-                      {this.replaceDashWithSpace(this.props.params.albumName)}
-                    </h2>
-                  </div>
-                  <div style={{ margin: "10px" }}>
-                    {this.displaySpotify()}
-                  </div>
-                </StyledTopContainer>
-              : null}
-            <TrackList openMenu={this.openMenu} enableOnClickOutside={true}>
+        <Container className="container">
+          <StyledPaperContainer>
+            {this.showAlbumInfo()}
+            <TrackList closeMenu={this.closeMenu} enableOnClickOutside={true}>
               {this.showTracks()}
             </TrackList>
-          </Paper>
-        </div>
+          </StyledPaperContainer>
+        </Container>
       </div>
     );
   }
 }
-
+const AlbumInfo = styled.div`margin: 10px 20px;`;
+const SpotifyContainer = styled.div`margin: 10px;`;
+const AlbumName = styled.h2`
+  display: block;
+  text-align: center;
+`;
+const StyledPaperContainer = styled(Paper)`
+  width: 80vw;
+  margin-top: 40px;
+  paddingTop: 10px;
+`;
+const Container = styled.div`
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+`;
 const StyledTopContainer = styled.div`
   display: flex;
   flex-direction: row;
