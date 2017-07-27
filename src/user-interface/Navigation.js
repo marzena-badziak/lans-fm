@@ -3,7 +3,6 @@ import { withRouter } from "react-router";
 import PropTypes from "prop-types";
 import { encodeURI, decodeURI } from "../lib/utils";
 
-
 class Navigation extends Component {
   goBackToSearchResults = e => {
     e.preventDefault();
@@ -12,7 +11,9 @@ class Navigation extends Component {
   goBackToArtistPage = e => {
     e.preventDefault();
     this.props.router.push(
-      `/${encodeURIComponent(this.props.artistName)}/${encodeURIComponent(this.props.artistChosen)}`
+      `/${encodeURIComponent(this.props.artistName)}/${encodeURIComponent(
+        this.props.artistChosen
+      )}`
     );
   };
 
@@ -28,8 +29,7 @@ class Navigation extends Component {
           }}
           onClick={this.goBackToSearchResults}
         >
-          {" "}/ Search results:{" "}
-          {decodeURI(this.props.artistName)}{" "}
+          {" "}/ Search results: {decodeURI(this.props.artistName)}{" "}
         </li>
       );
     } else {
@@ -44,8 +44,7 @@ class Navigation extends Component {
             }}
             onClick={this.goBackToSearchResults}
           >
-            {" "}/ Search results:{" "}
-            {decodeURI(this.props.artistName)}{" "}
+            {" "}/ Search results: {decodeURI(this.props.artistName)}{" "}
           </li>
           <li
             style={{

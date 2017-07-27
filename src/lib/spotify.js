@@ -42,6 +42,7 @@ export class SpotifyLogic {
         this.headers
       )
       .then(response => {
+        console.log(response);
         let artistUri = response.data.artists.items[0].uri;
         this.setSpotifyUrlCallback(artistUri);
       });
