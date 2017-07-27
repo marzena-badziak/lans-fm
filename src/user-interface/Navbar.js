@@ -24,8 +24,7 @@ class Navbar extends Component {
         }
         iconStyleLeft={{ marginTop: "0px" }}
         iconStyleRight={{
-          marginTop: "0",
-          marginRight: "0",
+          marginRight: "-10px",
           padding: "0"
         }}
         showMenuIconButton={true}
@@ -40,7 +39,7 @@ const StyledSearchBar = styled(SearchBar)`
   margin-top: 14px;
   /* Smartphones (portrait and landscape) ----------- */
   @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
-    width: 50vw;
+    width: 45vw;
     font-size: 10px;
     margin-top: 15px 0;
   }
@@ -52,6 +51,7 @@ const StyledSearchBar = styled(SearchBar)`
   }
 `;
 const StyledAppBar = styled(AppBar)`
+position: absolute;
   display: flex;
   align-items: center;
   padding: 3px;
