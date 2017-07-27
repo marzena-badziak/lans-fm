@@ -72,7 +72,7 @@ const StyledLogo = styled.a`
 const StyledLogin = styled.a`
   position: relative;
   float: right;
-  top: 27px;
+  top: 20px;
   right: 5px;
   font-family: Righteous;
   color: white;
