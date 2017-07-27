@@ -19,14 +19,19 @@ class AlbumTile extends Component {
     return str.replace(/\s+/g, "_");
     return encodeURIComponent(str);
   }
+  createAlbumUrl = (...args) => {
+    const urlArr = [...args].map(item => {
+      return "/" + encodeURI(item);
+    });
+    return urlArr.join("");
+  };
   openAlbum = () => {
     return this.props.router.push(
-      "/" +
-        encodeURI(this.props.params.artistName) +
-        "/" +
-        encodeURI(this.props.params.artistChosen) +
-        "/" +
-        encodeURI(this.props.title)
+      this.createAlbumUrl(
+        this.props.params.artistName,
+        this.props.params.artistChosen,
+        this.props.title
+      )
     );
   };
 

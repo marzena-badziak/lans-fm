@@ -3,7 +3,7 @@ import onClickOutside from "react-onclickoutside";
 
 class TrackList extends Component {
   handleClickOutside = e => {
-    this.props.openMenu(null, 0, 0, true);
+    this.props.closeMenu();
   };
   render() {
     return (

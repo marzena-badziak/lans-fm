@@ -20,14 +20,18 @@ class ArtistTile extends Component {
   replaceSpacesWithDashes(str) {
     return str.replace(/\s+/g, "-"); return encodeURIComponent(str);
   }
-  getAlbums = e => {
-    e.preventDefault();
-    this.props.router.push(
+
+  buildAlbumsAddress = () => {
+    return (
       "/" +
         encodeURI(this.props.params.artistName) +
         "/" +
         encodeURI(this.props.name)
     );
+  };
+  getAlbums = e => {
+    e.preventDefault();
+    this.props.router.push(this.buildAlbumsAddress());
   };
 
   setOpacity(val) {
