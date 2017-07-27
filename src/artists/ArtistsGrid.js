@@ -12,7 +12,7 @@ class ArtistsGrid extends Component {
   fetchArtist = e => {
     this.props.dispatch(
       searchArtist({
-        artist: this.props.params.artistName
+        artist: decodeURI(this.props.params.artistName)
       })
     );
   };
@@ -20,9 +20,7 @@ class ArtistsGrid extends Component {
   componentDidMount() {
     this.fetchArtist();
   }
-  replaceDashWithSpace(str) {
-    return str.replace(/-/g, " "); return decodeURIComponent(str);
-  }
+
   buildGrid = results => {
     return results.map(function(artist, index, results) {
       return (

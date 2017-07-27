@@ -17,9 +17,6 @@ class ArtistTile extends Component {
     );
     this.props.router.push(this.props.name);
   };
-  replaceSpacesWithDashes(str) {
-    return str.replace(/\s+/g, "-"); return encodeURIComponent(str);
-  }
 
   buildAlbumsAddress = () => {
     return (
