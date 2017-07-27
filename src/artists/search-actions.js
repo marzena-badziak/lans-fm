@@ -17,11 +17,11 @@ export const searchArtist = artist => {
     axios
       .get(`${lastfmRequestURLMaker(getsimilarOptions)}`)
       .then(function(response) {
-        if (typeof response.data.similarartists === "undefined") {
+        if (!response.data.similarartists || response.data.similarartists.artist.length === 0) {
           dispatch({
             type: "SEARCH_NO_ARTIST"
           });
-        } else {
+        }  else {
           dispatch({
             type: "SEARCH_ARTIST_SUCCESS",
             artistsSimilar: response.data.similarartists.artist
