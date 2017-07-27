@@ -6,7 +6,8 @@ const lastfmKey = {
 const paramsToURL = (params) => {
   let paramsURL = "";
   Object.entries(params).forEach(([key, value]) => {
-    paramsURL += `&${key}=${value}`;
+    value = encodeURIComponent(value);
+    paramsURL += (`&${key}=${value}`);
   });
   return paramsURL;
 }

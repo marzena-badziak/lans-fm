@@ -7,18 +7,15 @@ import { encodeURI, decodeURI } from "../lib/utils";
 class Navigation extends Component {
   goBackToSearchResults = e => {
     e.preventDefault();
-    console.log("back to search");
-    this.props.router.push("/" + encodeURIComponent(this.props.artistName));
+    this.props.router.push("/" + decodeURIComponent(this.props.artistName));
   };
   goBackToArtistPage = e => {
     e.preventDefault();
     this.props.router.push(
-      `/${encodeURIComponent(this.props.artistName)}/${encodeURIComponent(this.props.artistChosen)}`
+      `/${decodeURIComponent(this.props.artistName)}/${decodeURIComponent(this.props.artistChosen)}`
     );
   };
-  replaceDashWithSpace(str) {
-    return str.replace(/-/g, " "); return decodeURIComponent(str);
-  }
+
   showProperBreadcrump() {
     if (!this.props.artistChosen) {
       return (
