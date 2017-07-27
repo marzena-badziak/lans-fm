@@ -21,10 +21,9 @@ class ArtistsGrid extends Component {
   replaceDashWithSpace(str) {
     return str.replace(/-/g, " ");
   }
-  render() {
-    let grid = [];
-    this.props.results.forEach(artist => {
-      grid.push(
+  buildGrid = results => {
+    return results.map(function(artist, index, results) {
+      return (
         <ArtistTile
           name={artist.name}
           key={artist.name}
@@ -32,7 +31,9 @@ class ArtistsGrid extends Component {
         />
       );
     });
+  };
 
+  render() {
     return (
       <div>
         <StyledMessage>
@@ -44,7 +45,7 @@ class ArtistsGrid extends Component {
           ? <StyledCircularProgress color="#aa8899" />
           : false}
         <SearchResultsContainer className="container">
-          {grid}
+          {this.buildGrid(this.props.results)}
         </SearchResultsContainer>
       </div>
     );

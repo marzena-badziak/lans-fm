@@ -18,14 +18,18 @@ class ArtistTile extends Component {
   replaceSpacesWithDashes(str) {
     return str.replace(/\s+/g, "-");
   }
+
+  buildAlbumsAddress = () => {
+    return (
+      "/" +
+      this.replaceSpacesWithDashes(this.props.params.artistName) +
+      "/" +
+      this.replaceSpacesWithDashes(this.props.name)
+    );
+  };
   getAlbums = e => {
     e.preventDefault();
-    this.props.router.push(
-      "/" +
-        this.replaceSpacesWithDashes(this.props.params.artistName) +
-        "/" +
-        this.replaceSpacesWithDashes(this.props.name)
-    );
+    this.props.router.push(this.buildAlbumsAddress());
   };
 
   setOpacity(val) {
@@ -54,4 +58,4 @@ ArtistTile.propTypes = {
   alt: propTypes.string
 };
 
-export default withRouter(ArtistTile);
+export default connect()(withRouter(ArtistTile));
