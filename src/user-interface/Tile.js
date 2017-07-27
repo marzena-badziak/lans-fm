@@ -11,7 +11,6 @@ import { withRouter } from "react-router";
 import CircularProgress from "material-ui/CircularProgress";
 import { encodeURI, decodeURI } from "../lib/utils";
 
-
 class Tile extends Component {
   constructor(props) {
     super(props);
@@ -60,11 +59,8 @@ class Tile extends Component {
       "&type=video&key=AIzaSyBdXp1WnmYGXXuDFybXxK_94awGD5Qm-Zw";
     this.youTubeLogic.getYoutubeVideoId(searchRequest);
   };
-  replaceSpacesWithDashes(str) {
-    return str.replace(/\s+/g, "-"); return encodeURIComponent(str);
-  }
+
   imageLoaded = () => {
-    console.log("al");
     this.setState({
       imageDisplay: "block"
     });
@@ -100,7 +96,11 @@ class Tile extends Component {
                   alt={this.props.imageAlt}
                   onLoad={() => this.imageLoaded()}
                 />
-                <CircularProgress size={260} color="#aa8899" />
+                <CircularProgress
+                  style={{ height: "260px", marginTop: "40px" }}
+                  size={130}
+                  color="#aa8899"
+                />
               </div>}
 
           <Overlay style={{ opacity: this.state.opacity }}>
@@ -157,10 +157,10 @@ class Tile extends Component {
   }
 }
 const StyledAlbumCard = styled(Card)`
-position: relative;
-width: 260px;
-margin 0 auto;
-margin-top: 30px;
+  position: relative;
+  width: 260px;
+  margin 0 auto;
+  margin-top: 30px;
 `;
 
 const StyledCardActions = styled(CardActions)`
