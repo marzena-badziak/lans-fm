@@ -1,4 +1,6 @@
-const album = (state = { album: {}, message: "" }, action) => {
+const initialState = { album: {}, message: "" };
+
+const album = (state = initialState, action) => {
   switch (action.type) {
     case "GET_ALBUM_INFO":
       return {

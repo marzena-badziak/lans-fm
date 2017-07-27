@@ -8,6 +8,9 @@ import RaisedButton from "material-ui/RaisedButton";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import CircularProgress from "material-ui/CircularProgress";
+import { encodeURI, decodeURI } from "../lib/utils";
+
 class Tile extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +26,9 @@ class Tile extends Component {
       videoId: "",
       videoFound: true,
       opacity: 0,
-      showYouTubeIcon: false
+      showYouTubeIcon: false,
+      imageLoaded: false,
+      imageDisplay: "none"
     };
   }
   setOpacity(val) {
@@ -54,9 +59,12 @@ class Tile extends Component {
       "&type=video&key=AIzaSyBdXp1WnmYGXXuDFybXxK_94awGD5Qm-Zw";
     this.youTubeLogic.getYoutubeVideoId(searchRequest);
   };
-  replaceSpacesWithDashes(str) {
-    return str.replace(/\s+/g, "-");
-  }
+
+  imageLoaded = () => {
+    this.setState({
+      imageDisplay: "block"
+    });
+  };
   render() {
     return (
       <StyledAlbumCard
@@ -74,7 +82,27 @@ class Tile extends Component {
             />
           }
         >
-          <img src={this.props.imageSrc} alt={this.props.imageAlt} />
+          {this.state.imageDisplay === "block"
+            ? <img
+                style={{ display: this.state.imageDisplay }}
+                src={this.props.imageSrc}
+                alt={this.props.imageAlt}
+                onLoad={() => this.imageLoaded()}
+              />
+            : <div>
+                {" "}<img
+                  style={{ display: this.state.imageDisplay }}
+                  src={this.props.imageSrc}
+                  alt={this.props.imageAlt}
+                  onLoad={() => this.imageLoaded()}
+                />
+                <CircularProgress
+                  style={{ height: "260px", marginTop: "40px" }}
+                  size={130}
+                  color="#aa8899"
+                />
+              </div>}
+
           <Overlay style={{ opacity: this.state.opacity }}>
             <TextOnOverlay>
               {this.props.labelSecond}
@@ -129,10 +157,10 @@ class Tile extends Component {
   }
 }
 const StyledAlbumCard = styled(Card)`
-position: relative;
-width: 260px;
-margin 0 auto;
-margin-top: 30px;
+  position: relative;
+  width: 260px;
+  margin 0 auto;
+  margin-top: 30px;
 `;
 
 const StyledCardActions = styled(CardActions)`

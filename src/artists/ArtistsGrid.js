@@ -5,12 +5,14 @@ import { searchArtist } from "../artists/search-actions.js";
 import ArtistTile from "./ArtistTile.js";
 import propTypes from "prop-types";
 import CircularProgress from "material-ui/CircularProgress";
+import { encodeURI, decodeURI } from "../lib/utils";
+
 
 class ArtistsGrid extends Component {
   fetchArtist = e => {
     this.props.dispatch(
       searchArtist({
-        artist: this.props.params.artistName
+        artist: decodeURI(this.props.params.artistName)
       })
     );
   };
@@ -18,13 +20,10 @@ class ArtistsGrid extends Component {
   componentDidMount() {
     this.fetchArtist();
   }
-  replaceDashWithSpace(str) {
-    return str.replace(/-/g, " ");
-  }
-  render() {
-    let grid = [];
-    this.props.results.forEach(artist => {
-      grid.push(
+
+  buildGrid = results => {
+    return results.map(function(artist, index, results) {
+      return (
         <ArtistTile
           name={artist.name}
           key={artist.name}
@@ -32,19 +31,21 @@ class ArtistsGrid extends Component {
         />
       );
     });
+  };
 
+  render() {
     return (
       <div>
         <StyledMessage>
           {this.props.message}{" "}
-          <strong>{this.replaceDashWithSpace(this.props.artistEntered)}</strong>
+          <strong>{decodeURI(this.props.artistEntered)}</strong>
         </StyledMessage>
 
         {this.props.message === "Searching: "
           ? <StyledCircularProgress color="#aa8899" />
           : false}
         <SearchResultsContainer className="container">
-          {grid}
+          {this.buildGrid(this.props.results)}
         </SearchResultsContainer>
       </div>
     );

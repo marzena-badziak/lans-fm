@@ -1,22 +1,21 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
 import PropTypes from "prop-types";
+import { encodeURI, decodeURI } from "../lib/utils";
+
 
 class Navigation extends Component {
   goBackToSearchResults = e => {
     e.preventDefault();
-    console.log("back to search");
-    this.props.router.push("/" + this.props.artistName);
+    this.props.router.push("/" + decodeURIComponent(this.props.artistName));
   };
   goBackToArtistPage = e => {
     e.preventDefault();
     this.props.router.push(
-      `/${this.props.artistName}/${this.props.artistChosen}`
+      `/${decodeURIComponent(this.props.artistName)}/${decodeURIComponent(this.props.artistChosen)}`
     );
   };
-  replaceDashWithSpace(str) {
-    return str.replace(/-/g, " ");
-  }
+
   showProperBreadcrump() {
     if (!this.props.artistChosen) {
       return (
@@ -30,7 +29,7 @@ class Navigation extends Component {
           onClick={this.goBackToSearchResults}
         >
           {" "}/ Search results:{" "}
-          {this.replaceDashWithSpace(this.props.artistName)}{" "}
+          {decodeURI(this.props.artistName)}{" "}
         </li>
       );
     } else {
@@ -46,7 +45,7 @@ class Navigation extends Component {
             onClick={this.goBackToSearchResults}
           >
             {" "}/ Search results:{" "}
-            {this.replaceDashWithSpace(this.props.artistName)}{" "}
+            {decodeURI(this.props.artistName)}{" "}
           </li>
           <li
             style={{
@@ -57,7 +56,7 @@ class Navigation extends Component {
             }}
             onClick={this.goBackToArtistPage}
           >
-            / {this.replaceDashWithSpace(this.props.artistChosen)}
+            / {decodeURI(this.props.artistChosen)}
           </li>
         </div>
       );

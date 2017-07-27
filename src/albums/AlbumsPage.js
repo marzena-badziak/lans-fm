@@ -7,13 +7,13 @@ import styled from "styled-components";
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
 import { withRouter } from "react-router";
-import { LansFmUtils } from "../lib/utils";
 import FlatButton from "material-ui/FlatButton";
 import Navigation from "../user-interface/Navigation";
 import { SpotifyIframe } from "./SpotifyIframe";
 import { SpotifyFollowIframe } from "./SpotifyFollowIframe";
 import { SpotifyLogic } from "../lib/spotify";
 import SpotifyLoginButton from "./SpotifyLoginButton";
+import { LansFmUtils, encodeURI, decodeURI } from "../lib/utils";
 
 class AlbumsPage extends Component {
   constructor(props) {
@@ -48,14 +48,14 @@ class AlbumsPage extends Component {
   fetchAlbums = e => {
     this.props.dispatch(
       getAlbums({
-        data: this.replaceDashWithSpace(this.props.params.artistChosen)
+        data: decodeURI(this.props.params.artistChosen)
       })
     );
   };
   fetchArtist = e => {
     this.props.dispatch(
       getArtistInfo({
-        artist: this.replaceDashWithSpace(this.props.params.artistChosen)
+        artist: decodeURI(this.props.params.artistChosen)
       })
     );
   };
@@ -98,20 +98,6 @@ class AlbumsPage extends Component {
       }
     }
   }
-  replaceSpacesWithDashes(str) {
-    return str.replace(/\s+/g, "-");
-  }
-  replaceDashWithSpace(str) {
-    return str.replace(/-/g, " ");
-  }
-
-  goBackToSearchResults = e => {
-    e.preventDefault();
-    console.log("back to search");
-    this.props.router.push(
-      "/" + this.replaceSpacesWithDashes(this.props.params.artistName)
-    );
-  };
   fetchSimilarArtist = e => {
     this.props.dispatch(
       searchArtist({
@@ -119,117 +105,110 @@ class AlbumsPage extends Component {
       })
     );
     this.props.router.push(
-      "/" + this.replaceSpacesWithDashes(this.props.params.artistChosen)
+      "/" + encodeURI(this.props.params.artistChosen)
     );
   };
 
-  addSpaces = (number) => {
+  addSpaces = number => {
     let remainder = number.length % 3;
-    return (number.substr(0, remainder) + number.substr(remainder).replace(/(\d{3})/g, ' $1')).trim();
-  }
+    return (number.substr(0, remainder) +
+      number.substr(remainder).replace(/(\d{3})/g, " $1")).trim();
+  };
 
   showStats = () => {
-    if(this.props.artist.artist.stats) {
-      return(
+    if (this.props.artist.artist.stats) {
+      return (
         <div>
-          <span><strong>Listeners:</strong> {this.addSpaces(this.props.artist.artist.stats.listeners)} </span>
-          <span><strong>Playcount:</strong> {this.addSpaces(this.props.artist.artist.stats.playcount)} </span>
+          <span>
+            <strong>Listeners:</strong>{" "}
+            {this.addSpaces(this.props.artist.artist.stats.listeners)}{" "}
+          </span>
+          <span>
+            <strong>Playcount:</strong>{" "}
+            {this.addSpaces(this.props.artist.artist.stats.playcount)}{" "}
+          </span>
         </div>
-      )
+      );
     } else {
-        return;
+      return;
+    }
+  };
+  getImage(imageSize) {
+    return this.props.artist.artist.image[imageSize]["#text"];
+  }
+  setImage() {
+    if (this.props.artist.artist.image) {
+      return this.getImage(2);
     }
   }
-
   setSpotifyArtistUri = uri => {
     this.setState({ spotifyArtistUri: uri });
   };
+
+  showSpotify() {
+    if (this.state.displaySpotifyLogin) {
+      return (
+        <SpotifyLoginButton
+          spotifyStateString={this.spotifyStateString}
+          redirectUrl={this.props.location.pathname}
+        />
+      );
+    } else {
+      if (this.state.spotifyArtistUri) {
+        return (
+          <div>
+            <SpotifyFollowIframe
+              spotifyUri={this.state.spotifyArtistUri}
+              title={this.state.spotifyArtistUri}
+              width="200px"
+              height="30px"
+            />
+            <SpotifyIframe
+              spotifyUri={this.state.spotifyArtistUri}
+              title={this.state.spotifyArtistUri}
+              width="300"
+              height="300"
+            />
+          </div>
+        );
+      }
+    }
+  }
+
   render() {
     return (
       <div>
         <Navigation artistName={this.props.params.artistName} />
         <div className="container">
-          <FlatButton
+          <SearchSimilarButton
             label="Search Similar"
             onClick={e => this.fetchSimilarArtist(e)}
-            style={{ margin: "5px" }}
             backgroundColor="#7a3e5e"
             hoverColor="plum"
-            style={{ position: "relative", float: "right" }}
             labelStyle={{
               fontSize: "12px",
               padding: "3px 5px"
             }}
           />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              alignItems: "center",
-              alignContent: "center",
-              margin: "10px",
-              marginTop: "30px"
-            }}
-          >
+          <Container>
             <Avatar
-              src={
-                this.props.artist.artist.image
-                  ? this.props.artist.artist.image[2]["#text"]
-                  : ""
-              }
+              src={this.setImage()}
               alt={`${this.props.artist.artist.name} foto`}
               size={200}
               style={{ marginTop: "10px" }}
             />
-            <div style={{
-              display: "flex",
-              flexDirection: "column"
-            }}
-            >
-              <h2 style={{ fontSize: "50px", marginLeft: "15px" }}>
+            <StatsContainer>
+              <ArtistName>
                 {this.props.artist.artist.name}
-              </h2>
+              </ArtistName>
               {this.showStats()}
-            </div>
+            </StatsContainer>
+            {this.showSpotify()}
+          </Container>
 
-            {this.state.displaySpotifyLogin
-              ? <SpotifyLoginButton
-                  spotifyStateString={this.spotifyStateString}
-                  redirectUrl={this.props.location.pathname}
-                />
-              : this.state.spotifyArtistUri
-                ? <div>
-                    <SpotifyFollowIframe
-                      spotifyUri={this.state.spotifyArtistUri}
-                      title={this.state.spotifyArtistUri}
-                      width="200px"
-                      height="30px"
-                    />
-                    <SpotifyIframe
-                      spotifyUri={this.state.spotifyArtistUri}
-                      title={this.state.spotifyArtistUri}
-                      width="300"
-                      height="300"
-                    />
-                  </div>
-                : null}
-          </div>
+          <AlbumsHeader>Albums:</AlbumsHeader>
 
-          <h3 style={{ display: "block", margin: "0" }}>Albums:</h3>
-
-          <SearchResultsContainer
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
-              alignItems: "flex-start",
-              alignContent: "flex-start",
-              margin: "0 auto"
-            }}
-          >
+          <SearchResultsContainer>
             {this.renderTiles()}
           </SearchResultsContainer>
         </div>
@@ -237,6 +216,33 @@ class AlbumsPage extends Component {
     );
   }
 }
+const AlbumsHeader = styled.h3`
+  display: block;
+  margin: 0;
+`;
+const ArtistName = styled.h2`
+  font-size: 50px;
+  margin-left: 15px;
+`;
+const StatsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  margin: 10px;
+  margin-top: 30px;
+`;
+const SearchSimilarButton = styled(FlatButton)`
+  margin: 5px;
+  position: relative;
+  float: right;
+`;
 const SearchResultsContainer = styled.div`
   display: flex;
   flex-direction: row;
