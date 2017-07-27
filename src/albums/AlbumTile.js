@@ -16,14 +16,19 @@ class AlbumTile extends Component {
   replaceSpacesWithDashes(str) {
     return str.replace(/\s+/g, "-");
   }
+  createAlbumUrl = (...args) => {
+    const urlArr = [...args].map(item => {
+      return "/" + this.replaceSpacesWithDashes(item);
+    });
+    return urlArr.join("");
+  };
   openAlbum = () => {
     return this.props.router.push(
-      "/" +
-        this.replaceSpacesWithDashes(this.props.params.artistName) +
-        "/" +
-        this.replaceSpacesWithDashes(this.props.params.artistChosen) +
-        "/" +
-        this.replaceSpacesWithDashes(this.props.title)
+      this.createAlbumUrl(
+        this.props.params.artistName,
+        this.props.params.artistChosen,
+        this.props.title
+      )
     );
   };
 

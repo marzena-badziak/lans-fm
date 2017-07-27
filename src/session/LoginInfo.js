@@ -73,7 +73,7 @@ class LoginInfo extends Component {
                   primaryText="Login to last.fm"
                   onClick={function Redirect() {
                     window.location =
-                      "http://www.last.fm/api/auth?api_key=5df8d91bac81fb9ea65ca73b43ecec62&cb=http%3A%2F%2Flocalhost%3A3000%2Flogin";
+                      "http://www.last.fm/api/auth?api_key=5df8d91bac81fb9ea65ca73b43ecec62&cb=http%3A%2F%2Flocalhost%3A3000%2Flogin?currentUrl=" + {this.props.currentPageParams};
                   }}
                 />
               </IconMenu>

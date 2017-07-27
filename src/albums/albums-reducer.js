@@ -1,4 +1,6 @@
-const albums = (state = { albums: [], message: "" }, action) => {
+const initialState = { albums: [], message: "" };
+
+const albums = (state = initialState, action) => {
   switch (action.type) {
     case "SEARCH_ALBUMS_ATTEMPT":
       return {
