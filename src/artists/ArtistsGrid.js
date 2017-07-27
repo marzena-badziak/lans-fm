@@ -5,6 +5,8 @@ import { searchArtist } from "../artists/search-actions.js";
 import ArtistTile from "./ArtistTile.js";
 import propTypes from "prop-types";
 import CircularProgress from "material-ui/CircularProgress";
+import { encodeURI, decodeURI } from "../lib/utils";
+
 
 class ArtistsGrid extends Component {
   fetchArtist = e => {
@@ -19,7 +21,7 @@ class ArtistsGrid extends Component {
     this.fetchArtist();
   }
   replaceDashWithSpace(str) {
-    return str.replace(/-/g, " ");
+    return str.replace(/-/g, " "); return decodeURIComponent(str);
   }
   render() {
     let grid = [];
@@ -37,7 +39,7 @@ class ArtistsGrid extends Component {
       <div>
         <StyledMessage>
           {this.props.message}{" "}
-          <strong>{this.replaceDashWithSpace(this.props.artistEntered)}</strong>
+          <strong>{decodeURI(this.props.artistEntered)}</strong>
         </StyledMessage>
 
         {this.props.message === "Searching: "

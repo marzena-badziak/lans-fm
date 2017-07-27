@@ -7,13 +7,13 @@ import styled from "styled-components";
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
 import { withRouter } from "react-router";
-import { LansFmUtils } from "../lib/utils";
 import FlatButton from "material-ui/FlatButton";
 import Navigation from "../user-interface/Navigation";
 import { SpotifyIframe } from "./SpotifyIframe";
 import { SpotifyFollowIframe } from "./SpotifyFollowIframe";
 import { SpotifyLogic } from "../lib/spotify";
 import SpotifyLoginButton from "./SpotifyLoginButton";
+import { LansFmUtils, encodeURI, decodeURI } from "../lib/utils";
 
 class AlbumsPage extends Component {
   constructor(props) {
@@ -48,14 +48,14 @@ class AlbumsPage extends Component {
   fetchAlbums = e => {
     this.props.dispatch(
       getAlbums({
-        data: this.replaceDashWithSpace(this.props.params.artistChosen)
+        data: decodeURI(this.props.params.artistChosen)
       })
     );
   };
   fetchArtist = e => {
     this.props.dispatch(
       getArtistInfo({
-        artist: this.replaceDashWithSpace(this.props.params.artistChosen)
+        artist: decodeURI(this.props.params.artistChosen)
       })
     );
   };
@@ -98,18 +98,12 @@ class AlbumsPage extends Component {
       }
     }
   }
-  replaceSpacesWithDashes(str) {
-    return str.replace(/\s+/g, "-");
-  }
-  replaceDashWithSpace(str) {
-    return str.replace(/-/g, " ");
-  }
 
   goBackToSearchResults = e => {
     e.preventDefault();
     console.log("back to search");
     this.props.router.push(
-      "/" + this.replaceSpacesWithDashes(this.props.params.artistName)
+      "/" + encodeURI(this.props.params.artistName)
     );
   };
   fetchSimilarArtist = e => {
@@ -119,7 +113,7 @@ class AlbumsPage extends Component {
       })
     );
     this.props.router.push(
-      "/" + this.replaceSpacesWithDashes(this.props.params.artistChosen)
+      "/" + encodeURI(this.props.params.artistChosen)
     );
   };
 

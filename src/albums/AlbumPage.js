@@ -14,7 +14,7 @@ import { scrobbleAlbum } from "./scrobble-album";
 import { SpotifyIframe } from "./SpotifyIframe";
 import axios from "axios";
 import Track from "./Track";
-import { LansFmUtils } from "../lib/utils";
+import { LansFmUtils, encodeURI, decodeURI } from "../lib/utils";
 import { SpotifyLogic } from "../lib/spotify";
 import Navigation from "../user-interface/Navigation";
 import FontAwesome from "react-fontawesome";
@@ -91,20 +91,15 @@ class AlbumPage extends Component {
   fetchAlbum = e => {
     this.props.dispatch(
       getAlbumInfo({
-        artist: this.replaceDashWithSpace(this.props.params.artistChosen),
-        album: this.replaceDashWithSpace(this.props.params.albumName)
+        artist: decodeURI(this.props.params.artistChosen),
+        album: decodeURI(this.props.params.albumName)
       })
     );
   };
   componentDidMount() {
     this.fetchAlbum();
   }
-  replaceSpacesWithDashes(str) {
-    return str.replace(/\s+/g, "-");
-  }
-  replaceDashWithSpace(str) {
-    return str.replace(/-/g, " ");
-  }
+
   displaySpotify() {
     if (
       this.props.session.spotifyAccessToken &&
@@ -143,7 +138,7 @@ class AlbumPage extends Component {
             <Track
               i={i}
               track={track}
-              artist={this.replaceDashWithSpace(this.props.params.artistChosen)}
+              artist={decodeURI(this.props.params.artistChosen)}
               open={this.state.open[`${i}`] || "none"}
               left={this.state.left[`${i}`] || 0}
               top={this.state.top[`${i}`] || 0}
@@ -199,7 +194,7 @@ class AlbumPage extends Component {
                       size={150}
                     />
                     <h2 style={{ display: "block", textAlign: "center" }}>
-                      {this.replaceDashWithSpace(this.props.params.albumName)}
+                      {decodeURI(this.props.params.albumName)}
                     </h2>
                   </div>
                   <div style={{ margin: "10px" }}>

@@ -15,3 +15,13 @@ export class LansFmUtils {
       : false;
   };
 }
+
+export const encodeURI = (str) => {
+  str = str.replace(/\s+/g, "_");
+  return encodeURIComponent(str);
+}
+
+export const decodeURI = (str) => {
+  str = str.replace(/_/g, " ");
+  return decodeURIComponent(str);
+}
