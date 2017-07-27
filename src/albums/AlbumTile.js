@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import Tile from "../user-interface/Tile";
 import { withRouter } from "react-router";
 import propTypes from "prop-types";
+import { encodeURI, decodeURI } from "../lib/utils";
+
 
 class AlbumTile extends Component {
   setImage = () => {
@@ -14,11 +16,12 @@ class AlbumTile extends Component {
     }
   };
   replaceSpacesWithDashes(str) {
-    return str.replace(/\s+/g, "-");
+    return str.replace(/\s+/g, "_");
+    return encodeURIComponent(str);
   }
   createAlbumUrl = (...args) => {
     const urlArr = [...args].map(item => {
-      return "/" + this.replaceSpacesWithDashes(item);
+      return "/" + encodeURI(item);
     });
     return urlArr.join("");
   };

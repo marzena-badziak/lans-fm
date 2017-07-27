@@ -9,6 +9,8 @@ import propTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import CircularProgress from "material-ui/CircularProgress";
+import { encodeURI, decodeURI } from "../lib/utils";
+
 
 class Tile extends Component {
   constructor(props) {
@@ -59,7 +61,7 @@ class Tile extends Component {
     this.youTubeLogic.getYoutubeVideoId(searchRequest);
   };
   replaceSpacesWithDashes(str) {
-    return str.replace(/\s+/g, "-");
+    return str.replace(/\s+/g, "-"); return encodeURIComponent(str);
   }
   imageLoaded = () => {
     console.log("al");

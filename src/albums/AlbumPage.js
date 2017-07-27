@@ -8,7 +8,7 @@ import styled from "styled-components";
 import { withRouter } from "react-router";
 import { SpotifyIframe } from "./SpotifyIframe";
 import Track from "./Track";
-import { LansFmUtils } from "../lib/utils";
+import { LansFmUtils, encodeURI, decodeURI } from "../lib/utils";
 import { SpotifyLogic } from "../lib/spotify";
 import Navigation from "../user-interface/Navigation";
 import SpotifyLoginButton from "./SpotifyLoginButton";
@@ -80,20 +80,15 @@ class AlbumPage extends Component {
   fetchAlbum = e => {
     this.props.dispatch(
       getAlbumInfo({
-        artist: this.replaceDashWithSpace(this.props.params.artistChosen),
-        album: this.replaceDashWithSpace(this.props.params.albumName)
+        artist: decodeURI(this.props.params.artistChosen),
+        album: decodeURI(this.props.params.albumName)
       })
     );
   };
   componentDidMount() {
     this.fetchAlbum();
   }
-  replaceSpacesWithDashes(str) {
-    return str.replace(/\s+/g, "-");
-  }
-  replaceDashWithSpace(str) {
-    return str.replace(/-/g, " ");
-  }
+
   displaySpotify() {
     if (
       this.props.session.spotifyAccessToken &&
@@ -123,6 +118,7 @@ class AlbumPage extends Component {
       );
     }
   }
+
   checkIfAlbumHasTracks() {
     if (this.props.album.album.tracks.track.length !== 0) {
       return this.props.album.album.tracks.track.map((track, i) => {
@@ -130,7 +126,7 @@ class AlbumPage extends Component {
           <Track
             i={i}
             track={track}
-            artist={this.replaceDashWithSpace(this.props.params.artistChosen)}
+            artist={decodeURI(this.props.params.artistChosen)}
             open={this.state.open[`${i}`] || "none"}
             left={this.state.left[`${i}`] || 0}
             top={this.state.top[`${i}`] || 0}
@@ -176,7 +172,7 @@ class AlbumPage extends Component {
           <AlbumInfo style={{ margin: "10px 20px" }}>
             <Avatar src={this.getAlbumImage(2)} size={150} />
             <AlbumName>
-              {this.replaceDashWithSpace(this.props.params.albumName)}
+              {decodeURI(this.props.params.albumName)}
             </AlbumName>
           </AlbumInfo>
           <SpotifyContainer>
@@ -193,6 +189,7 @@ class AlbumPage extends Component {
           artistName={this.props.params.artistName}
           artistChosen={this.props.params.artistChosen}
         />
+
         <Container className="container">
           <StyledPaperContainer>
             {this.showAlbumInfo()}

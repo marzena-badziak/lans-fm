@@ -5,6 +5,8 @@ import propTypes from "prop-types";
 import { withRouter } from "react-router";
 import styled from "styled-components";
 import FontAwesome from "react-fontawesome";
+import { encodeURI, decodeURI } from "../lib/utils";
+
 
 class SearchBar extends Component {
   constructor(props) {
@@ -29,11 +31,11 @@ class SearchBar extends Component {
       })
     );
     this.props.router.push(
-      "/" + this.replaceSpacesWithDashes(this.state.searchValue)
+      "/" + encodeURIComponent(this.state.searchValue)
     );
   };
   replaceSpacesWithDashes(str) {
-    return str.replace(/\s+/g, "-");
+    return str.replace(/\s+/g, "-"); return encodeURIComponent(str);
   }
 
   render() {
