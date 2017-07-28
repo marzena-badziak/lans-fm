@@ -8,7 +8,7 @@ import styled from "styled-components";
 import { withRouter } from "react-router";
 import { SpotifyIframe } from "./SpotifyIframe";
 import Track from "./Track";
-import { LansFmUtils, encodeURI, decodeURI } from "../lib/utils";
+import { LansFmUtils, decodeURI } from "../lib/utils";
 import { SpotifyLogic } from "../lib/spotify";
 import Navigation from "../user-interface/Navigation";
 import SpotifyLoginButton from "./SpotifyLoginButton";
@@ -40,7 +40,7 @@ class AlbumPage extends Component {
     if (displaySpotifyLogin) {
       let stateString = LansFmUtils.randomString(32);
       this.spotifyStateString = stateString;
-      let spotifyAuthorizationUrl = this.props.dispatch({
+      this.props.dispatch({
         type: "SPOTIFY_GENERATE_STATE",
         spotifyStateString: stateString
       });

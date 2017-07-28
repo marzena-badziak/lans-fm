@@ -13,7 +13,7 @@ import { SpotifyIframe } from "./SpotifyIframe";
 import { SpotifyFollowIframe } from "./SpotifyFollowIframe";
 import { SpotifyLogic } from "../lib/spotify";
 import SpotifyLoginButton from "./SpotifyLoginButton";
-import { LansFmUtils, encodeURI, decodeURI } from "../lib/utils";
+import { LansFmUtils, decodeURI } from "../lib/utils";
 import MediaQuery from "react-responsive";
 
 class AlbumsPage extends Component {
@@ -37,7 +37,7 @@ class AlbumsPage extends Component {
     if (displaySpotifyLogin) {
       let stateString = LansFmUtils.randomString(32);
       this.spotifyStateString = stateString;
-      let spotifyAuthorizationUrl = this.props.dispatch({
+      this.props.dispatch({
         type: "SPOTIFY_GENERATE_STATE",
         spotifyStateString: stateString
       });
@@ -237,10 +237,7 @@ const AtristInfoContainer = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-const AlbumsHeader = styled.h3`
-  display: block;
-  margin: 0;
-`;
+
 const ArtistName = styled.h2`font-size: 50px;`;
 const StatsContainer = styled.div`
   display: flex;

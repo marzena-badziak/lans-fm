@@ -5,8 +5,7 @@ import { searchArtist } from "../artists/search-actions.js";
 import ArtistTile from "./ArtistTile.js";
 import propTypes from "prop-types";
 import CircularProgress from "material-ui/CircularProgress";
-import { encodeURI, decodeURI } from "../lib/utils";
-
+import { decodeURI } from "../lib/utils";
 
 class ArtistsGrid extends Component {
   fetchArtist = e => {

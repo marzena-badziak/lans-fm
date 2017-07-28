@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-import FontAwesome from "react-fontawesome";
 import YouTubeLogic from "../lib/youtube";
-import ShowVideo from "../artists/ShowVideo";
 import { Card, CardActions, CardMedia, CardTitle } from "material-ui/Card";
 import styled from "styled-components";
 import RaisedButton from "material-ui/RaisedButton";
-import propTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import CircularProgress from "material-ui/CircularProgress";
@@ -135,7 +132,6 @@ class Tile extends Component {
             label={this.props.labelFirst}
             backgroundColor="darkmagenta"
             onClick={this.props.firstButtonOnClick()}
-            hoverColor="#4e024e"
             labelStyle={{
               padding: "5px",
               color: "white"
@@ -145,7 +141,6 @@ class Tile extends Component {
             label={this.props.labelSecond}
             backgroundColor="#7a3e5e"
             onClick={this.props.secondButtonOnClick()}
-            hoverColor="#ccd4d4"
             labelStyle={{
               padding: "5px",
               color: "white"
@@ -196,18 +191,6 @@ transition: .2s all;
 }
 `;
 
-const StyledYouTubeFontAwesome = styled(FontAwesome)`
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.75);
-  color: #b31217;
-  position: absolute;
-  z-index: 5;
-  top: 10px;
-  left: 10px;
-  cursor: pointer;
-  &:hover {
-    color: #e52d27;
-  }
-`;
 const StyledRaisedButton = styled(RaisedButton)`
   margin: 0;
 `;

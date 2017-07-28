@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import FlatButton from "material-ui/FlatButton";
 import { connect } from "react-redux";
-import DropDownMenu from "material-ui/DropDownMenu";
 import IconMenu from "material-ui/IconMenu";
 import IconButton from "material-ui/IconButton";
 import MenuIcon from "material-ui/svg-icons/navigation/menu";
@@ -160,6 +159,7 @@ const StyledLoginInfo = styled.div`
   font-size: 14px;
   color: white;
   padding: 0;
+  font-family: Righteous;
 `;
 
 const StyledLoginBox = styled.div`

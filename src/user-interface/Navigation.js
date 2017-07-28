@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
 import PropTypes from "prop-types";
-import { encodeURI, decodeURI } from "../lib/utils";
+import { decodeURI } from "../lib/utils";
 
 class Navigation extends Component {
   goBackToSearchResults = e => {
