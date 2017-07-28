@@ -5,7 +5,7 @@ import propTypes from "prop-types";
 import { withRouter } from "react-router";
 import styled from "styled-components";
 import FontAwesome from "react-fontawesome";
-import { encodeURI, decodeURI } from "../lib/utils";
+import { encodeURI } from "../lib/utils";
 
 class SearchBar extends Component {
   constructor(props) {
