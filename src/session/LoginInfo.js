@@ -160,6 +160,7 @@ const StyledLoginInfo = styled.div`
   font-size: 14px;
   color: white;
   padding: 0;
+  font-family: Righteous;
 `;
 
 const StyledLoginBox = styled.div`

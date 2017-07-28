@@ -1,5 +1,5 @@
 import axios from "axios";
-import {decodeURI} from "./utils"
+import { decodeURI } from "./utils";
 
 export class SpotifyLogic {
   constructor(spotifyAccessToken, setSpotifyUrlCallback) {
@@ -47,6 +47,8 @@ export class SpotifyLogic {
           let artistUri = response.data.artists.items[0].uri;
           this.setSpotifyUrlCallback(artistUri);
         }
+        let artistUri = response.data.artists.items[0].uri;
+        this.setSpotifyUrlCallback(artistUri);
       });
   };
 }
