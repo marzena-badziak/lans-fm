@@ -64,6 +64,7 @@ class Tile extends Component {
       imageDisplay: "block"
     });
   };
+
   render() {
     return (
       <StyledAlbumCard
@@ -96,7 +97,7 @@ class Tile extends Component {
                   onLoad={() => this.imageLoaded()}
                 />
                 <CircularProgress
-                  style={{ height: "260px", marginTop: "40px" }}
+                  style={{ height: "220px", marginTop: "40px" }}
                   size={130}
                   color="#aa8899"
                 />
@@ -132,9 +133,9 @@ class Tile extends Component {
         <StyledCardActions>
           <StyledRaisedButton
             label={this.props.labelFirst}
-            backgroundColor="plum"
+            backgroundColor="darkmagenta"
             onClick={this.props.firstButtonOnClick()}
-            hoverColor="#ccd4d4"
+            hoverColor="#4e024e"
             labelStyle={{
               padding: "10px",
               color: "white"
