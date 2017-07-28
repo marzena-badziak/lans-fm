@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Tile from "../user-interface/Tile";
 import { withRouter } from "react-router";
 import propTypes from "prop-types";
-import { encodeURI, decodeURI } from "../lib/utils";
+import { encodeURI } from "../lib/utils";
 
 class AlbumTile extends Component {
   setImage = () => {
