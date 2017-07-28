@@ -17,18 +17,19 @@ export class SpotifyLogic {
     axios
       .get(
         "https://api.spotify.com/v1/search?q=album:" +
-          decodeURI(albumName) +
+          encodeURIComponent(decodeURI(albumName)) +
           " artist:" +
-          decodeURI(artistChosen) +
+          encodeURIComponent(decodeURI(artistChosen)) +
           "&type=album",
         this.headers
       )
       .then(response => {
-        let uri = response.data.albums.items[0].uri;
-        this.setSpotifyUrlCallback(uri);
+        if (response.data.albums.items.length !== 0) {
+          let uri = response.data.albums.items[0].uri;
+          this.setSpotifyUrlCallback(uri);
+        }
       })
       .catch(err => {
-        console.log(err);
         this.setSpotifyUrlCallback("");
       });
   };
@@ -37,11 +38,15 @@ export class SpotifyLogic {
     axios
       .get(
         "https://api.spotify.com/v1/search?q=artist:" +
-          decodeURI(artistChosen) +
+          encodeURIComponent(decodeURI(artistChosen)) +
           "&type=artist",
         this.headers
       )
       .then(response => {
+        if(response.data.artists.items.length !== 0) {
+          let artistUri = response.data.artists.items[0].uri;
+          this.setSpotifyUrlCallback(artistUri);
+        }
         let artistUri = response.data.artists.items[0].uri;
         this.setSpotifyUrlCallback(artistUri);
       });
