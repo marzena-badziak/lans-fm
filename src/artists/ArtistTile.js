@@ -52,7 +52,7 @@ class ArtistTile extends Component {
         imageAlt={this.props.imageAlt}
         firstButtonOnClick={() => this.fetchArtist}
         secondButtonOnClick={() => this.getAlbums}
-        labelFirst="Similar Artist"
+        labelFirst="Search Similar"
         labelSecond="Open Artist"
       />
     );
