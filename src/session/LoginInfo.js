@@ -67,8 +67,8 @@ class LoginInfo extends Component {
               targetOrigin={{ horizontal: "right", vertical: "top" }}
               style={{
                 verticalAlign: "center",
-                marginTop: "-5px",
-                marginRight: "-5px"
+                marginTop: "0",
+                marginRight: "0"
               }}
             >
               <MenuItem
@@ -126,8 +126,8 @@ class LoginInfo extends Component {
               targetOrigin={{ horizontal: "right", vertical: "top" }}
               style={{
                 verticalAlign: "center",
-                marginTop: "-5px",
-                marginRight: "-15px"
+                marginTop: "0",
+                marginRight: "0"
               }}
             >
               <MenuItem
@@ -152,8 +152,7 @@ class LoginInfo extends Component {
 }
 
 const StyledLoginInfo = styled.div`
-  ${"" /* vertical-align: middle;
-  letter-spacing: 0px; */} position: relative;
+  position: relative;
   top: -8px;
   display: inline-block;
   text-transform: uppercase;
@@ -161,7 +160,6 @@ const StyledLoginInfo = styled.div`
   font-size: 14px;
   color: white;
   padding: 0;
-  border: 1px dotted blue;
 `;
 
 const StyledLoginBox = styled.div`

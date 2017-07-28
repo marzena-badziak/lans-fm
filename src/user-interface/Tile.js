@@ -136,7 +136,7 @@ class Tile extends Component {
             onClick={this.props.firstButtonOnClick()}
             hoverColor="#ccd4d4"
             labelStyle={{
-              padding: "10px",
+              padding: "5px",
               color: "white"
             }}
           />

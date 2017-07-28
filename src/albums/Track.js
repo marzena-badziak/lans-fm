@@ -76,7 +76,8 @@ class Track extends Component {
                 width: "100px",
                 display: "flex",
                 justifyContent: "space-around",
-                alignItems: "center"
+                alignItems: "center",
+                fontSize: "10px"
               }}
               id={this.props.i}
             >

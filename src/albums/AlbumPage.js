@@ -13,6 +13,7 @@ import { SpotifyLogic } from "../lib/spotify";
 import Navigation from "../user-interface/Navigation";
 import SpotifyLoginButton from "./SpotifyLoginButton";
 import TrackList from "./TrackList";
+import MediaQuery from "react-responsive";
 
 class AlbumPage extends Component {
   constructor(props) {
@@ -96,13 +97,26 @@ class AlbumPage extends Component {
     ) {
       if (this.state.spotifyAlbumUri) {
         return (
-          <SpotifyIframe
-            spotifyUri={this.state.spotifyAlbumUri}
-            title={this.state.spotifyUri}
-            width="300"
-            height="300"
-            theme="white"
-          />
+          <div>
+            <MediaQuery query="(min-width: 481px)">
+              <SpotifyIframe
+                spotifyUri={this.state.spotifyAlbumUri}
+                title={this.state.spotifyUri}
+                width="300px"
+                height="300px"
+                theme="white"
+              />
+            </MediaQuery>
+            <MediaQuery query="(max-width: 480px)">
+              <SpotifyIframe
+                spotifyUri={this.state.spotifyAlbumUri}
+                title={this.state.spotifyUri}
+                width="260px"
+                height="300px"
+                theme="white"
+              />
+            </MediaQuery>
+          </div>
         );
       } else {
         return (
@@ -209,7 +223,7 @@ const AlbumName = styled.h2`
   text-align: center;
 `;
 const StyledPaperContainer = styled(Paper)`
-  width: 80vw;
+  width: 88vw;
   margin-top: 40px;
   paddingTop: 10px;
 `;

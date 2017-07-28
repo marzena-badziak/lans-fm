@@ -14,6 +14,7 @@ import { SpotifyFollowIframe } from "./SpotifyFollowIframe";
 import { SpotifyLogic } from "../lib/spotify";
 import SpotifyLoginButton from "./SpotifyLoginButton";
 import { LansFmUtils, encodeURI, decodeURI } from "../lib/utils";
+import MediaQuery from "react-responsive";
 
 class AlbumsPage extends Component {
   constructor(props) {
@@ -155,15 +156,27 @@ class AlbumsPage extends Component {
       if (this.state.spotifyArtistUri) {
         return (
           <SpotifyContainer>
-            <SpotifyIframe
-              spotifyUri={this.state.spotifyArtistUri}
-              title={this.state.spotifyArtistUri}
-              height="300px"
-            />
+            <MediaQuery query="(min-width: 481px)">
+              <SpotifyIframe
+                spotifyUri={this.state.spotifyArtistUri}
+                title={this.state.spotifyArtistUri}
+                height="300px"
+              />
+            </MediaQuery>
+
+            <MediaQuery query="(max-width: 480px)">
+              <SpotifyIframe
+                spotifyUri={this.state.spotifyArtistUri}
+                title={this.state.spotifyArtistUri}
+                height="300px"
+                width="260px"
+              />
+            </MediaQuery>
+
             <SpotifyFollowIframe
               spotifyUri={this.state.spotifyArtistUri}
               title={this.state.spotifyArtistUri}
-              width="145px"
+              width="160px"
               height="30px"
             />
           </SpotifyContainer>
@@ -245,7 +258,7 @@ const Container = styled.div`
   margin-top: 30px;
 `;
 const SearchSimilarButton = styled(FlatButton)`
-  margin-top: 15px;
+  margin: 15px;
 `;
 const SearchResultsContainer = styled.div`
   display: flex;

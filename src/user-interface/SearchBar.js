@@ -7,7 +7,6 @@ import styled from "styled-components";
 import FontAwesome from "react-fontawesome";
 import { encodeURI, decodeURI } from "../lib/utils";
 
-
 class SearchBar extends Component {
   constructor(props) {
     super(props);
@@ -30,9 +29,7 @@ class SearchBar extends Component {
         artist: this.state.searchValue
       })
     );
-    this.props.router.push(
-      "/" + encodeURI(this.state.searchValue)
-    );
+    this.props.router.push("/" + encodeURI(this.state.searchValue));
   };
 
   render() {
@@ -81,7 +78,7 @@ const StyledSearchSpan = styled.div`
   display: flex;
   height: inherit;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 12px;
   border-radius: 0px 10px 10px 0px;
   border: 1px solid #000000;
   background-color: #dd8899;
