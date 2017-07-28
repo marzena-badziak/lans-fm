@@ -23,7 +23,10 @@ class Navbar extends Component {
           <LoginInfo currentPageParams={this.props.urlParams} />
         }
         iconStyleLeft={{ marginTop: "0px" }}
-        iconStyleRight={{ marginTop: "0px", marginRight: "0px", padding: "0" }}
+        iconStyleRight={{
+          marginRight: "-10px",
+          padding: "0"
+        }}
         showMenuIconButton={true}
       />
     );
@@ -31,7 +34,7 @@ class Navbar extends Component {
 }
 
 const StyledSearchBar = styled(SearchBar)`
-  width: 30vw;
+  width: 35vw;
   font-size: 16px;
   margin-top: 14px;
   /* Smartphones (portrait and landscape) ----------- */
@@ -42,12 +45,13 @@ const StyledSearchBar = styled(SearchBar)`
   }
   /* Smartphones (portrait) ----------- */
   @media only screen and (max-width : 320px) {
-    width: 43vw;
+    width: 50vw;
     font-size: 10px;
     margin: 15px 0;
   }
 `;
 const StyledAppBar = styled(AppBar)`
+position: absolute;
   display: flex;
   align-items: center;
   padding: 3px;

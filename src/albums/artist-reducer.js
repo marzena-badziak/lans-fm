@@ -1,4 +1,6 @@
-const artist = (state = { artist: {}, message: "" }, action) => {
+const initialState = { artist: {}, message: "" };
+
+const artist = (state = initialState, action) => {
   switch (action.type) {
     case "GET_ARTIST_INFO":
       return {

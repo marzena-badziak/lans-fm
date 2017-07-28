@@ -8,6 +8,8 @@ import RaisedButton from "material-ui/RaisedButton";
 import propTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import CircularProgress from "material-ui/CircularProgress";
+
 class Tile extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +25,9 @@ class Tile extends Component {
       videoId: "",
       videoFound: true,
       opacity: 0,
-      showYouTubeIcon: false
+      showYouTubeIcon: false,
+      imageLoaded: false,
+      imageDisplay: "none"
     };
   }
   setOpacity(val) {
@@ -54,9 +58,13 @@ class Tile extends Component {
       "&type=video&key=AIzaSyBdXp1WnmYGXXuDFybXxK_94awGD5Qm-Zw";
     this.youTubeLogic.getYoutubeVideoId(searchRequest);
   };
-  replaceSpacesWithDashes(str) {
-    return str.replace(/\s+/g, "-");
-  }
+
+  imageLoaded = () => {
+    this.setState({
+      imageDisplay: "block"
+    });
+  };
+
   render() {
     return (
       <StyledAlbumCard
@@ -74,7 +82,27 @@ class Tile extends Component {
             />
           }
         >
-          <img src={this.props.imageSrc} alt={this.props.imageAlt} />
+          {this.state.imageDisplay === "block"
+            ? <img
+                style={{ display: this.state.imageDisplay }}
+                src={this.props.imageSrc}
+                alt={this.props.imageAlt}
+                onLoad={() => this.imageLoaded()}
+              />
+            : <div>
+                {" "}<img
+                  style={{ display: this.state.imageDisplay }}
+                  src={this.props.imageSrc}
+                  alt={this.props.imageAlt}
+                  onLoad={() => this.imageLoaded()}
+                />
+                <CircularProgress
+                  style={{ height: "220px", marginTop: "40px" }}
+                  size={130}
+                  color="#aa8899"
+                />
+              </div>}
+
           <Overlay style={{ opacity: this.state.opacity }}>
             <TextOnOverlay>
               {this.props.labelSecond}
@@ -105,11 +133,11 @@ class Tile extends Component {
         <StyledCardActions>
           <StyledRaisedButton
             label={this.props.labelFirst}
-            backgroundColor="plum"
+            backgroundColor="darkmagenta"
             onClick={this.props.firstButtonOnClick()}
-            hoverColor="#ccd4d4"
+            hoverColor="#4e024e"
             labelStyle={{
-              padding: "10px",
+              padding: "5px",
               color: "white"
             }}
           />
@@ -129,10 +157,10 @@ class Tile extends Component {
   }
 }
 const StyledAlbumCard = styled(Card)`
-position: relative;
-width: 260px;
-margin 0 auto;
-margin-top: 30px;
+  position: relative;
+  width: 260px;
+  margin 0 auto;
+  margin-top: 30px;
 `;
 
 const StyledCardActions = styled(CardActions)`

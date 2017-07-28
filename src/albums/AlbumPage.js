@@ -1,40 +1,31 @@
 import React, { Component } from "react";
 import { getAlbumInfo } from "./search-actions.js";
 import { connect } from "react-redux";
-import { List } from "material-ui/List";
 import Paper from "material-ui/Paper";
 import Avatar from "material-ui/Avatar";
 import CircularProgress from "material-ui/CircularProgress";
-import FlatButton from "material-ui/FlatButton";
 import styled from "styled-components";
-import Divider from "material-ui/Divider";
-import moment from "moment";
 import { withRouter } from "react-router";
-import { scrobbleAlbum } from "./scrobble-album";
 import { SpotifyIframe } from "./SpotifyIframe";
-import axios from "axios";
 import Track from "./Track";
-import { LansFmUtils } from "../lib/utils";
-
+import { LansFmUtils, encodeURI, decodeURI } from "../lib/utils";
+import { SpotifyLogic } from "../lib/spotify";
 import Navigation from "../user-interface/Navigation";
-import FontAwesome from "react-fontawesome";
 import SpotifyLoginButton from "./SpotifyLoginButton";
 import TrackList from "./TrackList";
-import { SpotifyLogic } from "../lib/spotify";
+import MediaQuery from "react-responsive";
 
 class AlbumPage extends Component {
   constructor(props) {
     super(props);
 
-    let displaySpotifyLogin =
-      this.props.session.spotifyAccessToken === "" ||
-      (this.props.session.spotifyExpiresIn !== "" &&
-        this.props.session.spotifyExpiresIn < Date.now())
-        ? true
-        : false;
+    let displaySpotifyLogin = LansFmUtils.verifySpotifyToken(
+      this.props.session.spotifyAccessToken,
+      this.props.session.spotifyExpiresIn
+    );
 
     this.state = {
-      spotifyAlbumUrl: "",
+      spotifyAlbumUri: "",
       displaySpotifyLogin: displaySpotifyLogin,
       open: {},
       left: {},
@@ -43,7 +34,7 @@ class AlbumPage extends Component {
 
     this.spotifyLogic = new SpotifyLogic(
       this.props.session.spotifyAccessToken,
-      this.setSpotifyAlbumUrl
+      this.setSpotifyAlbumUri
     );
 
     if (displaySpotifyLogin) {
@@ -55,22 +46,17 @@ class AlbumPage extends Component {
       });
     }
     if (!displaySpotifyLogin) {
-      this.spotifyLogic.getSpotifyAlbumId(
+      this.spotifyLogic.getSpotifyAlbumUri(
         this.props.params.albumName,
         this.props.params.artistChosen
       );
     }
   }
-  setSpotifyAlbumUrl = url => {
-    this.setState({ spotifyAlbumUrl: url });
+  setSpotifyAlbumUri = uri => {
+    this.setState({ spotifyAlbumUri: uri });
   };
 
-  openMenu = (i, left, top, close = false) => {
-    if (close) {
-      this.setState({
-        open: {}
-      });
-    }
+  openMenu = (i, left, top) => {
     if (this.state.open[`${i}`] === "block") {
       this.setState({
         open: {}
@@ -87,121 +73,179 @@ class AlbumPage extends Component {
     }
   };
 
-  closeMenu = i => {
+  closeMenu = () => {
     this.setState({
-      open: { [`${i}`]: "none" }
+      open: {}
     });
   };
   fetchAlbum = e => {
     this.props.dispatch(
       getAlbumInfo({
-        artist: this.replaceDashWithSpace(this.props.params.artistChosen),
-        album: this.replaceDashWithSpace(this.props.params.albumName)
+        artist: decodeURI(this.props.params.artistChosen),
+        album: decodeURI(this.props.params.albumName)
       })
     );
   };
   componentDidMount() {
     this.fetchAlbum();
   }
-  replaceSpacesWithDashes(str) {
-    return str.replace(/\s+/g, "-");
+
+  displaySpotify() {
+    if (
+      this.props.session.spotifyAccessToken &&
+      this.props.session.spotifyExpiresIn > Date.now()
+    ) {
+      if (this.state.spotifyAlbumUri) {
+        return (
+          <div>
+            <MediaQuery query="(min-width: 481px)">
+              <SpotifyIframe
+                spotifyUri={this.state.spotifyAlbumUri}
+                title={this.state.spotifyUri}
+                width="300px"
+                height="300px"
+                theme="white"
+              />
+            </MediaQuery>
+            <MediaQuery query="(max-width: 480px)">
+              <SpotifyIframe
+                spotifyUri={this.state.spotifyAlbumUri}
+                title={this.state.spotifyUri}
+                width="260px"
+                height="300px"
+                theme="white"
+              />
+            </MediaQuery>
+          </div>
+        );
+      } else {
+        return (
+          <SpotifyAlert>This album is not available on spotify</SpotifyAlert>
+        );
+      }
+    } else {
+      return (
+        <SpotifyLoginButton
+          spotifyStateString={this.spotifyStateString}
+          redirectUrl={this.props.location.pathname}
+        />
+      );
+    }
   }
-  replaceDashWithSpace(str) {
-    return str.replace(/-/g, " ");
+
+  checkIfAlbumHasTracks() {
+    if (this.props.album.album.tracks.track.length !== 0) {
+      return this.props.album.album.tracks.track.map((track, i) => {
+        return (
+          <Track
+            i={i}
+            track={track}
+            artist={decodeURI(this.props.params.artistChosen)}
+            open={this.state.open[`${i}`] || "none"}
+            left={this.state.left[`${i}`] || 0}
+            top={this.state.top[`${i}`] || 0}
+            openMenu={this.openMenu}
+            closeMenu={this.closeMenu}
+            disableOnClickOutside={true}
+          />
+        );
+      });
+    } else {
+      return (
+        <LastFMAlert>
+          Sorry tracks no tracks in last-fm database for this album
+        </LastFMAlert>
+      );
+    }
+  }
+  albumNotFound() {
+    if (this.props.album.message === "no_album") {
+      return (
+        <AlbumNotFundAlert>
+          Album not found in last-fm database
+        </AlbumNotFundAlert>
+      );
+    } else {
+      return <CircularProgress color="#aa8899" />;
+    }
   }
   showTracks() {
     if (this.props.album.message === "GOT_ALBUMS") {
-      if (this.props.album.album.tracks.track.length !== 0) {
-        return this.props.album.album.tracks.track.map((track, i) => {
-          return (
-            <Track
-              i={i}
-              track={track}
-              artist={this.replaceDashWithSpace(this.props.params.artistChosen)}
-              open={this.state.open[`${i}`] || "none"}
-              left={this.state.left[`${i}`] || 0}
-              top={this.state.top[`${i}`] || 0}
-              openMenu={this.openMenu}
-              closeMenu={this.closeMenu}
-              disableOnClickOutside={true}
-            />
-          );
-        });
-      } else {
-        return <div>Sorry tracks are not available for this album</div>;
-      }
+      return this.checkIfAlbumHasTracks();
     } else {
-      return <CircularProgress />;
+      return this.albumNotFound();
+    }
+  }
+  getAlbumImage(imageType) {
+    return this.props.album.album.image[imageType]["#text"];
+  }
+  showAlbumInfo() {
+    if (this.props.album.message === "GOT_ALBUMS") {
+      return (
+        <StyledTopContainer>
+          <AlbumInfo style={{ margin: "10px 20px" }}>
+            <Avatar src={this.getAlbumImage(2)} size={150} />
+            <AlbumName>
+              {decodeURI(this.props.params.albumName)}
+            </AlbumName>
+          </AlbumInfo>
+          <SpotifyContainer>
+            {this.displaySpotify()}
+          </SpotifyContainer>
+        </StyledTopContainer>
+      );
     }
   }
   render() {
     return (
       <div>
-        <div
-          className="container"
-          style={{
-            display: "flex",
-            // flexDirection: "column",
-            justifyContent: "center"
-            // flexWrap: "nowrap"
-          }}
-        >
-          <Paper
-            style={{ width: "80vw", marginTop: "40px", paddingTop: "10px" }}
-          >
-            {this.props.album.message === "GOT_ALBUMS"
-              ? <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    flexWrap: "wrap",
-                    justifyContent: "space-between"
-                  }}
-                >
-                  <div>
-                    <Avatar
-                      src={this.props.album.album.image[2]["#text"]}
-                      size={150}
-                    />
-                    <h2 style={{ display: "block", textAlign: "center" }}>
-                      {this.replaceDashWithSpace(this.props.params.albumName)}
-                    </h2>
-                    <div>
-                      {this.state.displaySpotifyLogin
-                        ? <FlatButton
-                            label="Login to Spotify"
-                            onClick={e => this.setSpotifyId(e)}
-                            style={{ margin: "15px" }}
-                            backgroundColor="darkgrey"
-                            hoverColor="grey"
-                            href={
-                              "https://accounts.spotify.com/authorize?client_id=7cd65f9a6005482cb3830530b1e52b16&response_type=token&redirect_uri=http://localhost:3000/loginSpotify/&state=" +
-                              this.spotifyStateString
-                            }
-                          />
-                        : null}
-                    </div>
-                  </div>
-                  <div>
-                    {this.state.spotifyAlbumUrl !== ""
-                      ? <SpotifyIframe
-                          spotifyAlbumUrl={this.state.spotifyAlbumUrl}
-                          title={this.state.spotifyAlbumUrl}
-                        />
-                      : null}
-                  </div>
-                </div>
-              : false}
-            <TrackList openMenu={this.openMenu} enableOnClickOutside={true}>
+        <Navigation
+          artistName={this.props.params.artistName}
+          artistChosen={this.props.params.artistChosen}
+        />
+
+        <Container className="container">
+          <StyledPaperContainer>
+            {this.showAlbumInfo()}
+            <TrackList closeMenu={this.closeMenu} enableOnClickOutside={true}>
               {this.showTracks()}
             </TrackList>
-          </Paper>
-        </div>
+          </StyledPaperContainer>
+        </Container>
       </div>
     );
   }
 }
+const AlbumInfo = styled.div`margin: 10px 20px;`;
+const SpotifyContainer = styled.div`margin: 10px;`;
+const AlbumName = styled.h2`
+  display: block;
+  text-align: center;
+`;
+const StyledPaperContainer = styled(Paper)`
+  width: 88vw;
+  margin-top: 40px;
+  paddingTop: 10px;
+`;
+const Container = styled.div`
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+`;
+const StyledTopContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  justify-content: space-between;
+`;
 
+const SpotifyAlert = styled.div`
+  margin-right: 50px;
+  margin-top: 20px;
+`;
+const AlbumNotFundAlert = styled.div`padding: 35px;`;
+const LastFMAlert = styled.div`padding: 35px;`;
 const mapStateToProps = state => {
   return {
     album: state.album,

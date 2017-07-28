@@ -44,8 +44,8 @@ class Track extends Component {
   };
 
   scrobbleInfo = () => {
-    if(this.state.isScrobbled === false) {
-      return;
+    if (this.state.isScrobbled === false) {
+      return "";
     } else {
       return (
         <div className="alert alert-success" role="alert">
@@ -76,7 +76,8 @@ class Track extends Component {
                 width: "100px",
                 display: "flex",
                 justifyContent: "space-around",
-                alignItems: "center"
+                alignItems: "center",
+                fontSize: "10px"
               }}
               id={this.props.i}
             >
@@ -86,14 +87,7 @@ class Track extends Component {
                   .add(moment.duration({ s: this.props.track.duration }))
                   .format("mm:ss")}
               </span>
-              <span
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  width: "25px",
-                  height: "25px"
-                }}
-              >
+              <FontAwesomeContainer>
                 <FontAwesome
                   className="fa fa-ellipsis-v"
                   name="options"
@@ -101,7 +95,7 @@ class Track extends Component {
                   aria-hidden="true"
                   style={{ paddingLeft: "12px" }}
                 />
-              </span>
+              </FontAwesomeContainer>
             </div>
           }
           style={{ textAlign: "left" }}
@@ -171,6 +165,12 @@ class Track extends Component {
     );
   }
 }
+const FontAwesomeContainer = styled.span`
+  display: flex;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+`;
 const DropDownHeader = styled.li`
   list-style-type: none;
   padding: 15px;
